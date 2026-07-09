@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://onigirito.github.io',
-  base: '/ShadowHarness/',
+  site: 'https://shadowharness.github.io',
+  base: '/',
   integrations: [sitemap()],
 });

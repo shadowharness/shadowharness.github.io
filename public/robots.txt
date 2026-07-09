@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://onigirito.github.io/ShadowHarness/sitemap-index.xml
+Sitemap: https://shadowharness.github.io/sitemap-index.xml

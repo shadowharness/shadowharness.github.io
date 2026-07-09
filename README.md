@@ -11,7 +11,7 @@ organizing every conversation by topic — so the session may end, but the conte
 
 ![Shadow デスクトップアプリのスクリーンショット](public/demo-screenshot-1.png)
 
-- **サイト / Website**: https://onigirito.github.io/ShadowHarness/ （[English](https://onigirito.github.io/ShadowHarness/en/)）
+- **サイト / Website**: https://shadowharness.github.io/ （[English](https://shadowharness.github.io/en/)）
 - **X**: [@ShadowHarness](https://x.com/ShadowHarness)
 
 ---
