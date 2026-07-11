@@ -1,12 +1,11 @@
 ---
 import SiteLayout from '../../layouts/SiteLayout.astro';
 
-const base = import.meta.env.BASE_URL;
 const siteUrl = 'https://shadowharness.github.io/';
 const pageUrl = `${siteUrl}en/security/`;
 const title = 'Security & Trust — Shadow';
 const description =
-  "How Shadow handles your conversation data — what we store, how it's isolated, encryption, and your right to erase or export it, explained plainly.";
+  'What Shadow stores and what it never receives, per-user isolation, encryption and keys, and your rights to delete and export — a concrete account of how your conversation data is handled.';
 ---
 
 <SiteLayout
@@ -17,255 +16,255 @@ const description =
 	alternateJa={`${siteUrl}security/`}
 	alternateEn={pageUrl}
 >
-		<main>
-			<section class="section page-lead">
-				<p class="eyebrow"><a href={`${base}en/`}>← Back to SHADOW</a></p>
-				<h1>Security &amp; Trust</h1>
-				<p class="lead">
-					A conversation log with an AI almost certainly contains personal information and
-					the substance of your work. Shadow is designed on that assumption. Here's a plain,
-					unhidden account of how Shadow stores your data and protects it.
+	<main class="doc-page">
+		<header class="doc-head">
+			<h1>Security &amp; Trust</h1>
+			<p class="updated">Updated July 11, 2026</p>
+			<p class="lead">
+				A conversation log with an AI carries the substance of your work and, inevitably,
+				personal information. Shadow's job is to hold that record and turn it into memory —
+				so this page explains concretely what we store, how it is separated, who can see what,
+				and what you can do with it. One principle runs through all of it:
+				<strong>protection should come from structure, not from trusting us to behave.</strong>
+			</p>
+		</header>
+
+		<aside class="keypoints">
+			<h2>Key points</h2>
+			<ul>
+				<li>The only thing sent to the server is your conversation record. Files, passwords, and API keys never leave your machine</li>
+				<li>Your data lives in its own isolated room, and no key exists that opens every room</li>
+				<li>The original record stays on your PC, memory notes can be exported anytime, and leaving deletes your room</li>
+				<li>Never sold, never used for advertising, never used to train AI</li>
+				<li>These commitments are never weakened without advance notice</li>
+			</ul>
+		</aside>
+
+		<article>
+			<section id="what-we-hold">
+				<h2>1. What we store — and what we don't</h2>
+				<p>
+					Shadow's server stores your conversation records with the AI, and the memory notes
+					(summaries and indexes) built from them automatically — the material an AI needs to
+					recall what you did last time. All of it is yours.
+				</p>
+				<p>
+					That record is the only thing sent to the server. The files on your machine, your
+					passwords, your API keys, and your work output are not.
+				</p>
+				<p>
+					The original record also stays on your PC; what the server holds is a copy. Because
+					the original is in your hands, leaving Shadow never means losing your history.
 				</p>
 			</section>
 
-			<section id="what-we-hold" class="section alt">
-				<h2>What we store — and don't</h2>
-				<p class="lead">
-					What Shadow stores is your conversation records with AI, and the memory notes
-					(summaries and indexes) built from them automatically. All of it is your asset —
-					Shadow keeps it so an AI can recall what you did last time, the next time you sit
-					down to work.
+			<section id="isolation">
+				<h2>2. Built so users can't mix</h2>
+				<p>
+					Most services put everyone's data in one shared store and separate users with access
+					permissions. In that design, a single permission bug is enough to expose someone
+					else's data.
 				</p>
-				<div class="grid-2">
-					<div class="card">
-						<h3>What we store</h3>
-						<p>Conversation records, and the memory notes built from them. All of it belongs to you.</p>
-					</div>
-					<div class="card">
-						<h3>What we don't store</h3>
-						<p>
-							Files on your machine, passwords, API keys, work output. None of that ever
-							leaves your PC — only conversation records are sent to the server.
-						</p>
-					</div>
-				</div>
-				<p class="lead">
-					The original conversation record always stays on your machine too. The server
-					holds a copy to process memory from — it is not a vault that holds your data
-					hostage.
+				<p>
+					Shadow doesn't use that design. Storage and processing are split into an independent
+					room per user, and your data is placed only in yours. Since no one else's data exists
+					inside your room, a defect there stays contained inside it — and the memory your AI
+					can draw on is the contents of your room, nothing else.
+				</p>
+				<p>
+					The building itself — the server machine and its network entrance — is shared; the
+					data storage and the memory processing are not. Each room also has its own key. No
+					key exists that opens every room, and none is kept at the entrance: breaking the
+					front door yields no keys to the rooms.
 				</p>
 			</section>
 
-			<section id="isolation" class="section">
-				<h2>One tenant, one room — isolation by design, not by permissions</h2>
-				<p class="lead">
-					Your data lives in a room (a container) isolated just for you. It is never placed
-					alongside another user's data.
+			<section id="transport">
+				<h2>3. Connections and keys</h2>
+				<p>All traffic between your PC and the server is encrypted.</p>
+				<p>
+					Keys (access tokens) are issued per device. If you lose your phone, you revoke that
+					device's key immediately; your other devices keep working.
 				</p>
-				<p class="lead">
-					Most services put everyone's data in one shared warehouse and separate it with
-					access permissions. That design means a single permission bug can expose someone
-					else's data. Shadow built the opposite: inside your room, another user's data simply
-					does not exist. Even if a flaw showed up in your room's own software, the only thing
-					reachable from it is your own data.
+				<p>
+					The server stores only a fingerprint (hash) of each key, never the key itself — a
+					break-in on the server yields no usable keys.
 				</p>
-				<p class="lead">
-					In terms of how far the separation goes: Shadow sits between "one shared database
-					for everyone" and "one physical server per user." The host OS, the container
-					platform, and the network entry point are shared, but the place where conversation
-					data is stored and the program that processes memory are split into a dedicated
-					container and a dedicated data volume, one per user.
-				</p>
-				<p class="lead">
-					That structural choice contains the kind of accident a shared database can produce
-					— a mix-up that exposes another user's data — to a single room, without the cost of
-					a dedicated physical server per user.
-				</p>
-				<p class="lead">
-					Each room also has its own key. There is no master key for every room sitting at
-					the server's front door. If the front door is ever breached, the keys to other
-					rooms are not part of the loot.
+				<p>
+					Connections always start from your side. There is no path from the server into your
+					PC. The operations channel is likewise separate from the user entrance, and
+					administrative actions cannot be reached from it.
 				</p>
 			</section>
 
-			<section id="operators" class="section alt">
-				<h2>What operators can see</h2>
-				<p class="lead">
-					Whoever operates the server is, technically, in a position to reach the data inside
-					it. That's true of any cloud service.
+			<section id="operators">
+				<h2>4. What operators can access</h2>
+				<p>
+					Whoever runs the server is technically in a position to reach the data inside it —
+					true of any cloud service. Shadow confines the use of that position to this:
 				</p>
-				<div class="grid-3">
-					<div class="card">
-						<h3>Only for your request or a real incident</h3>
-						<p>Operators open your data only when you ask us to investigate an issue, or when it's necessary to recover from a system failure.</p>
-					</div>
-					<div class="card">
-						<h3>Every access is logged</h3>
-						<p>Whenever data is opened, when and why is recorded.</p>
-					</div>
-					<div class="card">
-						<h3>Never for sales or advertising</h3>
-						<p>Never used for sales or advertising. Never sold or handed to a third party.</p>
-					</div>
-				</div>
+				<ul>
+					<li>Your data is opened only when you ask us to investigate a problem, or when recovering from a system failure requires it</li>
+					<li>Every access is logged: when, and for what</li>
+					<li>Your data is never used for sales or advertising, and never sold or passed to third parties</li>
+				</ul>
 			</section>
 
-			<section id="ai-summary" class="section">
-				<h2>AI summarization</h2>
-				<p class="lead">
-					The conversation records we hold are handed to a dedicated AI to turn into memory
-					notes. Two commitments here:
+			<section id="ai-summary">
+				<h2>5. The AI that builds memory notes</h2>
+				<p>
+					Turning conversation records into memory notes is done by AI dedicated to
+					summarization, under two rules:
 				</p>
-				<div class="grid-2">
-					<div class="card">
-						<h3>Never used for training</h3>
-						<p>The AI we use for summarization runs under terms where input is not used to train the model.</p>
-					</div>
-					<div class="card">
-						<h3>We cover the cost — we don't hold your key</h3>
-						<p>
-							Holding your API key would put the risk of a leak, and the fine print of
-							your key's own contract, on your shoulders. We don't take it.
-						</p>
-					</div>
-				</div>
+				<ul>
+					<li>The AI used for this runs under terms where your input is not used to train models</li>
+					<li>
+						The cost is ours, and we never take your API key — holding it would shift the risk
+						of a leak, and the fine print of its contract, onto you
+					</li>
+				</ul>
 			</section>
 
-			<section id="transport" class="section alt">
-				<h2>Transport and keys</h2>
-				<div class="grid-2">
-					<div class="card">
-						<h3>Encrypted in transit</h3>
-						<p>Everything between your machine and the server travels over an encrypted channel. Your records never cross the network in the clear.</p>
-					</div>
-					<div class="card">
-						<h3>A separate key per device</h3>
-						<p>Each device uses its own key (token). Lose a phone, and only that device's key gets revoked — instantly.</p>
-					</div>
-					<div class="card">
-						<h3>Only a fingerprint is stored</h3>
-						<p>The server keeps a hash for verification, never the key itself — there is nothing to steal from the server that would work as a key.</p>
-					</div>
-					<div class="card">
-						<h3>The admin path is fully separate</h3>
-						<p>The server's administrative route is completely separate from the one you use. Nothing reachable from your side of the door can reach admin operations.</p>
-					</div>
-				</div>
-			</section>
-
-			<section id="retention" class="section">
-				<h2>Never quietly deleted, always deletable</h2>
-				<div class="grid-3">
-					<div class="card">
-						<h3>Never quietly deleted</h3>
-						<p>
-							There is no code path on the server that truncates or overwrites a stored
-							conversation record. That guards against a bug or a mistake eating your
-							history, simply by not building the capability. Nightly backups are also
-							kept as separate generations elsewhere.
-						</p>
-					</div>
-					<div class="card">
-						<h3>You can delete it</h3>
-						<p>Close your account and your room is deleted entirely, backups included within the retention window (exact days will be spelled out in the Terms of Service).</p>
-					</div>
-					<div class="card">
-						<h3>You can take it with you</h3>
-						<p>Memory notes and the summarized conversation range can be exported anytime. The complete original conversation always lives on your machine anyway.</p>
-					</div>
-				</div>
-			</section>
-
-			<section id="dont-have" class="section alt">
-				<h2>What we don't have</h2>
-				<p class="lead">
-					The strongest protection is simply not holding something in the first place.
-					Here's what Shadow doesn't have:
+			<section id="retention">
+				<h2>6. Durable, deletable, portable</h2>
+				<p>
+					<strong>It can't silently shrink.</strong> The server has no operation that truncates
+					or overwrites a stored record — accidents that eat your history are prevented by the
+					absence of the capability, not by care. Nightly backups are kept in a separate
+					location, by generation.
 				</p>
-				<div class="grid-3">
-					<div class="card">
-						<h3>Your password</h3>
-						<p>It doesn't exist here. You sign in through an external account (Google, etc.), and the password stays between you and that company — it never even touches our server.</p>
-					</div>
-					<div class="card">
-						<h3>Your name or profile</h3>
-						<p>Not stored. All we get from the external account is an identifier tied to it, with no name attached — enough to know "same person as last time," nothing more.</p>
-					</div>
-					<div class="card">
-						<h3>Your card details</h3>
-						<p>Those go straight to the payment processor (Stripe); our server never sees them.</p>
-					</div>
-				</div>
-				<p class="lead">
-					What we do hold: your conversation data (what we're storing on your behalf), a
-					nameless identifier tied to your external account, one contact email address, and
-					a list of the devices you've connected (display name and the date you added it —
-					the minimum needed to let you cut off just one lost device). The email is used only
-					for incident notices and important announcements — never marketing.
+				<p>
+					<strong>You can delete it.</strong> Leave, and your room is deleted with you. Backups
+					expire within a retention period stated in the terms of service.
+				</p>
+				<p>
+					<strong>You can take it out.</strong> Memory notes and summarized conversation ranges
+					are exportable at any time — and the full original has been on your PC all along.
 				</p>
 			</section>
 
-			<section id="wont-do" class="section">
-				<h2>What we will never do</h2>
-				<div class="grid-2">
-					<div class="card">
-						<h3>Sell, advertise with, or train on your data</h3>
-						<p>We don't sell your data, use it for ads, or use it to train any AI.</p>
-					</div>
-					<div class="card">
-						<h3>Reach into your machine uninvited</h3>
-						<p>Every connection starts from your PC. There is no path from our server back to your PC.</p>
-					</div>
-					<div class="card">
-						<h3>Build a master key</h3>
-						<p>No master key exists that works across every user.</p>
-					</div>
-					<div class="card">
-						<h3>Leak internal information</h3>
-						<p>We don't return internal server information in a response — including anything that would let you infer another user exists.</p>
-					</div>
-				</div>
-			</section>
-
-			<section id="incident" class="section alt">
-				<h2>Our promise when something goes wrong</h2>
-				<p class="lead">
-					If something happens that could affect your data — a suspected intrusion, data
-					loss, a serious outage — and we become aware of it, we tell the affected user,
-					without hiding it and without delay, what happened and what we fixed.
+			<section id="dont-have">
+				<h2>7. What we never have</h2>
+				<p>
+					What we don't hold can't leak. Shadow is designed to never receive information it
+					doesn't need.
+				</p>
+				<ul>
+					<li>
+						<strong>Your password</strong> — sign-in goes through an external account. Your
+						password exists only between you and that provider, and never passes through
+						Shadow's servers
+					</li>
+					<li>
+						<strong>Your name or profile</strong> — not stored. What we receive is an opaque
+						identifier that says "same person as last time," nothing more
+					</li>
+					<li>
+						<strong>Your card details</strong> — they go directly to the payment provider and
+						never touch our servers
+					</li>
+				</ul>
+				<p>
+					What Shadow does hold: your conversation data, that identifier, one contact email
+					address, and a list of connected devices (display name and registration date — the
+					minimum needed to cut off just the one you lost). The email address is used for
+					incident notices and important announcements only, never marketing.
 				</p>
 			</section>
-		</main>
+
+			<section id="incident">
+				<h2>8. If something goes wrong</h2>
+				<p>
+					If we become aware of anything that could affect your data — suspected unauthorized
+					access, data loss, a serious failure — we tell the affected users promptly and
+					plainly: what happened, and what we fixed.
+				</p>
+			</section>
+
+			<section id="changes">
+				<h2>9. How these commitments change</h2>
+				<p>
+					This page moves freely in only one direction: stronger. Weakening or removing a
+					commitment will not happen without notifying users in advance.
+				</p>
+			</section>
+		</article>
+	</main>
 </SiteLayout>
 
 <style>
-	.page-lead {
-		padding-top: clamp(3rem, 10vh, 5rem);
-		padding-bottom: 1rem;
+	.doc-page {
+		max-width: 780px;
+		margin: 0 auto;
+		padding: clamp(3rem, 8vh, 5rem) 1.5rem 4.5rem;
 	}
-	.page-lead .eyebrow {
-		margin: 0 0 1.25rem;
-	}
-	.page-lead .eyebrow a {
-		text-decoration: none;
-		font-size: 0.85rem;
-		font-weight: 700;
-		letter-spacing: 0.03em;
-		color: #9db0c3;
-		transition: color 0.15s ease;
-	}
-	.page-lead .eyebrow a:hover {
-		color: #38dbe6;
-	}
-	.page-lead h1 {
-		font-size: clamp(1.9rem, 5vw, 2.6rem);
-		margin: 0 0 1.1rem;
+	.doc-head h1 {
+		font-size: clamp(1.9rem, 5vw, 2.5rem);
+		margin: 0 0 0.5rem;
 		color: #f4fbfd;
 	}
-	#isolation .lead,
-	#operators .lead,
-	#ai-summary .lead,
-	#dont-have .lead {
-		max-width: 760px;
+	.updated {
+		color: #708696;
+		font-size: 0.85rem;
+		margin: 0 0 1.8rem;
+	}
+	.doc-head .lead {
+		color: #c3d0dc;
+		font-size: 1.03rem;
+		line-height: 1.95;
+		margin: 0;
+	}
+	.doc-head .lead strong,
+	article strong {
+		color: #eef4f8;
+	}
+	.keypoints {
+		margin: 2.4rem 0 0;
+		background: rgba(56, 219, 230, 0.05);
+		border: 1px solid rgba(56, 219, 230, 0.2);
+		border-radius: 14px;
+		padding: 1.4rem 1.7rem;
+	}
+	.keypoints h2 {
+		font-size: 0.92rem;
+		letter-spacing: 0.1em;
+		color: #38dbe6;
+		margin: 0 0 0.7rem;
+	}
+	.keypoints ul {
+		margin: 0;
+		padding-left: 1.2em;
+	}
+	.keypoints li {
+		color: #c3d0dc;
+		line-height: 1.85;
+		margin: 0.4rem 0;
+		font-size: 0.96rem;
+	}
+	article section {
+		border-top: 1px solid rgba(56, 219, 230, 0.1);
+		margin-top: 2.8rem;
+		padding-top: 2.4rem;
+	}
+	article h2 {
+		font-size: 1.35rem;
+		color: #f4fbfd;
+		margin: 0 0 1rem;
+	}
+	article p {
+		color: #b9c7d4;
+		font-size: 0.99rem;
+		line-height: 1.95;
+		margin: 0.9rem 0;
+	}
+	article ul {
+		padding-left: 1.25em;
+		margin: 0.9rem 0;
+	}
+	article li {
+		color: #b9c7d4;
+		font-size: 0.99rem;
+		line-height: 1.9;
+		margin: 0.5rem 0;
 	}
 </style>
