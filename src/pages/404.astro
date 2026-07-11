@@ -1,29 +1,31 @@
 ---
-import '../styles/site.css';
+import SiteLayout from '../layouts/SiteLayout.astro';
 
+const siteUrl = 'https://shadowharness.github.io/';
 const base = import.meta.env.BASE_URL;
+const title = '404 — Shadow';
+const description = 'Not even Shadow remembers this page.';
 ---
 
-<html lang="ja">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="robots" content="noindex" />
-		<link rel="icon" type="image/png" href={`${base}shadow-icon.png`} />
-		<title>404 — Shadow</title>
-	</head>
-	<body>
-		<main>
-			<section class="hero">
-				<div class="ring" aria-hidden="true"></div>
-				<h1 class="wordmark">404</h1>
-				<p class="tagline">このページは<span class="ac">記憶にありません</span>。</p>
-				<p class="sub">Not even Shadow remembers this page.</p>
-				<div class="cta-row">
-					<a class="cta primary" href={base}>トップへ戻る</a>
-					<a class="cta ghost" href={`${base}en/`}>English</a>
-				</div>
-			</section>
-		</main>
-	</body>
-</html>
+<SiteLayout
+	lang="ja"
+	title={title}
+	description={description}
+	pageUrl={siteUrl}
+	alternateJa={siteUrl}
+	alternateEn={`${siteUrl}en/`}
+	noindex
+>
+	<main>
+		<section class="hero">
+			<div class="ring" aria-hidden="true"></div>
+			<h1 class="wordmark">404</h1>
+			<p class="tagline">このページは<span class="ac">記憶にありません</span>。</p>
+			<p class="sub">Not even Shadow remembers this page.</p>
+			<div class="cta-row">
+				<a class="cta primary" href={base}>トップへ戻る</a>
+				<a class="cta ghost" href={`${base}en/`}>English</a>
+			</div>
+		</section>
+	</main>
+</SiteLayout>

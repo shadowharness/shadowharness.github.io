@@ -1,0 +1,15 @@
+---
+export interface Props {
+	lang: 'ja' | 'en';
+}
+const { lang } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const securityUrl = lang === 'ja' ? `${base}security/` : `${base}en/security/`;
+---
+
+<footer class="site-footer">
+	<span>© 2026 Shadow Harness</span>
+	<a href="https://x.com/ShadowHarness" target="_blank" rel="noopener">X</a>
+	<a href="https://github.com/shadowharness/shadowharness.github.io" target="_blank" rel="noopener">GitHub</a>
+	<a href={securityUrl}>{lang === 'ja' ? 'セキュリティ・信頼性' : 'Security & Trust'}</a>
+</footer>

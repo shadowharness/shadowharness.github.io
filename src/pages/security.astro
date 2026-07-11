@@ -1,0 +1,276 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+const siteUrl = 'https://shadowharness.github.io/';
+const pageUrl = `${siteUrl}security/`;
+const title = 'セキュリティ・信頼性 — Shadow';
+const description =
+  'Shadow があなたの会話データをどう扱うか——預かる範囲、隔離のしくみ、暗号化、消去・持ち出しの権利まで、隠さず説明します。';
+---
+
+<SiteLayout
+	lang="ja"
+	title={title}
+	description={description}
+	pageUrl={pageUrl}
+	alternateJa={pageUrl}
+	alternateEn={`${siteUrl}en/security/`}
+>
+		<main>
+			<section class="section page-lead">
+				<p class="eyebrow"><a href={base}>← SHADOW トップへ</a></p>
+				<h1>セキュリティ・信頼性</h1>
+				<p class="lead">
+					AIとの会話ログには、ほぼ確実に個人情報や仕事の中身が入っている。Shadow はそれを
+					前提に設計している。ここでは、Shadow があなたのデータをどう預かり、どう守るかを、
+					隠さず説明する。
+				</p>
+			</section>
+
+			<section id="what-we-hold" class="section alt">
+				<h2>預かるもの、預からないもの</h2>
+				<p class="lead">
+					Shadow が預かるのは、AIとの作業で交わした会話の記録と、そこから自動で作る
+					「記憶ノート」（要約と索引）だけ。全部あなたの資産。次の作業でAIが「前に何を
+					したか」を思い出せるように、Shadow がそれを預かって整理する。
+				</p>
+				<div class="grid-2">
+					<div class="card">
+						<h3>預かるもの</h3>
+						<p>会話の記録と、そこから作る記憶ノート。すべてあなたの資産。</p>
+					</div>
+					<div class="card">
+						<h3>預からないもの</h3>
+						<p>
+							PC上のファイル・パスワード・APIキー・作業成果物。これらはPCから出ない。
+							サーバーに送るのは会話記録だけ。
+						</p>
+					</div>
+				</div>
+				<p class="lead">
+					会話記録の原本はあなたのPCにも残る。サーバーはその写しを預かって記憶を処理する
+					場所であって、データを人質に取る場所ではない。
+				</p>
+			</section>
+
+			<section id="isolation" class="section">
+				<h2>一人一部屋 — 「権限で守る」ではなく「そもそも無い」</h2>
+				<p class="lead">
+					あなたのデータは、あなた専用の隔離された部屋（コンテナ）に入る。他の利用者の
+					データと同じ場所に置かれることはない。
+				</p>
+				<p class="lead">
+					普通のサービスは、全員のデータを1つの倉庫に入れて権限で仕切る作り。この作りは、
+					権限のバグ1つで他人のデータが見える事故につながる。Shadow は逆に、部屋の中に
+					他人のデータがそもそも存在しない作りにした。仮に部屋のソフトに欠陥があっても、
+					そこから見えるのは自分のデータだけ。
+				</p>
+				<p class="lead">
+					どこまで分かれているかで言うと、Shadow は「全員のデータを1つの共有データベースに
+					入れる方式」と「利用者ごとに物理サーバーを1台用意する方式」の中間。ホストOSや
+					通信の入口は共有するが、会話データを保存する場所と記憶を処理するプログラムは、
+					利用者ごとの専用コンテナと専用データ領域に分かれている。
+				</p>
+				<p class="lead">
+					共有データベース方式で起こりうる「利用者を取り違えて他人のデータまで見える」
+					事故の範囲を、構造によって1つの部屋に閉じ込める設計。物理サーバーを一人1台
+					用意する費用をかけずに、記憶データへ強い隔離を持たせている。
+				</p>
+				<p class="lead">
+					部屋の鍵も部屋ごとに別で、全部屋共通のマスターキーはサーバーの入口にも置いて
+					いない。入口が破られても、他の部屋の鍵は手に入らない。
+				</p>
+			</section>
+
+			<section id="operators" class="section alt">
+				<h2>運営に何が見えるか — 正直な話</h2>
+				<p class="lead">
+					サーバーを管理する運営者は、技術的にはサーバー内のデータに触れる立場にある。
+					これはどのクラウドサービスでも同じで、隠すのは不誠実なので明記する。その上で
+					約束する。
+				</p>
+				<div class="grid-3">
+					<div class="card">
+						<h3>開くのは依頼と障害対応だけ</h3>
+						<p>あなたから障害調査の依頼があったときと、システム障害の復旧に必要なときだけ開く。</p>
+					</div>
+					<div class="card">
+						<h3>いつ・何のためを記録</h3>
+						<p>データを開いた場合は、いつ・何のために開いたかを記録に残す。</p>
+					</div>
+					<div class="card">
+						<h3>好奇心・営業では読まない</h3>
+						<p>好奇心で読まない。営業や広告のために読まない。第三者に売らない・渡さない。</p>
+					</div>
+				</div>
+			</section>
+
+			<section id="ai-summary" class="section">
+				<h2>AI要約と外部送信</h2>
+				<p class="lead">
+					預かった会話記録は、要約専用のAIに渡して記憶ノートに変換する。このAIは外部の
+					AI提供会社のAPI。ここで2つ約束する。
+				</p>
+				<div class="grid-2">
+					<div class="card">
+						<h3>学習に使わせない</h3>
+						<p>要約に使うAIは「入力データをモデルの学習に使わない」契約条件のもので運用する。</p>
+					</div>
+					<div class="card">
+						<h3>費用は運営持ち・キーは預からない</h3>
+						<p>
+							あなたのAPIキーを預かると、漏洩時の責任やキーの契約条件の違いをあなたに
+							背負わせることになる。だから預からない。
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<section id="transport" class="section alt">
+				<h2>通信と鍵</h2>
+				<div class="grid-2">
+					<div class="card">
+						<h3>通信は暗号化</h3>
+						<p>あなたのPCとサーバーの通信はすべて暗号化される。会話の記録が裸のままネットワークを流れることはない。</p>
+					</div>
+					<div class="card">
+						<h3>端末ごとに別の鍵</h3>
+						<p>端末ごとに別の合鍵（トークン）を使う。スマホを失くした等のときは、その端末の鍵だけを即座に無効化できる。</p>
+					</div>
+					<div class="card">
+						<h3>保存するのは指紋だけ</h3>
+						<p>サーバー側に保存されるのは鍵そのものではなく照合用の指紋（ハッシュ）だけ。サーバーから鍵が盗まれる形にはならない。</p>
+					</div>
+					<div class="card">
+						<h3>管理経路は完全に分離</h3>
+						<p>サーバーの管理経路（運営用の裏口）は利用者用の入口と完全に分離。利用者用の入口からは管理操作に到達できない。</p>
+					</div>
+				</div>
+			</section>
+
+			<section id="retention" class="section">
+				<h2>消えない、消せる — 両方を正しく</h2>
+				<div class="grid-3">
+					<div class="card">
+						<h3>勝手に消えない</h3>
+						<p>
+							サーバーには会話記録を「切り詰める・上書きする」操作がプログラムとして
+							存在しない。バグや誤操作で記録が欠ける事故を、機能の不在で防ぐ。夜間
+							バックアップも別の場所に世代保存する。
+						</p>
+					</div>
+					<div class="card">
+						<h3>あなたが消せる</h3>
+						<p>
+							退会すればあなたの部屋ごと削除され、バックアップも保持期間内に消える
+							（具体的な日数は利用規約に明記する）。
+						</p>
+					</div>
+					<div class="card">
+						<h3>取り出せる</h3>
+						<p>
+							記憶ノートと要約済みの会話範囲はいつでも取り出せる。会話の完全な原本は
+							あなたのPCに常にある。
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<section id="dont-have" class="section alt">
+				<h2>私たちが「持っていないもの」リスト</h2>
+				<p class="lead">
+					守り方として一番強いのは「そもそも持たない」こと。Shadow が持っていないもの。
+				</p>
+				<div class="grid-3">
+					<div class="card">
+						<h3>あなたのパスワード</h3>
+						<p>
+							存在しない。ログインは Google 等の外部アカウントで行い、パスワードは
+							その会社との間だけにある。私たちのサーバーに渡る瞬間すらない。
+						</p>
+					</div>
+					<div class="card">
+						<h3>あなたの氏名・プロフィール</h3>
+						<p>
+							保存しない。外部アカウントから受け取るのは「前回と同じ人」と分かる、
+							氏名を含まない識別番号だけ。
+						</p>
+					</div>
+					<div class="card">
+						<h3>あなたのカード情報</h3>
+						<p>決済会社（Stripe）に直接渡り、私たちのサーバーを通らない。</p>
+					</div>
+				</div>
+				<p class="lead">
+					私たちが持っているのは、あなたの会話データ（＝預かりもの）、氏名を含まない
+					外部アカウント固有の識別番号、連絡用メールアドレス1個、そして繋いだ端末の一覧
+					（表示名と登録日 — 「その端末だけ切断したい」を実現するために必要な最小限）
+					だけ。メールの用途は事故のお知らせと重要なお知らせに限定し、宣伝には使わない。
+				</p>
+			</section>
+
+			<section id="wont-do" class="section">
+				<h2>運営がやらないことリスト</h2>
+				<div class="grid-2">
+					<div class="card">
+						<h3>売らない・広告に使わない・学習に使わない</h3>
+						<p>あなたのデータを売らない・広告に使わない・AIの学習に使わない。</p>
+					</div>
+					<div class="card">
+						<h3>あなたのPCに勝手にアクセスしない</h3>
+						<p>接続は常にあなたのPC側から開始する。サーバーからあなたのPCへ接続する経路は作っていない。</p>
+					</div>
+					<div class="card">
+						<h3>共通のマスターキーを作らない</h3>
+						<p>全ユーザー共通のマスターキーは作らない。</p>
+					</div>
+					<div class="card">
+						<h3>内部情報を応答に含めない</h3>
+						<p>サーバーの内部情報（他の利用者の存在を推測できる情報を含む）を応答に含めない。</p>
+					</div>
+				</div>
+			</section>
+
+			<section id="incident" class="section alt">
+				<h2>事故のときの約束</h2>
+				<p class="lead">
+					あなたのデータに影響しうる問題（不正アクセスの疑い・データ欠損・重大な障害）を
+					運営が把握したら、対象の利用者に隠さず・すみやかに知らせ、何が起きたか・何を
+					直したかを説明する。
+				</p>
+			</section>
+		</main>
+</SiteLayout>
+
+<style>
+	.page-lead {
+		padding-top: clamp(3rem, 10vh, 5rem);
+		padding-bottom: 1rem;
+	}
+	.page-lead .eyebrow {
+		margin: 0 0 1.25rem;
+	}
+	.page-lead .eyebrow a {
+		text-decoration: none;
+		font-size: 0.85rem;
+		font-weight: 700;
+		letter-spacing: 0.03em;
+		color: #9db0c3;
+		transition: color 0.15s ease;
+	}
+	.page-lead .eyebrow a:hover {
+		color: #38dbe6;
+	}
+	.page-lead h1 {
+		font-size: clamp(1.9rem, 5vw, 2.6rem);
+		margin: 0 0 1.1rem;
+		color: #f4fbfd;
+	}
+	#isolation .lead,
+	#operators .lead,
+	#ai-summary .lead,
+	#dont-have .lead {
+		max-width: 760px;
+	}
+</style>
