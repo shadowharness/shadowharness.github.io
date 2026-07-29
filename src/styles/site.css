@@ -662,8 +662,8 @@ summary {
 .memory-layout {
 	position: relative;
 	display: grid;
-	grid-template-columns: minmax(0, 1.08fr) minmax(350px, 0.92fr);
-	gap: clamp(3rem, 7vw, 7rem);
+	grid-template-columns: minmax(0, 1.22fr) minmax(330px, 0.78fr);
+	gap: clamp(3rem, 6vw, 6rem);
 	align-items: center;
 	padding-block: clamp(7rem, 13vw, 12rem);
 }
@@ -672,29 +672,74 @@ summary {
 	position: relative;
 }
 
-.memory-visual video,
-.memory-poster-fallback {
+.memory-gallery {
 	position: relative;
 	z-index: 2;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0.9rem;
+}
+
+.memory-clip {
+	min-width: 0;
+	margin: 0;
+	overflow: hidden;
+	border: 1px solid rgba(103, 235, 227, 0.2);
+	border-radius: 18px;
+	background: rgba(4, 10, 13, 0.88);
+	box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.22);
+}
+
+.memory-clip-featured {
+	grid-column: 1 / -1;
+}
+
+.memory-clip-media {
+	position: relative;
+	overflow: hidden;
+	background: #03080b;
+}
+
+.memory-clip video {
 	display: block;
 	width: 100%;
 	aspect-ratio: 16 / 9;
 	object-fit: cover;
-	border: 1px solid rgba(103, 235, 227, 0.22);
-	border-radius: 50%;
-	box-shadow:
-		0 0 0 1.2rem rgba(33, 198, 191, 0.025),
-		0 0 100px rgba(21, 176, 169, 0.18);
-	clip-path: circle(47% at 50% 50%);
+}
+
+.memory-clip figcaption {
+	display: grid;
+	gap: 0.32rem;
+	padding: 0.8rem 0.9rem 0.95rem;
+}
+
+.memory-clip figcaption > span {
+	color: #7f9a99;
+	font-family: var(--mono);
+	font-size: 0.58rem;
+	letter-spacing: 0.12em;
+}
+
+.memory-clip figcaption strong {
+	font-family: var(--display);
+	font-size: 1rem;
+	letter-spacing: -0.02em;
+}
+
+.memory-clip figcaption p {
+	margin: 0;
+	color: #aebfbd;
+	font-size: 0.72rem;
+	line-height: 1.55;
 }
 
 .memory-orbit {
 	position: absolute;
-	inset: -7%;
+	inset: -4%;
 	z-index: 1;
 	border: 1px solid rgba(98, 223, 216, 0.16);
-	border-radius: 50%;
-	transform: rotate(-12deg);
+	border-radius: 32%;
+	transform: rotate(-3deg);
 }
 
 .memory-orbit::before,
@@ -722,26 +767,14 @@ summary {
 	box-shadow: 0 0 1.25rem var(--signal);
 }
 
-.memory-caption {
-	position: absolute;
-	right: 7%;
-	bottom: 1%;
-	z-index: 3;
-	padding: 0.35rem 0.6rem;
-	background: var(--night);
-	color: #8fa5a5;
-	font-family: var(--mono);
-	font-size: 0.58rem;
-	letter-spacing: 0.12em;
-}
-
 .memory-motion-control {
 	position: absolute;
-	bottom: 1%;
-	left: 7%;
+	bottom: 0.55rem;
+	left: 0.55rem;
 	z-index: 3;
 	padding: 0.45rem 0.7rem;
 	border: 1px solid rgba(143, 165, 165, 0.45);
+	border-radius: 999px;
 	background: rgba(9, 16, 20, 0.9);
 	color: var(--night-text);
 	font-family: var(--mono);
@@ -1651,7 +1684,7 @@ summary {
 	}
 
 	.memory-visual {
-		width: min(80%, 650px);
+		width: min(100%, 820px);
 		margin-inline: auto;
 	}
 
@@ -1853,6 +1886,14 @@ summary {
 		width: 100%;
 	}
 
+	.memory-gallery {
+		grid-template-columns: 1fr;
+	}
+
+	.memory-clip-featured {
+		grid-column: auto;
+	}
+
 	.memory-copy h2 {
 		font-size: clamp(2.55rem, 11vw, 3.8rem);
 	}
@@ -1997,8 +2038,7 @@ summary {
 		animation-iteration-count: 1 !important;
 	}
 
-	.memory-visual video {
-		clip-path: none;
-		border-radius: 20px;
+	.memory-clip video {
+		border-radius: 0;
 	}
 }

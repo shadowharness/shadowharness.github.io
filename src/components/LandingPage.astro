@@ -55,6 +55,29 @@ const copy = isJa
 			memoryAlt: 'Sidera Memoryの記憶が星空として再構成され、関係する記憶が光る様子',
 			memoryPause: '動きを停止',
 			memoryPlay: '動きを再生',
+			memoryClips: [
+				{
+					title: '記憶の全景',
+					body: '複数AIの結論・経緯・根拠が、関係を保ったまま一つの空に並びます。',
+					alt: 'Sidera Memoryの記憶の全景を移動しながら見る様子',
+					video: 'sidera-memory-loop.mp4',
+					poster: 'sidera-memory-poster.webp',
+				},
+				{
+					title: '星の再配置',
+					body: '記憶が増えると、星と銀河が新しい関係に沿って組み替わります。',
+					alt: 'Sidera Memoryの星が流入し、新しい配置へ組み替わる様子',
+					video: 'sidera-memory-reformation.mp4',
+					poster: 'sidera-memory-reformation-poster.webp',
+				},
+				{
+					title: '入力から想起',
+					body: '「前回は何をしていた？」という入力から、関係する過去だけが回答へ戻ります。',
+					alt: '前回の作業を尋ねる入力に、Sidera Memoryから過去の結論が返る様子',
+					video: 'sidera-memory-recall.mp4',
+					poster: 'sidera-memory-recall-poster.webp',
+				},
+			],
 			memorySteps: [
 				['残す', '各AIの会話ログを、あとから原文へ戻れる証拠として保ちます。'],
 				['整える', '結論、経緯、変更を分け、古い判断と現在の判断を混ぜません。'],
@@ -139,6 +162,29 @@ const copy = isJa
 			memoryAlt: 'Sidera Memory rebuilding a field of memories and lighting up the relevant ones',
 			memoryPause: 'Pause animation',
 			memoryPlay: 'Play animation',
+			memoryClips: [
+				{
+					title: 'The memory field',
+					body: 'Conclusions, changes, and evidence from multiple agents remain connected in one field.',
+					alt: 'Moving through the full field of memories in Sidera Memory',
+					video: 'sidera-memory-loop.mp4',
+					poster: 'sidera-memory-poster.webp',
+				},
+				{
+					title: 'Stars re-form',
+					body: 'As memory grows, stars and galaxies rearrange around their changing relationships.',
+					alt: 'Stars flowing into Sidera Memory and settling into a new arrangement',
+					video: 'sidera-memory-reformation.mp4',
+					poster: 'sidera-memory-reformation-poster.webp',
+				},
+				{
+					title: 'Recall from an input',
+					body: 'Ask what happened last time and the relevant past returns directly into the answer.',
+					alt: 'A prompt asking about the previous task and Sidera Memory returning the relevant conclusion',
+					video: 'sidera-memory-recall.mp4',
+					poster: 'sidera-memory-recall-poster.webp',
+				},
+			],
 			memorySteps: [
 				['Keep', 'Conversation logs remain evidence you can trace back to the original words.'],
 				['Resolve', 'Conclusions, history, and revisions stay distinct instead of being blended together.'],
@@ -271,40 +317,42 @@ const demoId = isJa ? 'fbVTuTbw2ws' : 'jTfa8tup2-4';
 		<div class="section-shell memory-layout">
 			<div class="memory-visual">
 				<div class="memory-orbit" aria-hidden="true"></div>
-				<video
-					id="sidera-memory-motion"
-					autoplay
-					muted
-					loop
-					playsinline
-					preload="none"
-					aria-label={copy.memoryAlt}
-					data-ambient-video
-					data-src={`${base}media/sidera-memory-loop.mp4`}
-					data-poster={`${base}media/sidera-memory-poster.webp`}
-				></video>
-				<button
-					type="button"
-					class="memory-motion-control"
-					aria-controls="sidera-memory-motion"
-					data-motion-control
-					data-pause-label={copy.memoryPause}
-					data-play-label={copy.memoryPlay}
-					hidden
-				>
-					{copy.memoryPause}
-				</button>
-				<noscript>
-					<img
-						class="memory-poster-fallback"
-						src={`${base}media/sidera-memory-poster.webp`}
-						alt={copy.memoryAlt}
-						width="1280"
-						height="720"
-						loading="lazy"
-					/>
-				</noscript>
-				<span class="memory-caption">SIDERA / MEMORY VIEW</span>
+				<div class="memory-gallery">
+					{copy.memoryClips.map((clip, index) => (
+						<figure class:list={['memory-clip', { 'memory-clip-featured': index === 0 }]}>
+							<div class="memory-clip-media">
+								<video
+									id={`sidera-memory-motion-${index + 1}`}
+									autoplay
+									muted
+									loop
+									playsinline
+									preload="none"
+									poster={`${base}media/${clip.poster}`}
+									aria-label={clip.alt}
+									data-ambient-video
+									data-src={`${base}media/${clip.video}`}
+								></video>
+								<button
+									type="button"
+									class="memory-motion-control"
+									aria-controls={`sidera-memory-motion-${index + 1}`}
+									data-motion-control
+									data-pause-label={copy.memoryPause}
+									data-play-label={copy.memoryPlay}
+									hidden
+								>
+									{copy.memoryPause}
+								</button>
+							</div>
+							<figcaption>
+								<span>SIDERA / {String(index + 1).padStart(2, '0')}</span>
+								<strong>{clip.title}</strong>
+								<p>{clip.body}</p>
+							</figcaption>
+						</figure>
+					))}
+				</div>
 			</div>
 			<div class="memory-copy">
 				<p class="eyebrow">{copy.memoryEyebrow}</p>
