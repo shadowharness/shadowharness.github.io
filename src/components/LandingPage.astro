@@ -229,6 +229,7 @@ const copy = isJa
 
 const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 const demoId = isJa ? 'fbVTuTbw2ws' : 'jTfa8tup2-4';
+const mediaVersion = '20260729c';
 ---
 
 <main id="main-content">
@@ -256,7 +257,7 @@ const demoId = isJa ? 'fbVTuTbw2ws' : 'jTfa8tup2-4';
 					<span>{copy.windowTitle}</span>
 				</div>
 				<img
-					src={`${base}media/hero-workspace.webp`}
+					src={`${base}media/hero-workspace.webp?v=${mediaVersion}`}
 					alt={copy.workspaceAlt}
 					width="1600"
 					height="900"
@@ -328,10 +329,10 @@ const demoId = isJa ? 'fbVTuTbw2ws' : 'jTfa8tup2-4';
 									loop
 									playsinline
 									preload="none"
-									poster={`${base}media/${clip.poster}`}
+									poster={`${base}media/${clip.poster}?v=${mediaVersion}`}
 									aria-label={clip.alt}
 									data-ambient-video
-									data-src={`${base}media/${clip.video}`}
+									data-src={`${base}media/${clip.video}?v=${mediaVersion}`}
 								></video>
 								<button
 									type="button"
@@ -416,7 +417,7 @@ const demoId = isJa ? 'fbVTuTbw2ws' : 'jTfa8tup2-4';
 				title={copy.demoTitle}
 				buttonLabel={copy.demoButton}
 				closeLabel={copy.demoClose}
-				posterSrc={`${base}media/hero-workspace.webp`}
+				posterSrc={`${base}media/hero-workspace.webp?v=${mediaVersion}`}
 				posterAlt={copy.demoPosterAlt}
 			/>
 			<p class="demo-meta">{copy.demoMeta}</p>
