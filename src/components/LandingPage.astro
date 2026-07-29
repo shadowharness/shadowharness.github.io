@@ -192,7 +192,7 @@ const panes = [
 const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 ---
 
-<main id="main-content" class="product-console" data-product-console>
+<main id="main-content" class="product-console" tabindex="-1" data-product-console>
 	<section class="console-stage" aria-label={isJa ? 'ShadowHarness製品ショーケース' : 'ShadowHarness product showcase'}>
 		<header class="console-titlebar">
 			<span class="console-brandline"><i aria-hidden="true"></i>{copy.stageLabel}</span>
@@ -528,7 +528,8 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 		consoleRoot.querySelectorAll<HTMLElement>('[data-pane-target]').forEach((control) => {
 			control.addEventListener('click', (event) => {
 				event.preventDefault();
-				activatePane(control.dataset.paneTarget ?? 'overview', { updateHash: true });
+				const focusTab = control.getAttribute('role') !== 'tab' && event.detail === 0;
+				activatePane(control.dataset.paneTarget ?? 'overview', { updateHash: true, focusTab });
 			});
 		});
 
@@ -555,8 +556,9 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 			if (!link) return;
 			const url = new URL(link.href, window.location.href);
 			if (url.origin !== window.location.origin || url.pathname !== window.location.pathname) return;
-			const paneId = canonicalPane(url.hash);
-			if (!paneIds.has(paneId) || !url.hash) return;
+			const targetId = url.hash.replace(/^#/, '').toLowerCase();
+			if (targetId !== 'sidera' && !paneIds.has(targetId)) return;
+			const paneId = canonicalPane(targetId);
 			event.preventDefault();
 			activatePane(paneId, { updateHash: true });
 		});
