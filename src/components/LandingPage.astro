@@ -564,6 +564,7 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 		sideraShots.forEach((shot) => {
 			const select = shot.querySelector<HTMLButtonElement>('[data-sidera-select]');
 			select?.addEventListener('click', () => {
+				const wasFeatured = shot.classList.contains('is-featured');
 				sideraShots.forEach((candidate) => {
 					const isFeatured = candidate === shot;
 					candidate.classList.toggle('is-featured', isFeatured);
@@ -571,6 +572,10 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 						.querySelector<HTMLButtonElement>('[data-sidera-select]')
 						?.setAttribute('aria-pressed', isFeatured ? 'true' : 'false');
 				});
+				const selectedVideo = shot.querySelector<HTMLVideoElement>('[data-sidera-video]');
+				if (!wasFeatured && selectedVideo && Number.isFinite(selectedVideo.duration)) {
+					selectedVideo.currentTime = 0;
+				}
 				motionPaused = reduceMotion.matches;
 				syncSideraPlayback('memory');
 			});

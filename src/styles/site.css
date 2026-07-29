@@ -2229,7 +2229,7 @@ body:has(.product-console) .site-footer {
 	background: #0a1720;
 	color: #91abb5;
 	font-family: var(--mono);
-	font-size: 0.58rem;
+	font-size: 0.625rem;
 	font-weight: 700;
 	letter-spacing: 0.13em;
 }
@@ -2306,7 +2306,7 @@ body:has(.product-console) .site-footer {
 	padding: 12px 13px 8px;
 	color: #78929d;
 	font-family: var(--mono);
-	font-size: 0.52rem;
+	font-size: 0.625rem;
 	font-weight: 700;
 	letter-spacing: 0.16em;
 }
@@ -2375,7 +2375,7 @@ body:has(.product-console) .site-footer {
 	border-top: 1px solid var(--console-line);
 	color: #77bda8;
 	font-family: var(--mono);
-	font-size: 0.53rem;
+	font-size: 0.625rem;
 	font-weight: 700;
 	letter-spacing: 0.1em;
 }
@@ -2421,7 +2421,7 @@ body:has(.product-console) .site-footer {
 	background: #0a2836;
 	color: #a7eaf5;
 	font-family: var(--mono);
-	font-size: 0.57rem;
+	font-size: 0.625rem;
 	font-weight: 700;
 	letter-spacing: 0.075em;
 }
@@ -2494,7 +2494,7 @@ body:has(.product-console) .site-footer {
 	margin: 0 0 9px;
 	color: var(--console-cyan);
 	font-family: var(--mono);
-	font-size: 0.58rem;
+	font-size: 0.625rem;
 	font-weight: 700;
 	letter-spacing: 0.13em;
 }
@@ -2546,7 +2546,7 @@ body:has(.product-console) .site-footer {
 	background: transparent;
 	color: #a8bdc5;
 	font-family: var(--mono);
-	font-size: 0.62rem;
+	font-size: 0.625rem;
 	font-weight: 700;
 	text-decoration: none;
 	cursor: pointer;
@@ -2582,7 +2582,7 @@ body:has(.product-console) .site-footer {
 	background: #0e1b23;
 	color: #78939e;
 	font-family: var(--mono);
-	font-size: 0.48rem;
+	font-size: 0.625rem;
 	letter-spacing: 0.05em;
 }
 
@@ -2640,7 +2640,7 @@ body:has(.product-console) .site-footer {
 	border-top: 1px solid #203c49;
 	color: #93aab3;
 	font-family: var(--mono);
-	font-size: 0.49rem;
+	font-size: 0.625rem;
 }
 
 .overview-screen figcaption > * {
@@ -2714,7 +2714,7 @@ body:has(.product-console) .site-footer {
 .workspace-inspector dt {
 	color: var(--console-cyan);
 	font-family: var(--mono);
-	font-size: 0.54rem;
+	font-size: 0.625rem;
 	font-weight: 700;
 	letter-spacing: 0.08em;
 }
@@ -2741,7 +2741,7 @@ body:has(.product-console) .site-footer {
 	border-bottom: 1px solid var(--console-line);
 	color: #b9d3da;
 	font-family: var(--mono);
-	font-size: 0.61rem;
+	font-size: 0.625rem;
 	font-weight: 700;
 	text-decoration: none;
 }
@@ -2796,7 +2796,7 @@ body:has(.product-console) .site-footer {
 	background: #24101d;
 	color: #ffb8d3;
 	font-family: var(--mono);
-	font-size: 0.57rem;
+	font-size: 0.625rem;
 	font-weight: 700;
 	cursor: pointer;
 }
@@ -2811,7 +2811,7 @@ body:has(.product-console) .site-footer {
 	margin-top: 5px;
 	padding: 4px 0;
 	border-color: transparent;
-	font-size: 0.52rem;
+	font-size: 0.625rem;
 }
 
 .sidera-gallery {
@@ -3009,14 +3009,14 @@ body:has(.product-console) .site-footer {
 .console-pane-demo .demo-launch-label {
 	right: 12px;
 	bottom: 10px;
-	font-size: 0.58rem;
+	font-size: 0.625rem;
 }
 
 .demo-runtime {
 	margin: 7px 0 0;
 	color: #6f858e;
 	font-family: var(--mono);
-	font-size: 0.52rem;
+	font-size: 0.625rem;
 	text-align: right;
 }
 
@@ -3033,7 +3033,7 @@ body:has(.product-console) .site-footer {
 .trust-inline > strong {
 	color: #e6c875;
 	font-family: var(--mono);
-	font-size: 0.58rem;
+	font-size: 0.625rem;
 	letter-spacing: 0.12em;
 }
 
@@ -3056,7 +3056,7 @@ body:has(.product-console) .site-footer {
 	padding: 7px 0 7px 12px;
 	border-bottom: 1px solid var(--console-line-soft);
 	color: #8fa3ab;
-	font-size: 0.62rem;
+	font-size: 0.625rem;
 	line-height: 1.45;
 }
 
@@ -3155,7 +3155,7 @@ body:has(.product-console) .site-footer {
 
 	.console-titlebar {
 		grid-template-columns: minmax(0, 1fr) auto;
-		font-size: 0.6rem;
+		font-size: 0.625rem;
 	}
 
 	.console-brandline {
@@ -3299,12 +3299,12 @@ body:has(.product-console) .site-footer {
 
 	.overview-screen figcaption {
 		min-height: 29px;
-		font-size: 0.55rem;
+		font-size: 0.625rem;
 	}
 
 	.screen-toolbar {
 		height: 23px;
-		font-size: 0.56rem;
+		font-size: 0.625rem;
 	}
 
 	.workspace-canvas,
@@ -3477,7 +3477,7 @@ body:has(.product-console) .site-footer {
 
 	.console-brandline::after {
 		content: "SHADOW // COMMAND";
-		font-size: 0.45rem;
+		font-size: 0.625rem;
 	}
 
 	.console-links a:first-child {
@@ -3494,7 +3494,7 @@ body:has(.product-console) .site-footer {
 
 	.console-actions > * {
 		gap: 5px;
-		font-size: 0.48rem;
+		font-size: 0.625rem;
 	}
 
 	.workspace-screen,
@@ -3535,6 +3535,16 @@ body:has(.product-console) .site-footer {
 }
 
 @media (orientation: portrait) and (min-width: 761px) and (max-width: 1100px) {
+	.product-console {
+		display: grid;
+		place-items: center;
+		padding: 20px;
+	}
+
+	.console-stage {
+		max-height: 1080px;
+	}
+
 	.overview-canvas,
 	.workspace-canvas,
 	.demo-canvas {
