@@ -627,7 +627,7 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 				if (!wasFeatured && selectedVideo && Number.isFinite(selectedVideo.duration)) {
 					selectedVideo.currentTime = 0;
 				}
-				motionPaused = reduceMotion.matches;
+				if (!wasFeatured) motionPaused = reduceMotion.matches;
 				syncSideraPlayback('memory');
 			});
 		});
