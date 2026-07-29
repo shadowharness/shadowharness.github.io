@@ -2629,6 +2629,48 @@ body:has(.product-console) .site-footer {
 	background: #03070a;
 }
 
+.screen-image {
+	position: relative;
+	min-width: 0;
+	min-height: 0;
+}
+
+.screen-toggle {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	width: 100%;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	cursor: zoom-in;
+}
+
+.screen-toggle[hidden] {
+	display: none;
+}
+
+.screen-toggle:focus-visible {
+	outline: 2px solid var(--console-cyan);
+	outline-offset: -3px;
+}
+
+.screen-frame:has(.screen-toggle:hover),
+.screen-frame:has(.screen-toggle:focus-visible),
+.screen-frame:has(.screen-toggle[aria-pressed="true"]) {
+	border-color: var(--console-cyan);
+}
+
+.screen-frame:has(.screen-toggle:hover) .screen-toolbar,
+.screen-frame:has(.screen-toggle:focus-visible) .screen-toolbar,
+.screen-frame:has(.screen-toggle[aria-pressed="true"]) .screen-toolbar {
+	border-bottom-color: var(--console-cyan);
+}
+
+.screen-toggle[aria-pressed="true"] {
+	cursor: zoom-out;
+}
+
 .overview-screen {
 	align-self: center;
 }
@@ -3072,6 +3114,55 @@ body:has(.product-console) .site-footer {
 
 .trust-inline a {
 	margin-top: 11px;
+}
+
+@media (min-width: 1101px) and (orientation: landscape) {
+	.console-pane-overview:has(.screen-toggle[aria-pressed="true"]) .overview-canvas,
+	.console-pane-workspace:has(.screen-toggle[aria-pressed="true"]) .workspace-canvas {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0;
+		align-items: stretch;
+		background: #050d13;
+	}
+
+	.console-pane-overview:has(.screen-toggle[aria-pressed="true"]) .overview-canvas {
+		padding: 0 28px;
+	}
+
+	.console-pane-workspace:has(.screen-toggle[aria-pressed="true"]) .workspace-canvas {
+		padding: 0;
+	}
+
+	.console-pane-overview:has(.screen-toggle[aria-pressed="true"]) .overview-copy,
+	.console-pane-workspace:has(.screen-toggle[aria-pressed="true"]) .workspace-inspector {
+		display: none;
+	}
+
+	.console-pane-overview:has(.screen-toggle[aria-pressed="true"]) .overview-screen,
+	.console-pane-workspace:has(.screen-toggle[aria-pressed="true"]) .workspace-screen {
+		display: grid;
+		align-self: center;
+		width: 100%;
+		height: auto;
+		margin: 0;
+	}
+
+	.console-pane-overview:has(.screen-toggle[aria-pressed="true"]) .overview-screen {
+		grid-template-rows: 27px auto 35px;
+	}
+
+	.console-pane-workspace:has(.screen-toggle[aria-pressed="true"]) .workspace-screen {
+		grid-template-rows: 27px auto;
+	}
+
+	.console-pane:has(.screen-toggle[aria-pressed="true"]) .screen-image {
+		aspect-ratio: 16 / 9;
+	}
+
+	.console-pane:has(.screen-toggle[aria-pressed="true"]) .screen-frame img {
+		height: 100%;
+		object-fit: contain;
+	}
 }
 
 @media (max-width: 1080px) {

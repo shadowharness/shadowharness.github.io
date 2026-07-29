@@ -38,6 +38,7 @@ const copy = isJa
 			overviewX: 'Xで開発を見る',
 			overviewAlt:
 				'ShadowHarnessの実画面。Explorer、Preview、複数のAIターミナル、Sidera Memoryが一つの画面に並ぶ',
+			screenToggle: '実画面を拡大表示',
 			screenLabel: 'REAL PRODUCT / WINDOWS',
 			agentLabel: 'AVAILABLE SESSIONS',
 			workspaceTitle: '切り替えるのは、思考だけ。窓ではない。',
@@ -122,6 +123,7 @@ const copy = isJa
 			overviewX: 'Follow the build on X',
 			overviewAlt:
 				'The real ShadowHarness interface with Explorer, Preview, multiple AI terminals, and Sidera Memory on one screen',
+			screenToggle: 'Enlarge product screen',
 			screenLabel: 'REAL PRODUCT / WINDOWS',
 			agentLabel: 'AVAILABLE SESSIONS',
 			workspaceTitle: 'Switch your thinking. Not your windows.',
@@ -248,20 +250,31 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 								<a href="https://x.com/ShadowHarness" target="_blank" rel="noopener">{copy.overviewX}<span aria-hidden="true">↗</span></a>
 							</div>
 						</div>
-						<figure class="screen-frame overview-screen">
+						<figure id="overview-screen" class="screen-frame overview-screen">
 							<div class="screen-toolbar">
 								<span><i></i><i></i><i></i></span>
 								<strong>{copy.screenLabel}</strong>
 								<em>1600 × 900</em>
 							</div>
-							<img
-								src={`${base}media/hero-workspace.webp?v=${mediaVersion}`}
-								alt={copy.overviewAlt}
-								width="1600"
-								height="900"
-								fetchpriority="high"
-								decoding="async"
-							/>
+							<div class="screen-image">
+								<img
+									src={`${base}media/hero-workspace.webp?v=${mediaVersion}`}
+									alt={copy.overviewAlt}
+									width="1600"
+									height="900"
+									fetchpriority="high"
+									decoding="async"
+								/>
+								<button
+									type="button"
+									class="screen-toggle"
+									aria-controls="overview-screen"
+									aria-label={copy.screenToggle}
+									aria-pressed="false"
+									data-screen-toggle
+									hidden
+								></button>
+							</div>
 							<figcaption>
 								<span>{copy.agentLabel}</span>
 								{agents.map((agent) => <strong>{agent}</strong>)}
@@ -284,21 +297,32 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 						<span>02 / 04</span>
 					</header>
 					<div class="pane-canvas workspace-canvas">
-						<figure class="screen-frame workspace-screen">
+						<figure id="workspace-screen" class="screen-frame workspace-screen">
 							<div class="screen-toolbar">
 								<span><i></i><i></i><i></i></span>
 								<strong>SHADOW / ARRANGE</strong>
 								<em>LIVE UI</em>
 							</div>
-							<img
-								src={`${base}media/multi-agent-workspace-placeholder.webp?v=${mediaVersion}`}
-								data-src={`${base}media/multi-agent-workspace.webp?v=${mediaVersion}`}
-								alt={copy.workspaceAlt}
-								width="1600"
-								height="900"
-								loading="eager"
-								decoding="async"
-							/>
+							<div class="screen-image">
+								<img
+									src={`${base}media/multi-agent-workspace-placeholder.webp?v=${mediaVersion}`}
+									data-src={`${base}media/multi-agent-workspace.webp?v=${mediaVersion}`}
+									alt={copy.workspaceAlt}
+									width="1600"
+									height="900"
+									loading="eager"
+									decoding="async"
+								/>
+								<button
+									type="button"
+									class="screen-toggle"
+									aria-controls="workspace-screen"
+									aria-label={copy.screenToggle}
+									aria-pressed="false"
+									data-screen-toggle
+									hidden
+								></button>
+							</div>
 						</figure>
 						<aside class="workspace-inspector">
 							<p class="console-kicker">ONE DESK</p>
@@ -447,9 +471,11 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 		};
 
 		const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+		const screenExpansion = window.matchMedia('(min-width: 1101px) and (orientation: landscape)');
 		const sideraVideos = Array.from(consoleRoot.querySelectorAll<HTMLVideoElement>('[data-sidera-video]'));
 		const sideraShots = Array.from(consoleRoot.querySelectorAll<HTMLElement>('[data-sidera-shot]'));
 		const motionControl = consoleRoot.querySelector<HTMLButtonElement>('[data-sidera-motion-control]');
+		const screenToggles = Array.from(consoleRoot.querySelectorAll<HTMLButtonElement>('[data-screen-toggle]'));
 		let motionPaused = reduceMotion.matches;
 
 		const featuredVideo = () =>
@@ -552,11 +578,29 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 			updateMotionLabel();
 		};
 
+		const collapseScreens = () => {
+			screenToggles.forEach((toggle) => toggle.setAttribute('aria-pressed', 'false'));
+		};
+
+		const syncScreenToggleAvailability = () => {
+			const available = screenExpansion.matches;
+			if (!available) {
+				const focusedToggle = screenToggles.find((toggle) => toggle === document.activeElement);
+				focusedToggle?.closest<HTMLElement>('[data-stage-pane]')?.focus();
+				collapseScreens();
+			}
+			screenToggles.forEach((toggle) => {
+				toggle.hidden = !available;
+			});
+		};
+
 		const activatePane = (
 			requestedId: string,
 			options: { updateHash?: boolean; focusTab?: boolean } = {},
 		) => {
 			const paneId = canonicalPane(requestedId);
+			const screenToggleHadFocus = screenToggles.some((toggle) => toggle === document.activeElement);
+			collapseScreens();
 			loadPaneImages(paneId);
 			if (paneId === 'memory') loadSideraPosters();
 			panes.forEach((pane) => {
@@ -568,6 +612,7 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 				tab.tabIndex = selected ? 0 : -1;
 				if (selected && options.focusTab) tab.focus();
 			});
+			if (screenToggleHadFocus && !options.focusTab) document.getElementById(paneId)?.focus();
 			syncSideraPlayback(paneId);
 			if (options.updateHash && window.location.hash !== `#${paneId}`) {
 				window.history.pushState({ pane: paneId }, '', `#${paneId}`);
@@ -595,6 +640,15 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 					updateHash: true,
 					focusTab: true,
 				});
+			});
+		});
+
+		screenToggles.forEach((toggle) => {
+			toggle.addEventListener('click', () => {
+				if (!screenExpansion.matches) return;
+				const shouldExpand = toggle.getAttribute('aria-pressed') !== 'true';
+				collapseScreens();
+				toggle.setAttribute('aria-pressed', shouldExpand ? 'true' : 'false');
 			});
 		});
 
@@ -637,14 +691,25 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 			syncSideraPlayback('memory');
 		});
 
+		document.addEventListener('keydown', (event) => {
+			if (event.key !== 'Escape') return;
+			const expandedToggle = screenToggles.find((toggle) => toggle.getAttribute('aria-pressed') === 'true');
+			if (!expandedToggle) return;
+			event.preventDefault();
+			expandedToggle.setAttribute('aria-pressed', 'false');
+			expandedToggle.focus();
+		});
+
 		window.addEventListener('hashchange', () => activatePane(window.location.hash));
 		window.addEventListener('popstate', () => activatePane(window.location.hash));
+		screenExpansion.addEventListener('change', syncScreenToggleAvailability);
 		reduceMotion.addEventListener('change', (event) => {
 			motionPaused = event.matches;
 			const activePane = panes.find((pane) => !pane.hidden)?.id ?? 'overview';
 			syncSideraPlayback(activePane);
 		});
 
+		syncScreenToggleAvailability();
 		activatePane(window.location.hash);
 	}
 </script>
