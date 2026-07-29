@@ -291,7 +291,8 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 								<em>LIVE UI</em>
 							</div>
 							<img
-								src={`${base}media/multi-agent-workspace.webp?v=${mediaVersion}`}
+								src={`${base}media/multi-agent-workspace-placeholder.webp?v=${mediaVersion}`}
+								data-src={`${base}media/multi-agent-workspace.webp?v=${mediaVersion}`}
 								alt={copy.workspaceAlt}
 								width="1600"
 								height="900"
@@ -367,16 +368,8 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 												loop
 												playsinline
 												preload="none"
-												poster={`${base}media/${
-													index === 0
-														? clip.poster
-														: clip.poster.replace(/\.webp$/, '-placeholder.webp')
-												}?v=${mediaVersion}`}
-												data-poster={
-													index === 0
-														? undefined
-														: `${base}media/${clip.poster}?v=${mediaVersion}`
-												}
+												poster={`${base}media/${clip.poster.replace(/\.webp$/, '-placeholder.webp')}?v=${mediaVersion}`}
+												data-poster={`${base}media/${clip.poster}?v=${mediaVersion}`}
 												aria-label={clip.alt}
 												data-sidera-video
 												data-src={`${base}media/${clip.video}?v=${mediaVersion}`}
@@ -414,7 +407,8 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 								title={copy.demoTitle}
 								buttonLabel={copy.demoButton}
 								closeLabel={copy.demoClose}
-								posterSrc={`${base}media/${isJa ? 'demo-poster-ja.webp' : 'demo-poster-en.webp'}?v=${mediaVersion}`}
+								posterSrc={`${base}media/${isJa ? 'demo-poster-ja-placeholder.webp' : 'demo-poster-en-placeholder.webp'}?v=${mediaVersion}`}
+								posterFullSrc={`${base}media/${isJa ? 'demo-poster-ja.webp' : 'demo-poster-en.webp'}?v=${mediaVersion}`}
 								posterAlt={copy.demoPosterAlt}
 							/>
 							<p class="demo-runtime">{copy.demoMeta}</p>
@@ -478,15 +472,69 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 			}
 		};
 
+		const loadPaneImages = (paneId: string) => {
+			const pane = document.getElementById(paneId);
+			pane?.querySelectorAll<HTMLImageElement>('img[data-src]').forEach((image) => {
+				const source = image.dataset.src;
+				if (!source || image.dataset.loading === 'true') return;
+				image.dataset.loading = 'true';
+				const fullImage = new Image();
+				fullImage.addEventListener(
+					'load',
+					() => {
+						void fullImage
+							.decode()
+							.then(() => {
+								image.src = source;
+								delete image.dataset.src;
+								delete image.dataset.loading;
+							})
+							.catch(() => {
+								delete image.dataset.loading;
+							});
+					},
+					{ once: true },
+				);
+				fullImage.addEventListener(
+					'error',
+					() => {
+						delete image.dataset.loading;
+					},
+					{ once: true },
+				);
+				fullImage.src = source;
+			});
+		};
+
 		const loadSideraPosters = () => {
 			sideraVideos.forEach((video) => {
 				const source = video.dataset.poster;
-				if (!source) return;
-				delete video.dataset.poster;
+				if (!source || video.dataset.posterLoading === 'true') return;
+				video.dataset.posterLoading = 'true';
 				const poster = new Image();
-				poster.addEventListener('load', () => {
-					video.poster = source;
-				});
+				poster.addEventListener(
+					'load',
+					() => {
+						void poster
+							.decode()
+							.then(() => {
+								video.poster = source;
+								delete video.dataset.poster;
+								delete video.dataset.posterLoading;
+							})
+							.catch(() => {
+								delete video.dataset.posterLoading;
+							});
+					},
+					{ once: true },
+				);
+				poster.addEventListener(
+					'error',
+					() => {
+						delete video.dataset.posterLoading;
+					},
+					{ once: true },
+				);
 				poster.src = source;
 			});
 		};
@@ -509,6 +557,7 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 			options: { updateHash?: boolean; focusTab?: boolean } = {},
 		) => {
 			const paneId = canonicalPane(requestedId);
+			loadPaneImages(paneId);
 			if (paneId === 'memory') loadSideraPosters();
 			panes.forEach((pane) => {
 				pane.hidden = pane.id !== paneId;

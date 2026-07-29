@@ -5,6 +5,7 @@ interface Props {
   buttonLabel: string;
   closeLabel: string;
   posterSrc: string;
+  posterFullSrc: string;
   posterAlt: string;
 }
 
@@ -14,6 +15,7 @@ const {
   buttonLabel,
   closeLabel,
   posterSrc,
+  posterFullSrc,
   posterAlt,
 } = Astro.props;
 
@@ -39,6 +41,7 @@ youtubeUrl.searchParams.set("v", videoId);
     <img
       class="demo-poster"
       src={posterSrc}
+      data-src={posterFullSrc}
       alt={posterAlt}
       width="1600"
       height="900"
