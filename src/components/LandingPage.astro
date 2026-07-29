@@ -1,0 +1,465 @@
+---
+import DemoDialog from './DemoDialog.astro';
+
+interface Props {
+	lang: 'ja' | 'en';
+}
+
+const { lang } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const isJa = lang === 'ja';
+const guideUrl = isJa ? `${base}guide/` : `${base}en/guide/`;
+const securityUrl = isJa ? `${base}security/` : `${base}en/security/`;
+
+const copy = isJa
+	? {
+			eyebrow: 'WINDOWS · AI AGENT DESKTOP',
+			heroLine1: 'AIエージェントに、',
+			heroLine2: 'ひとつの机と記憶を。',
+			heroLead:
+				'あなたが使っている GPT / Codex、Claude Code、Grok、Gemini などを、そのまま一つの画面へ。作業と記憶が、AIをまたいでつながります。',
+			demoCta: 'デモを見る',
+			xCta: 'Xで最新情報',
+			heroNote: '提供方法とテスター募集は、決まり次第このサイトとXでお知らせします。',
+			workspaceAlt:
+				'ShadowHarnessの実画面。ファイル、プレビュー、複数のAIターミナルが一つのデスクトップに並んでいる',
+			windowTitle: 'ShadowHarness — Agent workspace',
+			visualNoteA: '複数のAI',
+			visualNoteB: 'ひとつの作業空間',
+			manifestoEyebrow: 'ONE DESK',
+			manifestoTitle: '切り替えるのは、思考だけ。窓ではない。',
+			manifestoLead:
+				'AIごとにアプリを行き来し、同じ前提を貼り直し、成果物を探し直す。その断片化を、作業環境の側で終わらせます。',
+			deskAlt: 'ShadowHarnessのPreviewとGrokペインを一つの作業画面に並べた実画面',
+			deskItems: [
+				{
+					no: '01',
+					title: 'いつものAIを、そのまま',
+					body: 'GPT / Codex、Claude Code、Grok、Geminiなど、利用中のCLIを本物のターミナルとして開けます。',
+				},
+				{
+					no: '02',
+					title: '資料と結果を、同じ視界に',
+					body: 'Explorer、Preview、EditorとAIペインを一つのデスクトップへ。配置は仕事に合わせて組み替えられます。',
+				},
+				{
+					no: '03',
+					title: '並列でも、散らからない',
+					body: '複数のAIを同時に動かしても、担当と成果物が同じ作業面に残ります。',
+				},
+			],
+			memoryEyebrow: 'SIDERA MEMORY',
+			memoryTitle: '記憶は、履歴の山ではなく、次の判断になる。',
+			memoryLead:
+				'ただ覚えるのではなく、何が今の結論か、どう変わったか、根拠は何かまで保つ。新しい入力には、関係する過去だけを届けます。',
+			memoryAlt: 'Sidera Memoryの記憶が星空として再構成され、関係する記憶が光る様子',
+			memoryPause: '動きを停止',
+			memoryPlay: '動きを再生',
+			memorySteps: [
+				['残す', '各AIの会話ログを、あとから原文へ戻れる証拠として保ちます。'],
+				['整える', '結論、経緯、変更を分け、古い判断と現在の判断を混ぜません。'],
+				['届ける', '入力に関係する結論と根拠だけを、必要なときに差し出します。'],
+			],
+			memoryLink: 'Sidera Memoryを詳しく見る',
+			flowEyebrow: 'A WORKDAY IN SHADOWHARNESS',
+			flowTitle: 'ひとつの仕事が、最後まで同じ場所を流れる。',
+			flowLead:
+				'始める、任せる、確かめる、続ける。ツールをつなぐための作業を減らし、本来の判断へ時間を戻します。',
+			flow: [
+				['OPEN', 'プロジェクトを開く', 'ファイルと現在の成果物をExplorer / Previewで確認します。'],
+				['WORK', '得意なAIへ任せる', '調査、実装、レビューを複数のAIペインへ分けて進めます。'],
+				['REVIEW', 'その場で確かめる', 'テキスト、画像、動画、レンダー結果を作業面から離れず確認します。'],
+				['CONTINUE', '次のセッションへつなぐ', 'Sidera Memoryが、今回の入力に必要な結論と経緯を戻します。'],
+			],
+			demoEyebrow: 'LIVE PRODUCT DEMO',
+			demoTitle: '説明ではなく、実際の画面を。',
+			demoLead:
+				'複数AIの起動、ペインの整列、ファイル編集、AI補完、レンダーまで。編集で隠さず、実画面で通して見せます。',
+			demoButton: '3分の実演を見る',
+			demoClose: '動画を閉じる',
+			demoPosterAlt: 'ShadowHarness実演動画のプレビュー',
+			demoMeta: '03:09 · 日本語 · 再生するまでYouTubeへ接続しません',
+			trustEyebrow: 'DATA & TRUST',
+			trustTitle: '便利さと、データの行き先を、同じページで話す。',
+			trustLead:
+				'Sidera Memoryを利用すると、対象CLIの端末ログの新しい部分がShadow Hubへ送られ、記憶の構造化にはLLMの判断が使われます。',
+			trustFacts: [
+				'構造化に送る入力は、モデル学習に使われない設定で処理します。',
+				'各CLI提供元でのデータ利用は、利用者自身の契約と設定に従います。',
+				'リスクをゼロとは表現しません。一般のLLMサービス利用と同種の境界があります。',
+			],
+			trustLink: 'データの扱いと信頼性を読む',
+			finalEyebrow: 'FOLLOW THE BUILD',
+			finalTitle: '次の案内は、ここから。',
+			finalLead:
+				'提供方法やテスター募集が決まり次第、このサイトとXで公開します。まずは実際の動きと、作っている理由を見てください。',
+			finalX: 'Xをフォロー',
+			finalYouTube: 'YouTubeでデモを見る',
+		}
+	: {
+			eyebrow: 'WINDOWS · AI AGENT DESKTOP',
+			heroLine1: 'Give every AI agent',
+			heroLine2: 'one desk and one memory.',
+			heroLead:
+				'Bring the GPT / Codex, Claude Code, Grok, Gemini and other tools you already use into one real workspace. Work and memory carry across agents.',
+			demoCta: 'Watch the demo',
+			xCta: 'Follow on X',
+			heroNote: 'Availability and tester news will be announced here and on X once confirmed.',
+			workspaceAlt:
+				'The real ShadowHarness interface with files, preview, and multiple AI terminals on one desktop',
+			windowTitle: 'ShadowHarness — Agent workspace',
+			visualNoteA: 'Multiple AIs',
+			visualNoteB: 'One workspace',
+			manifestoEyebrow: 'ONE DESK',
+			manifestoTitle: 'Switch your thinking. Not your windows.',
+			manifestoLead:
+				'Stop moving between apps, pasting the same premise again, and hunting for the last output. ShadowHarness ends that fragmentation at the workspace level.',
+			deskAlt: 'The real ShadowHarness interface with Preview and a Grok pane in one workspace',
+			deskItems: [
+				{
+					no: '01',
+					title: 'Your real AI tools, unchanged',
+					body: 'Open GPT / Codex, Claude Code, Grok, Gemini and more as genuine terminal sessions.',
+				},
+				{
+					no: '02',
+					title: 'Source and result in one view',
+					body: 'Explorer, Preview, Editor, and AI panes share a desktop you can arrange around the work.',
+				},
+				{
+					no: '03',
+					title: 'Parallel, without the sprawl',
+					body: 'Run several agents at once while keeping responsibilities and outputs on the same work surface.',
+				},
+			],
+			memoryEyebrow: 'SIDERA MEMORY',
+			memoryTitle: 'Memory should become the next decision—not a pile of history.',
+			memoryLead:
+				'Sidera does more than remember. It preserves the current conclusion, what changed, and the evidence behind it—then returns only what matters now.',
+			memoryAlt: 'Sidera Memory rebuilding a field of memories and lighting up the relevant ones',
+			memoryPause: 'Pause animation',
+			memoryPlay: 'Play animation',
+			memorySteps: [
+				['Keep', 'Conversation logs remain evidence you can trace back to the original words.'],
+				['Resolve', 'Conclusions, history, and revisions stay distinct instead of being blended together.'],
+				['Recall', 'Only the conclusions and evidence relevant to the current input are brought forward.'],
+			],
+			memoryLink: 'Explore Sidera Memory',
+			flowEyebrow: 'A WORKDAY IN SHADOWHARNESS',
+			flowTitle: 'One piece of work, flowing through one place.',
+			flowLead:
+				'Open, delegate, inspect, continue. Spend less time wiring tools together and more time making the decisions that matter.',
+			flow: [
+				['OPEN', 'Open the project', 'See files and current outputs in Explorer and Preview.'],
+				['WORK', 'Give each AI the right job', 'Split research, implementation, and review across several AI panes.'],
+				['REVIEW', 'Inspect it in place', 'Review text, images, video, and rendered output without leaving the workspace.'],
+				['CONTINUE', 'Carry it into the next session', 'Sidera returns the conclusions and context that matter to the next input.'],
+			],
+			demoEyebrow: 'LIVE PRODUCT DEMO',
+			demoTitle: 'See the product, not a promise.',
+			demoLead:
+				'Multiple AIs launching, panes arranging, files editing, AI completion, and rendered output—in one uninterrupted capture of the real interface.',
+			demoButton: 'Watch the 3-minute demo',
+			demoClose: 'Close video',
+			demoPosterAlt: 'Preview of the ShadowHarness live product demo',
+			demoMeta: '03:02 · English · No YouTube connection until you press play',
+			trustEyebrow: 'DATA & TRUST',
+			trustTitle: 'Convenience and data boundaries belong in the same conversation.',
+			trustLead:
+				'When Sidera Memory is enabled, new terminal-log content from the covered CLIs is sent to Shadow Hub. LLM judgment is part of structuring that memory.',
+			trustFacts: [
+				'Inputs used for structuring are processed with training disabled.',
+				'Each CLI provider handles data according to the user’s own plan and settings.',
+				'We do not claim zero risk. The boundary is broadly the same kind you accept when using LLM services.',
+			],
+			trustLink: 'Read Data & Trust',
+			finalEyebrow: 'FOLLOW THE BUILD',
+			finalTitle: 'The next announcement starts here.',
+			finalLead:
+				'Availability and tester recruitment will be published here and on X once confirmed. For now, see what already works—and why we are building it.',
+			finalX: 'Follow on X',
+			finalYouTube: 'Watch on YouTube',
+		};
+
+const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
+const demoId = isJa ? 'fbVTuTbw2ws' : 'jTfa8tup2-4';
+---
+
+<main id="main-content">
+	<section class="hero">
+		<div class="hero-copy">
+			<p class="eyebrow">{copy.eyebrow}</p>
+			<h1>
+				<span>{copy.heroLine1}</span>
+				<strong>{isJa ? <Fragment>ひとつの机と<br />記憶を。</Fragment> : copy.heroLine2}</strong>
+			</h1>
+			<p class="hero-lead">{copy.heroLead}</p>
+			<div class="cta-row">
+				<a class="button button-primary" href="#demo">{copy.demoCta}</a>
+				<a class="button button-secondary" href="https://x.com/ShadowHarness" target="_blank" rel="noopener">
+					{copy.xCta}
+				</a>
+			</div>
+			<p class="status-note"><span aria-hidden="true"></span>{copy.heroNote}</p>
+		</div>
+
+		<div class="hero-stage">
+			<div class="product-window product-window-hero">
+				<div class="window-bar" aria-hidden="true">
+					<span class="window-dots"><i></i><i></i><i></i></span>
+					<span>{copy.windowTitle}</span>
+				</div>
+				<img
+					src={`${base}media/hero-workspace.webp`}
+					alt={copy.workspaceAlt}
+					width="1600"
+					height="900"
+					fetchpriority="high"
+					decoding="async"
+				/>
+			</div>
+			<span class="visual-note visual-note-a">{copy.visualNoteA}</span>
+			<span class="visual-note visual-note-b">{copy.visualNoteB}</span>
+		</div>
+
+		<div class="agent-rail" aria-label={isJa ? '対応するAIの例' : 'Examples of supported AI tools'}>
+			<span class="agent-rail-label">{isJa ? 'USE WHAT YOU ALREADY USE' : 'USE WHAT YOU ALREADY USE'}</span>
+			{agents.map((agent) => <span>{agent}</span>)}
+		</div>
+	</section>
+
+	<section class="desk-section section-shell">
+		<div class="section-heading section-heading-wide">
+			<p class="eyebrow">{copy.manifestoEyebrow}</p>
+			<h2>
+				{isJa
+					? <Fragment>切り替えるのは、<br />思考だけ。<br />窓ではない。</Fragment>
+					: copy.manifestoTitle}
+			</h2>
+			<p>{copy.manifestoLead}</p>
+		</div>
+		<div class="desk-layout">
+			<div class="product-window product-window-desk">
+				<div class="window-bar" aria-hidden="true">
+					<span class="window-dots"><i></i><i></i><i></i></span>
+					<span>ShadowHarness / Multi-agent workspace</span>
+				</div>
+				<img
+					src={`${base}media/multi-agent-workspace.webp`}
+					alt={copy.deskAlt}
+					width="1600"
+					height="900"
+					loading="lazy"
+					decoding="async"
+				/>
+			</div>
+			<ol class="desk-index">
+				{copy.deskItems.map((item) => (
+					<li>
+						<span>{item.no}</span>
+						<div>
+							<h3>{item.title}</h3>
+							<p>{item.body}</p>
+						</div>
+					</li>
+				))}
+			</ol>
+		</div>
+	</section>
+
+	<section id="memory" class="memory-section">
+		<div class="section-shell memory-layout">
+			<div class="memory-visual">
+				<div class="memory-orbit" aria-hidden="true"></div>
+				<video
+					id="sidera-memory-motion"
+					autoplay
+					muted
+					loop
+					playsinline
+					preload="none"
+					aria-label={copy.memoryAlt}
+					data-ambient-video
+					data-src={`${base}media/sidera-memory-loop.mp4`}
+					data-poster={`${base}media/sidera-memory-poster.webp`}
+				></video>
+				<button
+					type="button"
+					class="memory-motion-control"
+					aria-controls="sidera-memory-motion"
+					data-motion-control
+					data-pause-label={copy.memoryPause}
+					data-play-label={copy.memoryPlay}
+					hidden
+				>
+					{copy.memoryPause}
+				</button>
+				<noscript>
+					<img
+						class="memory-poster-fallback"
+						src={`${base}media/sidera-memory-poster.webp`}
+						alt={copy.memoryAlt}
+						width="1280"
+						height="720"
+						loading="lazy"
+					/>
+				</noscript>
+				<span class="memory-caption">SIDERA / MEMORY VIEW</span>
+			</div>
+			<div class="memory-copy">
+				<p class="eyebrow">{copy.memoryEyebrow}</p>
+				<h2>
+					{isJa
+						? <Fragment>記憶は、履歴の<br />山ではなく、<br />次の判断になる。</Fragment>
+						: copy.memoryTitle}
+				</h2>
+				<p class="memory-lead">{copy.memoryLead}</p>
+				<ol class="memory-steps">
+					{copy.memorySteps.map(([title, body], index) => (
+						<li>
+							<span>{String(index + 1).padStart(2, '0')}</span>
+							<div>
+								<h3>{title}</h3>
+								<p>{body}</p>
+							</div>
+						</li>
+					))}
+				</ol>
+				<a class="text-link text-link-light" href={`${guideUrl}#memory`}>{copy.memoryLink}<span>↗</span></a>
+			</div>
+		</div>
+	</section>
+
+	<section class="flow-section section-shell">
+		<div class="section-heading">
+			<p class="eyebrow">{copy.flowEyebrow}</p>
+			<h2>
+				{isJa
+					? <Fragment>ひとつの仕事が、<br />最後まで同じ場所を<br />流れる。</Fragment>
+					: copy.flowTitle}
+			</h2>
+			<p>{copy.flowLead}</p>
+		</div>
+		<ol class="flow-list">
+			{copy.flow.map(([label, title, body], index) => (
+				<li>
+					<span class="flow-number">{String(index + 1).padStart(2, '0')}</span>
+					<span class="flow-label">{label}</span>
+					<h3>{title}</h3>
+					<p>{body}</p>
+				</li>
+			))}
+		</ol>
+	</section>
+
+	<section id="demo" class="demo-section">
+		<div class="section-shell">
+			<div class="demo-heading">
+				<div>
+					<p class="eyebrow">{copy.demoEyebrow}</p>
+					<h2>
+						{isJa ? <Fragment>説明ではなく、<br />実際の画面を。</Fragment> : copy.demoTitle}
+					</h2>
+				</div>
+				<p>{copy.demoLead}</p>
+			</div>
+			<DemoDialog
+				videoId={demoId}
+				title={copy.demoTitle}
+				buttonLabel={copy.demoButton}
+				closeLabel={copy.demoClose}
+				posterSrc={`${base}media/hero-workspace.webp`}
+				posterAlt={copy.demoPosterAlt}
+			/>
+			<p class="demo-meta">{copy.demoMeta}</p>
+		</div>
+	</section>
+
+	<section class="trust-section section-shell">
+		<div>
+			<p class="eyebrow">{copy.trustEyebrow}</p>
+			<h2>
+				{isJa
+					? <Fragment>便利さと、<br />データの行き先を、<br />同じページで話す。</Fragment>
+					: copy.trustTitle}
+			</h2>
+		</div>
+		<div class="trust-copy">
+			<p class="trust-lead">{copy.trustLead}</p>
+			<ul>
+				{copy.trustFacts.map((fact) => <li>{fact}</li>)}
+			</ul>
+			<a class="text-link" href={securityUrl}>{copy.trustLink}<span>↗</span></a>
+		</div>
+	</section>
+
+	<section class="final-section">
+		<div class="final-glow" aria-hidden="true"></div>
+		<p class="eyebrow">{copy.finalEyebrow}</p>
+		<h2>{isJa ? <Fragment>次の案内は、<br />ここから。</Fragment> : copy.finalTitle}</h2>
+		<p>{copy.finalLead}</p>
+		<div class="cta-row">
+			<a class="button button-inverse" href="https://x.com/ShadowHarness" target="_blank" rel="noopener">
+				{copy.finalX}
+			</a>
+			<a class="button button-dark-ghost" href="https://www.youtube.com/@ShadowHarness" target="_blank" rel="noopener">
+				{copy.finalYouTube}
+			</a>
+		</div>
+	</section>
+</main>
+
+<script>
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+	document.querySelectorAll<HTMLVideoElement>('[data-ambient-video]').forEach((video) => {
+		const control = video.parentElement?.querySelector<HTMLButtonElement>('[data-motion-control]');
+		const updateControl = () => {
+			if (!control) return;
+			control.textContent = video.paused
+				? (control.dataset.playLabel ?? 'Play')
+				: (control.dataset.pauseLabel ?? 'Pause');
+		};
+
+		control?.addEventListener('click', () => {
+			if (video.paused) {
+				void video.play().then(updateControl).catch(updateControl);
+			} else {
+				video.pause();
+				updateControl();
+			}
+		});
+		video.addEventListener('play', updateControl);
+		video.addEventListener('pause', updateControl);
+
+		const loadMedia = () => {
+			if (video.dataset.poster) video.poster = video.dataset.poster;
+			if (reduceMotion.matches) {
+				video.pause();
+				video.removeAttribute('autoplay');
+				if (control) control.hidden = true;
+				return;
+			}
+			if (video.dataset.src && !video.src) {
+				video.src = video.dataset.src;
+				video.load();
+				if (control) control.hidden = false;
+				void video.play().then(updateControl).catch(updateControl);
+			}
+		};
+
+		if ('IntersectionObserver' in window) {
+			const observer = new IntersectionObserver(
+				(entries) => {
+					if (entries.some((entry) => entry.isIntersecting)) {
+						loadMedia();
+						observer.disconnect();
+					}
+				},
+				{ rootMargin: '600px 0px' },
+			);
+			observer.observe(video);
+		} else {
+			loadMedia();
+		}
+	});
+</script>

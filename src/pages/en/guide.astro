@@ -1,0 +1,206 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+
+const siteUrl = 'https://shadowharness.github.io/';
+const base = import.meta.env.BASE_URL;
+const pageUrl = `${siteUrl}en/guide/`;
+const title = 'ShadowHarness Guide — One desk and one memory for your AI agents';
+const description =
+	'ShadowHarness is an integrated LLM terminal for Windows that brings Codex, Claude Code, Grok, Gemini, and more into one workspace with shared memory.';
+---
+
+<SiteLayout
+	lang="en"
+	title={title}
+	description={description}
+	pageUrl={pageUrl}
+	alternateJa={`${siteUrl}guide/`}
+	alternateEn={pageUrl}
+>
+	<main id="main-content" class="guide-page">
+		<header class="guide-hero">
+			<p class="eyebrow">PRODUCT GUIDE</p>
+			<h1>ShadowHarness Guide</h1>
+			<p class="lead">One desk and one memory for your AI agents.</p>
+			<p>
+				ShadowHarness is an integrated LLM terminal and agent desktop for Windows. It brings
+				multiple AI agents, files, previews, and memory into one working surface.
+			</p>
+			<div class="cta-row">
+				<a class="cta primary" href={`${base}en/#demo`}>Watch the demo</a>
+				<a class="cta ghost" href="https://x.com/ShadowHarness" target="_blank" rel="noopener">
+					Follow development on X
+				</a>
+			</div>
+		</header>
+
+		<div class="guide-layout">
+			<aside class="guide-nav">
+				<p>In this guide</p>
+				<nav aria-label="Guide contents">
+					<a href="#overview">What ShadowHarness is</a>
+					<a href="#agents">Use your usual AIs</a>
+					<a href="#workspace">One working surface</a>
+					<a href="#memory">Sidera Memory</a>
+					<a href="#workflow">A typical workflow</a>
+					<a href="#status">Status and updates</a>
+				</nav>
+			</aside>
+
+			<article class="guide-content prose">
+				<section id="overview">
+					<p class="eyebrow">01 / OVERVIEW</p>
+					<h2>A desk for AI work, built on Windows</h2>
+					<p>
+						As you add more AI agents, conversations spread across terminals, project files
+						live in other windows, and results open in still more apps. ShadowHarness brings
+						those pieces together on one working surface.
+					</p>
+					<div class="guide-callout">
+						<strong>It does not replace every provider with another, simplified AI.</strong>{' '}
+						It runs the agents you already use and adds a shared desk and memory around them.
+					</div>
+					<dl class="facts-list">
+						<div>
+							<dt>One desk</dt>
+							<dd>Keep multiple AIs, files, previews, and editing in the same window.</dd>
+						</div>
+						<div>
+							<dt>One job</dt>
+							<dd>Give agents different roles while they work against the same project.</dd>
+						</div>
+						<div>
+							<dt>One memory</dt>
+							<dd>Carry forward the relevant past instead of dragging an entire conversation along.</dd>
+						</div>
+					</dl>
+				</section>
+
+				<section id="agents">
+					<p class="eyebrow">02 / AGENTS</p>
+					<h2>GPT / Codex, Claude Code, Grok, Gemini, and more — as they are</h2>
+					<p>
+						The agents inside ShadowHarness are the tools you already know. You can place
+						Codex beside Claude Code and assign each a different role, then bring in Grok or
+						Gemini when another perspective helps.
+					</p>
+					<p>
+						ShadowHarness does not swap each agent for a reduced in-house imitation. It lets
+						the provider's own experience participate in a shared workspace. Available
+						capabilities and data handling still follow each provider's offering and your
+						settings with that provider.
+					</p>
+				</section>
+
+				<section id="workspace">
+					<p class="eyebrow">03 / WORKSPACE</p>
+					<h2>Keep thinking and making on the same surface</h2>
+					<div class="trust-grid">
+						<div>
+							<h3>Multiple AI panes</h3>
+							<p>
+								Open the agents you need and arrange them as the job changes. Put one on
+								research, one on implementation, and another on review while keeping the
+								whole effort visible.
+							</p>
+						</div>
+						<div>
+							<h3>Explorer</h3>
+							<p>
+								Browse the project's folders and files, then bring the right target into
+								an agent or Preview. The state of the work stays visible outside the chat.
+							</p>
+						</div>
+						<div>
+							<h3>Preview / Editor</h3>
+							<p>
+								Inspect text, images, audio, and video without leaving the workspace. Edit
+								text in place, and move between source and rendered Markdown or HTML.
+							</p>
+						</div>
+					</div>
+				</section>
+
+				<section id="memory">
+					<p class="eyebrow">04 / SIDERA MEMORY</p>
+					<h2>Turn stored history into memory the next task can use</h2>
+					<p>
+						Each CLI already leaves raw conversation logs on your PC. But keeping history is
+						not the same as giving the next agent the part it needs. Resuming one long thread
+						carries growing context forward, while switching agents or sessions fragments the
+						reasoning behind a decision.
+					</p>
+					<p>
+						Sidera Memory organizes new log data through Shadow Hub and selects only the past
+						that relates to the current input. It does not flatten a conversation into a
+						disposable short summary: it preserves which conclusion is current, what changed,
+						and where the supporting evidence can be traced in the original record.
+					</p>
+					<div class="guide-callout">
+						<strong>
+							Not just what was remembered, but what the current conclusion is, how it
+							changed, and what supports it.
+						</strong>{' '}
+						That is the role of memory in ShadowHarness.
+					</div>
+					<ol>
+						<li>Each AI's raw conversation log remains where its CLI stores it on your PC.</li>
+						<li>New log ranges are sent to Shadow Hub and structured into memory with LLM judgment.</li>
+						<li>Only memory relevant to the next input is selected and delivered to the working agent.</li>
+						<li>When needed, the structured result can point back to evidence in the original record.</li>
+					</ol>
+					<p>
+						See <a href={`${base}en/security/`}>Data Handling &amp; Trust</a> for the boundary
+						between your device, Shadow Hub, and the LLM used for this processing.
+					</p>
+				</section>
+
+				<section id="workflow">
+					<p class="eyebrow">05 / WORKFLOW</p>
+					<h2>Move one request forward with several AIs</h2>
+					<ol>
+						<li>
+							<strong>Open the project.</strong>{' '}
+							Find the target in Explorer and arrange the agents you need in panes.
+						</li>
+						<li>
+							<strong>Divide the roles.</strong>{' '}
+							Assign research, implementation, and review to different agents while
+							watching their progress on one screen.
+						</li>
+						<li>
+							<strong>Inspect the result in place.</strong>{' '}
+							Open changed files in Preview and make your own edits in the Editor when needed.
+						</li>
+						<li>
+							<strong>Continue in a fresh session.</strong>{' '}
+							Instead of carrying the entire chat, Sidera Memory supplies conclusions and
+							history relevant to the new input.
+						</li>
+					</ol>
+					<p>
+						Choose the AI that fits each part of the job, while the desk and memory stay
+						shared. That is the working environment ShadowHarness provides.
+					</p>
+				</section>
+
+				<section id="status">
+					<p class="eyebrow">06 / STATUS</p>
+					<h2>See the current product through demos and development updates</h2>
+					<p>
+						The demo on the home page shows the current interface and behavior. Development
+						updates and future tester opportunities will be announced on this site or the
+						official X account after their details and timing are confirmed.
+					</p>
+					<div class="guide-callout">
+						<a href={`${base}en/#demo`}>Watch the demo</a>
+						<span aria-hidden="true"> · </span>
+						<a href="https://x.com/ShadowHarness" target="_blank" rel="noopener">
+							Follow @ShadowHarness
+						</a>
+					</div>
+				</section>
+			</article>
+		</div>
+	</main>
+</SiteLayout>

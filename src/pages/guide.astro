@@ -1,0 +1,198 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const siteUrl = 'https://shadowharness.github.io/';
+const base = import.meta.env.BASE_URL;
+const pageUrl = `${siteUrl}guide/`;
+const title = 'ShadowHarness ガイド — AIエージェントに、ひとつの机と記憶を。';
+const description =
+	'ShadowHarnessは、Codex、Claude Code、Grok、Geminiなどを一つの机で使い、作業と記憶をつなぐWindows向け統合LLMターミナルです。';
+---
+
+<SiteLayout
+	lang="ja"
+	title={title}
+	description={description}
+	pageUrl={pageUrl}
+	alternateJa={pageUrl}
+	alternateEn={`${siteUrl}en/guide/`}
+>
+	<main id="main-content" class="guide-page">
+		<header class="guide-hero">
+			<p class="eyebrow">PRODUCT GUIDE</p>
+			<h1>ShadowHarness ガイド</h1>
+			<p class="lead">AIエージェントに、ひとつの机と記憶を。</p>
+			<p>
+				ShadowHarnessは、複数のAIエージェントとファイル、プレビュー、記憶を一つの画面で扱う、
+				Windows向けの統合LLMターミナル／エージェントデスクトップです。
+			</p>
+			<div class="cta-row">
+				<a class="cta primary" href={`${base}#demo`}>デモを見る</a>
+				<a class="cta ghost" href="https://x.com/ShadowHarness" target="_blank" rel="noopener">
+					Xで開発状況を見る
+				</a>
+			</div>
+		</header>
+
+		<div class="guide-layout">
+			<aside class="guide-nav">
+				<p>このガイド</p>
+				<nav aria-label="ガイド内の目次">
+					<a href="#overview">ShadowHarnessとは</a>
+					<a href="#agents">いつものAIを使う</a>
+					<a href="#workspace">一つの作業画面</a>
+					<a href="#memory">Sidera Memory</a>
+					<a href="#workflow">典型的な使い方</a>
+					<a href="#status">現在地と告知</a>
+				</nav>
+			</aside>
+
+			<article class="guide-content prose">
+				<section id="overview">
+					<p class="eyebrow">01 / OVERVIEW</p>
+					<h2>AIのための「机」を、Windowsの上につくる</h2>
+					<p>
+						AIエージェントが増えるほど、会話は別々のターミナルへ、作業中のファイルは別の
+						ウィンドウへ、確認したい結果はさらに別のアプリへ散らばります。ShadowHarnessは、
+						それらを一つの作業面へ集めます。
+					</p>
+					<div class="guide-callout">
+						<strong>各社のAIを別のAIへ作り替えるアプリではありません。</strong>
+						いつも使っているAIエージェントをそのまま動かし、その周りに共通の机と記憶を加えます。
+					</div>
+					<dl class="facts-list">
+						<div>
+							<dt>ひとつの机</dt>
+							<dd>複数のAI、ファイル、プレビュー、編集を同じウィンドウに置けます。</dd>
+						</div>
+						<div>
+							<dt>ひとつの作業</dt>
+							<dd>AIごとに画面を行き来せず、同じプロジェクトを見ながら役割を分けられます。</dd>
+						</div>
+						<div>
+							<dt>ひとつの記憶</dt>
+							<dd>過去の会話を丸ごと抱えず、今の入力に必要な部分を次のAIへつなぎます。</dd>
+						</div>
+					</dl>
+				</section>
+
+				<section id="agents">
+					<p class="eyebrow">02 / AGENTS</p>
+					<h2>GPT / Codex、Claude Code、Grok、Geminiなどを、そのまま</h2>
+					<p>
+						ShadowHarnessの中で動くのは、使い慣れた各社のAIエージェントです。Codexと
+						Claude Codeを並べて別の役割を任せる、GrokやGeminiを加えて見方を増やす、といった
+						使い方ができます。
+					</p>
+					<p>
+						各AIの操作や機能をShadowHarness独自の簡易版へ置き換えないため、それぞれの
+						提供元が用意する体験を保ったまま、共通の作業環境へ参加させられます。利用できる
+						機能やデータの扱いは、各AIの提供内容と利用者側の設定にも従います。
+					</p>
+				</section>
+
+				<section id="workspace">
+					<p class="eyebrow">03 / WORKSPACE</p>
+					<h2>考える場所と、手を動かす場所を離さない</h2>
+					<div class="trust-grid">
+						<div>
+							<h3>複数のAIペイン</h3>
+							<p>
+								AIエージェントを必要な数だけ開き、並べ替えながら使えます。一つに調査、
+								もう一つに実装、別の一つにレビューを任せる、といった分担が一画面で見渡せます。
+							</p>
+						</div>
+						<div>
+							<h3>Explorer</h3>
+							<p>
+								プロジェクトのフォルダとファイルを確認し、開きたい対象をAIやPreviewへ
+								つなぎます。いま何を扱っているかを、会話の外側からも把握できます。
+							</p>
+						</div>
+						<div>
+							<h3>Preview / Editor</h3>
+							<p>
+								テキスト、画像、音声、動画を同じ作業面で確認できます。テキストはその場で
+								編集でき、MarkdownやHTMLは内容と表示結果を行き来しながら仕上げられます。
+							</p>
+						</div>
+					</div>
+				</section>
+
+				<section id="memory">
+					<p class="eyebrow">04 / SIDERA MEMORY</p>
+					<h2>保存された履歴を、次の仕事で使える記憶へ</h2>
+					<p>
+						各CLIの会話は生ログとしてPCに残ります。しかし、履歴が残っていることと、
+						次のAIが必要な箇所をすぐ使えることは別です。長くなった一つの会話をそのまま再開すれば
+						文脈は膨らみ、別のAIや別のセッションへ移れば判断の経緯は分断されます。
+					</p>
+					<p>
+						Sidera Memoryは新しいログをShadow Hubで整理し、現在の入力に関係する過去だけを
+						選んで作業中のAIへ返します。会話を短い要約へ潰すのではなく、どの判断が現在の結論か、
+						以前から何が変わったか、その根拠をどの原文へたどれるかまで含めて保ちます。
+					</p>
+					<div class="guide-callout">
+						<strong>ただ覚えるのではなく、何が今の結論か、どう変わったか、根拠は何かまで保つ。</strong>
+						これがShadowHarnessにおける記憶の役割です。
+					</div>
+					<ol>
+						<li>各AIの会話は、それぞれのCLIが定める場所へ生ログとして残ります。</li>
+						<li>新しく増えたログの範囲がShadow Hubへ送られ、LLMの判断も使って記憶へ整理されます。</li>
+						<li>次の入力に関係する記憶だけが選ばれ、作業中のAIへ届けられます。</li>
+						<li>必要なら、整理された内容から元の会話記録へ根拠をたどれます。</li>
+					</ol>
+					<p>
+						この処理でどのデータが端末とHubに置かれるか、またLLMへ渡る情報の境界は、
+						<a href={`${base}security/`}>データの扱いと信頼性</a>で説明しています。
+					</p>
+				</section>
+
+				<section id="workflow">
+					<p class="eyebrow">05 / WORKFLOW</p>
+					<h2>ひとつの依頼を、複数のAIと進める</h2>
+					<ol>
+						<li>
+							<strong>プロジェクトを開く。</strong>
+							Explorerで対象を確認し、必要なAIエージェントをペインに並べます。
+						</li>
+						<li>
+							<strong>役割を分ける。</strong>
+							調査、実装、レビューなどを別々のAIへ任せ、進行を一つの画面で見渡します。
+						</li>
+						<li>
+							<strong>成果をその場で確かめる。</strong>
+							変更されたファイルをPreviewで開き、必要ならEditorで自分の手を入れます。
+						</li>
+						<li>
+							<strong>新しいセッションへ続ける。</strong>
+							会話を丸ごと持ち越す代わりに、Sidera Memoryが今回の入力に関係する結論と
+							経緯を届けます。
+						</li>
+					</ol>
+					<p>
+						AIを一つに絞るのではなく、仕事に合わせて使い分けながら、机と記憶だけは共有する。
+						ShadowHarnessはそのための作業環境です。
+					</p>
+				</section>
+
+				<section id="status">
+					<p class="eyebrow">06 / STATUS</p>
+					<h2>デモと開発状況から、いまのShadowHarnessを見る</h2>
+					<p>
+						現在の画面と動作は、トップページのデモで紹介しています。開発上の更新や今後の
+						テスター募集については、内容と時期が確定したものから、このサイトまたは
+						Xの公式アカウントでお知らせします。
+					</p>
+					<div class="guide-callout">
+						<a href={`${base}#demo`}>デモを見る</a>
+						<span aria-hidden="true"> · </span>
+						<a href="https://x.com/ShadowHarness" target="_blank" rel="noopener">
+							@ShadowHarnessをフォロー
+						</a>
+					</div>
+				</section>
+			</article>
+		</div>
+	</main>
+</SiteLayout>

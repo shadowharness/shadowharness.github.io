@@ -10,12 +10,24 @@ export interface Props {
 	pageUrl: string;
 	alternateJa: string;
 	alternateEn: string;
+	ogImage?: string;
 	noindex?: boolean;
 }
 
-const { lang, title, description, pageUrl, alternateJa, alternateEn, noindex = false } = Astro.props;
+const {
+	lang,
+	title,
+	description,
+	pageUrl,
+	alternateJa,
+	alternateEn,
+	ogImage,
+	noindex = false,
+} = Astro.props;
 const base = import.meta.env.BASE_URL;
 const siteUrl = 'https://shadowharness.github.io/';
+const resolvedOgImage = ogImage ?? (lang === 'ja' ? 'og-image.png' : 'og-image-en.png');
+const otherLangUrl = lang === 'ja' ? alternateEn : alternateJa;
 ---
 
 <html lang={lang}>
@@ -23,6 +35,9 @@ const siteUrl = 'https://shadowharness.github.io/';
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#0b1014" media="(prefers-color-scheme: dark)" />
+		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
 		<link rel="icon" type="image/png" href={`${base}shadow-icon.png`} />
 		{noindex && <meta name="robots" content="noindex" />}
 
@@ -37,17 +52,23 @@ const siteUrl = 'https://shadowharness.github.io/';
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={pageUrl} />
-		<meta property="og:image" content={`${siteUrl}og-image.png`} />
+		<meta property="og:site_name" content="ShadowHarness" />
+		<meta property="og:locale" content={lang === 'ja' ? 'ja_JP' : 'en_US'} />
+		<meta property="og:image" content={`${siteUrl}${resolvedOgImage}`} />
+		<meta property="og:image:alt" content="ShadowHarness" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@ShadowHarness" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content={`${siteUrl}og-image.png`} />
+		<meta name="twitter:image" content={`${siteUrl}${resolvedOgImage}`} />
 
 		<slot name="head-extra" />
 	</head>
 	<body>
-		<SiteHeader lang={lang} />
+		<a class="skip-link" href="#main-content">
+			{lang === 'ja' ? '本文へ移動' : 'Skip to content'}
+		</a>
+		<SiteHeader lang={lang} otherLangUrl={otherLangUrl} />
 		<slot />
 		<SiteFooter lang={lang} />
 	</body>

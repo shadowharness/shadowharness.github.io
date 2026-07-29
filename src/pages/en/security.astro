@@ -2,10 +2,11 @@
 import SiteLayout from '../../layouts/SiteLayout.astro';
 
 const siteUrl = 'https://shadowharness.github.io/';
+const base = import.meta.env.BASE_URL;
 const pageUrl = `${siteUrl}en/security/`;
-const title = 'Security & Trust — Shadow';
+const title = 'Data Handling & Trust — ShadowHarness';
 const description =
-  'What Shadow stores and what it never receives, per-user isolation, encryption and keys, and your rights to delete and export — a concrete account of how your conversation data is handled.';
+	'How Sidera Memory handles terminal logs across your device, Shadow Hub, the LLM used to structure memory, and each CLI provider.';
 ---
 
 <SiteLayout
@@ -16,251 +17,202 @@ const description =
 	alternateJa={`${siteUrl}security/`}
 	alternateEn={pageUrl}
 >
-	<main class="doc-page">
-		<header class="doc-head">
-			<h1>Security &amp; Trust</h1>
-			<p class="updated">Updated July 11, 2026</p>
+	<main id="main-content" class="guide-page">
+		<header class="guide-hero">
+			<p class="eyebrow">DATA HANDLING &amp; TRUST</p>
+			<h1>Data Handling &amp; Trust</h1>
 			<p class="lead">
-				A conversation log with an AI carries the substance of your work and, inevitably,
-				personal information. Shadow's job is to hold that record and turn it into memory —
-				so this page explains concretely what we store, how it is separated, who can see what,
-				and what you can do with it. One principle runs through all of it:
-				<strong>protection should come from structure, not from trusting us to behave.</strong>
+				Sidera Memory sends terminal conversation logs to Shadow Hub and uses LLM judgment
+				to organize them into memory the next task can use.
+			</p>
+			<p>
+				This page makes clear what leaves your device, where an LLM is involved, and where
+				ShadowHarness ends and each AI provider's settings begin.
 			</p>
 		</header>
 
-		<aside class="keypoints">
-			<h2>Key points</h2>
-			<ul>
-				<li>The only thing sent to the server is your conversation record. Files, passwords, and API keys never leave your machine</li>
-				<li>Your data lives in its own isolated room, and no key exists that opens every room</li>
-				<li>The original record stays on your PC, memory notes can be exported anytime, and leaving deletes your room</li>
-				<li>Never sold, never used for advertising, never used to train AI</li>
-				<li>These commitments are never weakened without advance notice</li>
-			</ul>
-		</aside>
+		<div class="guide-layout">
+			<aside class="guide-nav">
+				<p>On this page</p>
+				<nav aria-label="Data handling contents">
+					<a href="#summary">What to know first</a>
+					<a href="#flow">Sidera data flow</a>
+					<a href="#training">Structuring and training</a>
+					<a href="#providers">The provider boundary</a>
+					<a href="#storage">What lives where</a>
+					<a href="#risk">Risk is not zero</a>
+					<a href="#updates">Updates and contact</a>
+				</nav>
+			</aside>
 
-		<article>
-			<section id="what-we-hold">
-				<h2>1. What we store — and what we don't</h2>
-				<p>
-					Shadow's server stores your conversation records with the AI, and the memory notes
-					(summaries and indexes) built from them automatically — the material an AI needs to
-					recall what you did last time. All of it is yours.
-				</p>
-				<p>
-					That record is the only thing sent to the server. The files on your machine, your
-					passwords, your API keys, and your work output are not.
-				</p>
-				<p>
-					The original record also stays on your PC; what the server holds is a copy. Because
-					the original is in your hands, leaving Shadow never means losing your history.
-				</p>
-			</section>
+			<article class="guide-content prose">
+				<section id="summary">
+					<p class="eyebrow">01 / SUMMARY</p>
+					<h2>What to know first</h2>
+					<div class="trust-grid">
+						<div>
+							<h3>Logs go to the Hub</h3>
+							<p>
+								When you use Sidera Memory, new ranges of the terminal logs left by each
+								CLI on your PC are sent to Shadow Hub.
+							</p>
+						</div>
+						<div>
+							<h3>LLM judgment is involved</h3>
+							<p>
+								An LLM helps identify the current conclusion, the history of changes, and
+								the relationship between a conclusion and its evidence.
+							</p>
+						</div>
+						<div>
+							<h3>Structuring input is not used for training</h3>
+							<p>
+								Input sent for Sidera's structuring is processed under settings that do
+								not allow it to be used for model training.
+							</p>
+						</div>
+						<div>
+							<h3>Each CLI is a separate boundary</h3>
+							<p>
+								Data use by Codex, Claude Code, Grok, Gemini, and other providers follows
+								their terms and your settings with them.
+							</p>
+						</div>
+					</div>
+				</section>
 
-			<section id="isolation">
-				<h2>2. Built so users can't mix</h2>
-				<p>
-					Most services put everyone's data in one shared store and separate users with access
-					permissions. In that design, a single permission bug is enough to expose someone
-					else's data.
-				</p>
-				<p>
-					Shadow doesn't use that design. Storage and processing are split into an independent
-					room per user, and your data is placed only in yours. Since no one else's data exists
-					inside your room, a defect there stays contained inside it — and the memory your AI
-					can draw on is the contents of your room, nothing else.
-				</p>
-				<p>
-					The building itself — the server machine and its network entrance — is shared; the
-					data storage and the memory processing are not. Each room also has its own key. No
-					key exists that opens every room, and none is kept at the entrance: breaking the
-					front door yields no keys to the rooms.
-				</p>
-			</section>
+				<section id="flow">
+					<p class="eyebrow">02 / DATA FLOW</p>
+					<h2>How data moves through Sidera Memory</h2>
+					<ol>
+						<li>
+							<strong>Each CLI writes its raw log on your PC.</strong>{' '}
+							The CLI determines the location and format.
+						</li>
+						<li>
+							<strong>ShadowHarness detects new log ranges.</strong>{' '}
+							Terminal log data needed by Sidera Memory is sent to Shadow Hub.
+						</li>
+						<li>
+							<strong>The Hub structures it into memory.</strong>{' '}
+							Alongside mechanical indexing, LLM judgment helps connect conclusions,
+							changes, and supporting evidence.
+						</li>
+						<li>
+							<strong>The relevant part is returned for the current input.</strong>{' '}
+							The working AI pane receives memory selected for this task, not the entire history.
+						</li>
+					</ol>
+					<div class="guide-callout">
+						A terminal log can contain more than what you typed. It may include command
+						output and other content the AI handled during the conversation. Do not assume
+						that only your question is sent.
+					</div>
+				</section>
 
-			<section id="transport">
-				<h2>3. Connections and keys</h2>
-				<p>All traffic between your PC and the server is encrypted.</p>
-				<p>Keys (access tokens) are issued per device.</p>
-				<p>
-					The server stores only a fingerprint (hash) of each key, never the key itself — a
-					break-in on the server yields no usable keys.
-				</p>
-				<p>
-					Connections always start from your side. There is no path from the server into your
-					PC. The operations channel is likewise separate from the user entrance, and
-					administrative actions cannot be reached from it.
-				</p>
-			</section>
+				<section id="training">
+					<p class="eyebrow">03 / LLM PROCESSING</p>
+					<h2>Structuring memory and model training</h2>
+					<p>
+						Sidera Memory cannot be built with keyword search alone. It uses LLM judgment to
+						determine which conclusion is current, when an earlier decision changed, and
+						which record supports it.
+					</p>
+					<p>
+						Input sent for this structuring is handled under settings that do not allow it
+						to be used for model training. This does not mean that no data reaches an LLM:
+						the structuring input is processed by an LLM, but under conditions that exclude
+						that input from training data.
+					</p>
+					<div class="guide-callout">
+						This commitment covers the processing ShadowHarness performs to structure
+						Sidera memory. It does not override how the AI service behind each CLI handles data.
+					</div>
+				</section>
 
-			<section id="operators">
-				<h2>4. What operators can access</h2>
-				<p>
-					Whoever runs the server is technically in a position to reach the data inside it —
-					true of any cloud service. Shadow confines the use of that position to this:
-				</p>
-				<ul>
-					<li>Your data is opened only when you ask us to investigate a problem, or when recovering from a system failure requires it</li>
-					<li>In either case, we contact you and get your consent before opening it</li>
-					<li>Your data is never used for sales or advertising, and never sold or passed to third parties</li>
-				</ul>
-			</section>
+				<section id="providers">
+					<p class="eyebrow">04 / PROVIDER BOUNDARY</p>
+					<h2>Codex, Claude Code, Grok, Gemini, and others remain separate services</h2>
+					<p>
+						Input you send to an AI agent, and the response it generates, are also processed
+						by that provider's service. Retention, use for service improvement or training,
+						and organization-level protections depend on your plan and settings with that provider.
+					</p>
+					<p>
+						ShadowHarness's Sidera settings do not change those provider settings. Conversely,
+						even if training use is disabled with a provider, using Sidera Memory still sends
+						the terminal log data needed to build memory to Shadow Hub. Evaluate the two
+						boundaries separately.
+					</p>
+				</section>
 
-			<section id="ai-summary">
-				<h2>5. The AI that builds memory notes</h2>
-				<p>
-					Turning conversation records into memory notes is done by AI dedicated to
-					summarization, under two rules:
-				</p>
-				<ul>
-					<li>The AI used for this runs under terms where your input is not used to train models</li>
-					<li>
-						The cost is ours, and we never take your API key — holding it would shift the risk
-						of a leak, and the fine print of its contract, onto you
-					</li>
-				</ul>
-			</section>
+				<section id="storage">
+					<p class="eyebrow">05 / STORAGE</p>
+					<h2>What lives on your device and what lives on Shadow Hub</h2>
+					<dl class="facts-list">
+						<div>
+							<dt>Your PC</dt>
+							<dd>
+								Each CLI's raw log remains in the location that CLI chooses. The
+								ShadowHarness client also keeps local state needed to track
+								collection and sending progress.
+							</dd>
+						</div>
+						<div>
+							<dt>Shadow Hub</dt>
+							<dd>
+								The Hub receives log data sent for Sidera Memory and holds the structured
+								memory and indexes built from it.
+							</dd>
+						</div>
+						<div>
+							<dt>The working AI pane</dt>
+							<dd>
+								Memory judged relevant to the current input is supplied as context in the
+								range needed to continue the work.
+							</dd>
+						</div>
+					</dl>
+					<p>
+						Raw logs remain on the device, while data used to maintain memory also lives on
+						the Hub. Neither side is the sole location for every part of the system.
+					</p>
+				</section>
 
-			<section id="retention">
-				<h2>6. Durable, deletable, portable</h2>
-				<p>
-					<strong>It can't silently shrink.</strong> The server has no operation that truncates
-					or overwrites a stored record — accidents that eat your history are prevented by the
-					absence of the capability, not by care. Nightly backups are kept in a separate
-					location, by generation.
-				</p>
-				<p>
-					<strong>You can delete it.</strong> Leave, and your room is deleted with you. Backups
-					expire within a retention period stated in the terms of service.
-				</p>
-				<p>
-					<strong>You can take it out.</strong> Memory notes and summarized conversation ranges
-					are exportable at any time — and the full original has been on your PC all along.
-				</p>
-			</section>
+				<section id="risk">
+					<p class="eyebrow">06 / RISK</p>
+					<h2>Risk is not zero</h2>
+					<p>
+						Sending terminal logs over a network and processing them through the Hub and an
+						LLM carries non-zero risks, including unauthorized disclosure, incorrect access,
+						and service failure. These are the same kinds of risk involved when sending work
+						to a general cloud LLM.
+					</p>
+					<p>
+						A terminal conversation can contain source code, file paths, working decisions,
+						and command output. Consider the sensitivity of the work and review the settings
+						for both each AI provider and Sidera Memory before using them.
+					</p>
+					<p>
+						ShadowHarness reduces risk by making the data path explicit and by processing
+						structuring input under settings that exclude it from training. We do not turn
+						those measures into a promise that disclosure is impossible.
+					</p>
+				</section>
 
-			<section id="dont-have">
-				<h2>7. What we never have</h2>
-				<p>
-					What we don't hold can't leak. Shadow is designed to never receive information it
-					doesn't need.
-				</p>
-				<ul>
-					<li>
-						<strong>Your password</strong> — sign-in goes through an external account. Your
-						password exists only between you and that provider, and never passes through
-						Shadow's servers
-					</li>
-					<li>
-						<strong>Your name or profile</strong> — not stored. What we receive is an opaque
-						identifier that says "same person as last time," nothing more
-					</li>
-					<li>
-						<strong>Your card details</strong> — they go directly to the payment provider and
-						never touch our servers
-					</li>
-				</ul>
-				<p>
-					What Shadow does hold: your conversation data, that identifier, one contact email
-					address, and a list of connected devices. The email address is used for incident
-					notices and important announcements only, never marketing.
-				</p>
-			</section>
-
-			<section id="incident">
-				<h2>8. If something goes wrong</h2>
-				<p>
-					If we become aware of anything that could affect your data — suspected unauthorized
-					access, data loss, a serious failure — we tell the affected users promptly and
-					plainly: what happened, and what we fixed.
-				</p>
-			</section>
-
-			<section id="changes">
-				<h2>9. How these commitments change</h2>
-				<p>
-					This page moves freely in only one direction: stronger. Weakening or removing a
-					commitment will not happen without notifying users in advance.
-				</p>
-			</section>
-		</article>
+				<section id="updates">
+					<p class="eyebrow">07 / UPDATES</p>
+					<h2>When data handling changes</h2>
+					<p>
+						If the Sidera Memory processing path or data boundary changes, this page will be
+						updated as well. Development updates and official notices are available from{' '}
+						<a href="https://x.com/ShadowHarness" target="_blank" rel="noopener">
+							@ShadowHarness
+						</a>.
+					</p>
+					<p><a href={`${base}en/guide/`}>Return to the ShadowHarness Guide</a></p>
+				</section>
+			</article>
+		</div>
 	</main>
 </SiteLayout>
-
-<style>
-	.doc-page {
-		max-width: 780px;
-		margin: 0 auto;
-		padding: clamp(3rem, 8vh, 5rem) 1.5rem 4.5rem;
-	}
-	.doc-head h1 {
-		font-size: clamp(1.9rem, 5vw, 2.5rem);
-		margin: 0 0 0.5rem;
-		color: #f4fbfd;
-	}
-	.updated {
-		color: #708696;
-		font-size: 0.85rem;
-		margin: 0 0 1.8rem;
-	}
-	.doc-head .lead {
-		color: #c3d0dc;
-		font-size: 1.03rem;
-		line-height: 1.95;
-		margin: 0;
-	}
-	.doc-head .lead strong,
-	article strong {
-		color: #eef4f8;
-	}
-	.keypoints {
-		margin: 2.4rem 0 0;
-		background: rgba(56, 219, 230, 0.05);
-		border: 1px solid rgba(56, 219, 230, 0.2);
-		border-radius: 14px;
-		padding: 1.4rem 1.7rem;
-	}
-	.keypoints h2 {
-		font-size: 0.92rem;
-		letter-spacing: 0.1em;
-		color: #38dbe6;
-		margin: 0 0 0.7rem;
-	}
-	.keypoints ul {
-		margin: 0;
-		padding-left: 1.2em;
-	}
-	.keypoints li {
-		color: #c3d0dc;
-		line-height: 1.85;
-		margin: 0.4rem 0;
-		font-size: 0.96rem;
-	}
-	article section {
-		border-top: 1px solid rgba(56, 219, 230, 0.1);
-		margin-top: 2.8rem;
-		padding-top: 2.4rem;
-	}
-	article h2 {
-		font-size: 1.35rem;
-		color: #f4fbfd;
-		margin: 0 0 1rem;
-	}
-	article p {
-		color: #b9c7d4;
-		font-size: 0.99rem;
-		line-height: 1.95;
-		margin: 0.9rem 0;
-	}
-	article ul {
-		padding-left: 1.25em;
-		margin: 0.9rem 0;
-	}
-	article li {
-		color: #b9c7d4;
-		font-size: 0.99rem;
-		line-height: 1.9;
-		margin: 0.5rem 0;
-	}
-</style>

@@ -1,0 +1,150 @@
+---
+interface Props {
+  videoId: string;
+  title: string;
+  buttonLabel: string;
+  closeLabel: string;
+  posterSrc: string;
+  posterAlt: string;
+}
+
+const {
+  videoId,
+  title,
+  buttonLabel,
+  closeLabel,
+  posterSrc,
+  posterAlt,
+} = Astro.props;
+
+const dialogId = `demo-${videoId.replace(/[^a-zA-Z0-9_-]/g, "-")}-${Math.random()
+  .toString(36)
+  .slice(2, 9)}`;
+const youtubeUrl = new URL("https://www.youtube.com/watch");
+youtubeUrl.searchParams.set("v", videoId);
+---
+
+<div
+  data-demo-root
+  data-video-id={videoId}
+  data-video-title={title}
+>
+  <button
+    type="button"
+    class="demo-launch"
+    aria-haspopup="dialog"
+    aria-controls={dialogId}
+    aria-label={buttonLabel}
+  >
+    <img
+      class="demo-poster"
+      src={posterSrc}
+      alt={posterAlt}
+      width="1600"
+      height="900"
+      loading="lazy"
+      decoding="async"
+    />
+    <span class="demo-play" aria-hidden="true">
+      <svg viewBox="0 0 64 64" focusable="false">
+        <circle cx="32" cy="32" r="30"></circle>
+        <path d="M26 20.5 45 32 26 43.5Z"></path>
+      </svg>
+    </span>
+    <span class="demo-launch-label">{buttonLabel}</span>
+  </button>
+
+  <dialog
+    id={dialogId}
+    class="demo-dialog"
+    aria-label={title}
+    data-demo-dialog
+    data-close-label={closeLabel}
+  >
+    <div class="demo-dialog-inner">
+      <div data-demo-frame-mount></div>
+      <button
+        type="button"
+        class="demo-close"
+        aria-label={closeLabel}
+        data-demo-close
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </dialog>
+
+  <noscript>
+    <p>
+      <a href={youtubeUrl.toString()} target="_blank" rel="noopener noreferrer">
+        {buttonLabel}: {title}
+      </a>
+    </p>
+  </noscript>
+</div>
+
+<script>
+  const initializeDemoDialogs = () => {
+    const roots = document.querySelectorAll<HTMLElement>(
+      "[data-demo-root]:not([data-demo-ready])",
+    );
+
+    roots.forEach((root) => {
+      root.dataset.demoReady = "true";
+
+      const launch = root.querySelector<HTMLButtonElement>(".demo-launch");
+      const dialog = root.querySelector<HTMLDialogElement>("[data-demo-dialog]");
+      const close = root.querySelector<HTMLButtonElement>("[data-demo-close]");
+      const mount = root.querySelector<HTMLElement>("[data-demo-frame-mount]");
+      const videoId = root.dataset.videoId;
+      const title = root.dataset.videoTitle;
+
+      if (!launch || !dialog || !close || !mount || !videoId || !title) {
+        return;
+      }
+
+      let opener: HTMLElement | null = null;
+
+      const removeFrame = () => {
+        mount.replaceChildren();
+      };
+
+      const openDialog = () => {
+        opener =
+          document.activeElement instanceof HTMLElement
+            ? document.activeElement
+            : launch;
+
+        const frame = document.createElement("iframe");
+        frame.className = "demo-frame";
+        frame.title = title;
+        frame.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?autoplay=1`;
+        frame.allow =
+          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        frame.referrerPolicy = "strict-origin-when-cross-origin";
+        frame.allowFullscreen = true;
+
+        mount.replaceChildren(frame);
+        dialog.showModal();
+        close.focus();
+      };
+
+      launch.addEventListener("click", openDialog);
+      close.addEventListener("click", () => dialog.close());
+
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) {
+          dialog.close();
+        }
+      });
+
+      dialog.addEventListener("close", () => {
+        removeFrame();
+        opener?.focus();
+        opener = null;
+      });
+    });
+  };
+
+  initializeDemoDialogs();
+</script>
