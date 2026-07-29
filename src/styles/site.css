@@ -3126,11 +3126,11 @@ body:has(.product-console) .site-footer {
 	}
 
 	.console-pane-overview:has(.screen-toggle[aria-pressed="true"]) .overview-canvas {
-		padding: 0 28px;
+		padding: 0 36px;
 	}
 
 	.console-pane-workspace:has(.screen-toggle[aria-pressed="true"]) .workspace-canvas {
-		padding: 0;
+		padding: 0 5px;
 	}
 
 	.console-pane-overview:has(.screen-toggle[aria-pressed="true"]) .overview-copy,
