@@ -57,9 +57,9 @@ const copy = isJa
 			memoryPlay: '動きを再生',
 			memoryClips: [
 				{
-					title: '配線の再構築',
-					body: '更新を受けると、関係線が一度ほどけ、新しい構造へ描き直されます。',
-					alt: 'Sidera Memoryの関係線がほどけ、新しい構造へ再描画される様子',
+					title: '星と配線が再配置される',
+					body: '記憶の更新と同時に、星が新しい位置へ動き、接続線も同じ端点を追って組み替わります。',
+					alt: 'Sidera Memoryの更新で星が新しい位置へ動き、接続線も同時に組み替わる様子',
 					video: 'sidera-memory-reformation.mp4',
 					poster: 'sidera-memory-reformation-poster.webp',
 				},
@@ -84,16 +84,6 @@ const copy = isJa
 				['届ける', '入力に関係する結論と根拠だけを、必要なときに差し出します。'],
 			],
 			memoryLink: 'Sidera Memoryを詳しく見る',
-			flowEyebrow: 'A WORKDAY IN SHADOWHARNESS',
-			flowTitle: 'ひとつの仕事が、最後まで同じ場所を流れる。',
-			flowLead:
-				'始める、任せる、確かめる、続ける。ツールをつなぐための作業を減らし、本来の判断へ時間を戻します。',
-			flow: [
-				['OPEN', 'プロジェクトを開く', 'ファイルと現在の成果物をExplorer / Previewで確認します。'],
-				['WORK', '得意なAIへ任せる', '調査、実装、レビューを複数のAIペインへ分けて進めます。'],
-				['REVIEW', 'その場で確かめる', 'テキスト、画像、動画、レンダー結果を作業面から離れず確認します。'],
-				['CONTINUE', '次のセッションへつなぐ', 'Sidera Memoryが、今回の入力に必要な結論と経緯を戻します。'],
-			],
 			demoEyebrow: 'LIVE PRODUCT DEMO',
 			demoTitle: '説明ではなく、実際の画面を。',
 			demoLead:
@@ -164,9 +154,9 @@ const copy = isJa
 			memoryPlay: 'Play animation',
 			memoryClips: [
 				{
-					title: 'Relations rebuild',
-					body: 'After an update, the relation lines dissolve and redraw into the new structure.',
-					alt: 'Relation lines in Sidera Memory dissolving and redrawing into a new structure',
+					title: 'Stars and connections rearrange',
+					body: 'When memory updates, stars move to new positions and their connection lines follow the same endpoints.',
+					alt: 'Stars moving to new positions as their connection lines rearrange during a Sidera Memory update',
 					video: 'sidera-memory-reformation.mp4',
 					poster: 'sidera-memory-reformation-poster.webp',
 				},
@@ -191,16 +181,6 @@ const copy = isJa
 				['Recall', 'Only the conclusions and evidence relevant to the current input are brought forward.'],
 			],
 			memoryLink: 'Explore Sidera Memory',
-			flowEyebrow: 'A WORKDAY IN SHADOWHARNESS',
-			flowTitle: 'One piece of work, flowing through one place.',
-			flowLead:
-				'Open, delegate, inspect, continue. Spend less time wiring tools together and more time making the decisions that matter.',
-			flow: [
-				['OPEN', 'Open the project', 'See files and current outputs in Explorer and Preview.'],
-				['WORK', 'Give each AI the right job', 'Split research, implementation, and review across several AI panes.'],
-				['REVIEW', 'Inspect it in place', 'Review text, images, video, and rendered output without leaving the workspace.'],
-				['CONTINUE', 'Carry it into the next session', 'Sidera returns the conclusions and context that matter to the next input.'],
-			],
 			demoEyebrow: 'LIVE PRODUCT DEMO',
 			demoTitle: 'See the product, not a promise.',
 			demoLead:
@@ -229,7 +209,7 @@ const copy = isJa
 
 const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 const demoId = isJa ? 'fbVTuTbw2ws' : 'jTfa8tup2-4';
-const mediaVersion = '20260729c';
+const mediaVersion = '20260729e';
 ---
 
 <main id="main-content">
@@ -275,133 +255,119 @@ const mediaVersion = '20260729c';
 		</div>
 	</section>
 
-	<section class="desk-section section-shell">
-		<div class="section-heading section-heading-wide">
-			<p class="eyebrow">{copy.manifestoEyebrow}</p>
-			<h2>
-				{isJa
-					? <Fragment>切り替えるのは、<br />思考だけ。<br />窓ではない。</Fragment>
-					: copy.manifestoTitle}
-			</h2>
-			<p>{copy.manifestoLead}</p>
-		</div>
-		<div class="desk-layout">
-			<div class="product-window product-window-desk">
-				<div class="window-bar" aria-hidden="true">
-					<span class="window-dots"><i></i><i></i><i></i></span>
-					<span>ShadowHarness / Multi-agent workspace</span>
+	<section class="product-story-section">
+		<div class="section-shell">
+			<div class="desk-showcase">
+				<div class="section-heading section-heading-wide">
+					<p class="eyebrow">{copy.manifestoEyebrow}</p>
+					<h2>
+						{isJa
+							? <Fragment>切り替えるのは、<br />思考だけ。<br />窓ではない。</Fragment>
+							: copy.manifestoTitle}
+					</h2>
+					<p>{copy.manifestoLead}</p>
 				</div>
-				<img
-					src={`${base}media/multi-agent-workspace.webp`}
-					alt={copy.deskAlt}
-					width="1600"
-					height="900"
-					loading="lazy"
-					decoding="async"
-				/>
-			</div>
-			<ol class="desk-index">
-				{copy.deskItems.map((item) => (
-					<li>
-						<span>{item.no}</span>
-						<div>
-							<h3>{item.title}</h3>
-							<p>{item.body}</p>
+				<div class="desk-layout">
+					<div class="product-window product-window-desk">
+						<div class="window-bar" aria-hidden="true">
+							<span class="window-dots"><i></i><i></i><i></i></span>
+							<span>ShadowHarness / Multi-agent workspace</span>
 						</div>
-					</li>
-				))}
-			</ol>
-		</div>
-	</section>
-
-	<section id="memory" class="memory-section">
-		<div class="section-shell memory-layout">
-			<div class="memory-visual">
-				<div class="memory-orbit" aria-hidden="true"></div>
-				<div class="memory-gallery">
-					{copy.memoryClips.map((clip, index) => (
-						<figure class:list={['memory-clip', { 'memory-clip-featured': index === 0 }]}>
-							<div class="memory-clip-media">
-								<video
-									id={`sidera-memory-motion-${index + 1}`}
-									autoplay
-									muted
-									loop
-									playsinline
-									preload="none"
-									poster={`${base}media/${clip.poster}?v=${mediaVersion}`}
-									aria-label={clip.alt}
-									data-ambient-video
-									data-src={`${base}media/${clip.video}?v=${mediaVersion}`}
-								></video>
-								<button
-									type="button"
-									class="memory-motion-control"
-									aria-controls={`sidera-memory-motion-${index + 1}`}
-									data-motion-control
-									data-pause-label={copy.memoryPause}
-									data-play-label={copy.memoryPlay}
-									hidden
-								>
-									{copy.memoryPause}
-								</button>
-							</div>
-							<figcaption>
-								<span>SIDERA / {String(index + 1).padStart(2, '0')}</span>
-								<strong>{clip.title}</strong>
-								<p>{clip.body}</p>
-							</figcaption>
-						</figure>
-					))}
+						<img
+							src={`${base}media/multi-agent-workspace.webp?v=${mediaVersion}`}
+							alt={copy.deskAlt}
+							width="1600"
+							height="900"
+							loading="lazy"
+							decoding="async"
+						/>
+					</div>
+					<ol class="desk-index">
+						{copy.deskItems.map((item) => (
+							<li>
+								<span>{item.no}</span>
+								<div>
+									<h3>{item.title}</h3>
+									<p>{item.body}</p>
+								</div>
+							</li>
+						))}
+					</ol>
 				</div>
 			</div>
-			<div class="memory-copy">
-				<p class="eyebrow">{copy.memoryEyebrow}</p>
-				<h2>
-					{isJa
-						? <Fragment>記憶は、履歴の<br />山ではなく、<br />次の判断になる。</Fragment>
-						: copy.memoryTitle}
-				</h2>
-				<p class="memory-lead">{copy.memoryLead}</p>
-				<ol class="memory-steps">
-					{copy.memorySteps.map(([title, body], index) => (
-						<li>
-							<span>{String(index + 1).padStart(2, '0')}</span>
-							<div>
-								<h3>{title}</h3>
-								<p>{body}</p>
-							</div>
-						</li>
-					))}
-				</ol>
-				<a class="text-link text-link-light" href={`${guideUrl}#memory`}>{copy.memoryLink}<span>↗</span></a>
+
+			<div id="memory" class="memory-panel">
+				<div class="memory-panel-heading">
+					<div>
+						<p class="eyebrow">{copy.memoryEyebrow}</p>
+						<h2>
+							{isJa
+								? <Fragment>記憶は、履歴の山ではなく、<br />次の判断になる。</Fragment>
+								: copy.memoryTitle}
+						</h2>
+					</div>
+					<p class="memory-lead">{copy.memoryLead}</p>
+					<div class="memory-copy">
+						<ol class="memory-steps">
+							{copy.memorySteps.map(([title, body], index) => (
+								<li>
+									<span>{String(index + 1).padStart(2, '0')}</span>
+									<div>
+										<h3>{title}</h3>
+										<p>{body}</p>
+									</div>
+								</li>
+							))}
+						</ol>
+						<a class="text-link text-link-light" href={`${guideUrl}#memory`}>{copy.memoryLink}<span>↗</span></a>
+					</div>
+				</div>
+				<div class="memory-panel-body">
+					<div class="memory-visual">
+						<div class="memory-orbit" aria-hidden="true"></div>
+						<div class="memory-gallery">
+							{copy.memoryClips.map((clip, index) => (
+								<figure class:list={['memory-clip', { 'memory-clip-featured': index === 0 }]}>
+									<div class="memory-clip-media">
+										<video
+											id={`sidera-memory-motion-${index + 1}`}
+											autoplay
+											muted
+											loop
+											playsinline
+											preload="none"
+											poster={`${base}media/${clip.poster}?v=${mediaVersion}`}
+											aria-label={clip.alt}
+											data-ambient-video
+											data-src={`${base}media/${clip.video}?v=${mediaVersion}`}
+										></video>
+										<button
+											type="button"
+											class="memory-motion-control"
+											aria-controls={`sidera-memory-motion-${index + 1}`}
+											data-motion-control
+											data-pause-label={copy.memoryPause}
+											data-play-label={copy.memoryPlay}
+											hidden
+										>
+											{copy.memoryPause}
+										</button>
+									</div>
+									<figcaption>
+										<span>SIDERA / {String(index + 1).padStart(2, '0')}</span>
+										<strong>{clip.title}</strong>
+										<p>{clip.body}</p>
+									</figcaption>
+								</figure>
+							))}
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
 
-	<section class="flow-section section-shell">
-		<div class="section-heading">
-			<p class="eyebrow">{copy.flowEyebrow}</p>
-			<h2>
-				{isJa
-					? <Fragment>ひとつの仕事が、<br />最後まで同じ場所を<br />流れる。</Fragment>
-					: copy.flowTitle}
-			</h2>
-			<p>{copy.flowLead}</p>
-		</div>
-		<ol class="flow-list">
-			{copy.flow.map(([label, title, body], index) => (
-				<li>
-					<span class="flow-number">{String(index + 1).padStart(2, '0')}</span>
-					<span class="flow-label">{label}</span>
-					<h3>{title}</h3>
-					<p>{body}</p>
-				</li>
-			))}
-		</ol>
-	</section>
-
-	<section id="demo" class="demo-section">
+	<section id="demo" class="closing-section">
 		<div class="section-shell">
 			<div class="demo-heading">
 				<div>
@@ -412,48 +378,44 @@ const mediaVersion = '20260729c';
 				</div>
 				<p>{copy.demoLead}</p>
 			</div>
-			<DemoDialog
-				videoId={demoId}
-				title={copy.demoTitle}
-				buttonLabel={copy.demoButton}
-				closeLabel={copy.demoClose}
-				posterSrc={`${base}media/hero-workspace.webp?v=${mediaVersion}`}
-				posterAlt={copy.demoPosterAlt}
-			/>
-			<p class="demo-meta">{copy.demoMeta}</p>
-		</div>
-	</section>
-
-	<section class="trust-section section-shell">
-		<div>
-			<p class="eyebrow">{copy.trustEyebrow}</p>
-			<h2>
-				{isJa
-					? <Fragment>便利さと、<br />データの行き先を、<br />同じページで話す。</Fragment>
-					: copy.trustTitle}
-			</h2>
-		</div>
-		<div class="trust-copy">
-			<p class="trust-lead">{copy.trustLead}</p>
-			<ul>
-				{copy.trustFacts.map((fact) => <li>{fact}</li>)}
-			</ul>
-			<a class="text-link" href={securityUrl}>{copy.trustLink}<span>↗</span></a>
-		</div>
-	</section>
-
-	<section class="final-section">
-		<div class="final-glow" aria-hidden="true"></div>
-		<p class="eyebrow">{copy.finalEyebrow}</p>
-		<h2>{isJa ? <Fragment>次の案内は、<br />ここから。</Fragment> : copy.finalTitle}</h2>
-		<p>{copy.finalLead}</p>
-		<div class="cta-row">
-			<a class="button button-inverse" href="https://x.com/ShadowHarness" target="_blank" rel="noopener">
-				{copy.finalX}
-			</a>
-			<a class="button button-dark-ghost" href="https://www.youtube.com/@ShadowHarness" target="_blank" rel="noopener">
-				{copy.finalYouTube}
-			</a>
+			<div class="demo-trust-grid">
+				<div class="demo-product">
+					<DemoDialog
+						videoId={demoId}
+						title={copy.demoTitle}
+						buttonLabel={copy.demoButton}
+						closeLabel={copy.demoClose}
+						posterSrc={`${base}media/${isJa ? 'demo-poster-ja.webp' : 'demo-poster-en.webp'}?v=${mediaVersion}`}
+						posterAlt={copy.demoPosterAlt}
+					/>
+					<p class="demo-meta">{copy.demoMeta}</p>
+				</div>
+				<aside class="trust-card" aria-labelledby="trust-heading">
+					<p class="eyebrow">{copy.trustEyebrow}</p>
+					<h2 id="trust-heading">{copy.trustTitle}</h2>
+					<p class="trust-lead">{copy.trustLead}</p>
+					<ul>
+						{copy.trustFacts.map((fact) => <li>{fact}</li>)}
+					</ul>
+					<a class="text-link" href={securityUrl}>{copy.trustLink}<span>↗</span></a>
+				</aside>
+			</div>
+			<div class="follow-card">
+				<div class="final-glow" aria-hidden="true"></div>
+				<div>
+					<p class="eyebrow">{copy.finalEyebrow}</p>
+					<h2>{copy.finalTitle}</h2>
+					<p>{copy.finalLead}</p>
+				</div>
+				<div class="cta-row">
+					<a class="button button-inverse" href="https://x.com/ShadowHarness" target="_blank" rel="noopener">
+						{copy.finalX}
+					</a>
+					<a class="button button-dark-ghost" href="https://www.youtube.com/@ShadowHarness" target="_blank" rel="noopener">
+						{copy.finalYouTube}
+					</a>
+				</div>
+			</div>
 		</div>
 	</section>
 </main>
