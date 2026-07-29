@@ -28,3 +28,5 @@ npm ci
 npm run dev     # ローカルプレビュー / local preview
 npm run build   # 静的ビルド / static build
 ```
+
+公開前後の品質判定は [UX-AUDIT.md](UX-AUDIT.md) に従います。
