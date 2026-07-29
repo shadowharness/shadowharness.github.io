@@ -3117,6 +3117,39 @@ body:has(.product-console) .site-footer {
 }
 
 @media (min-width: 1101px) and (orientation: landscape) {
+	.screen-toggle:not([hidden]) {
+		top: -27px;
+	}
+
+	.screen-toggle:not([hidden])[aria-pressed="false"]::after {
+		content: attr(aria-label) "  ↗";
+		position: absolute;
+		top: 0;
+		right: 0;
+		display: grid;
+		place-items: center;
+		height: 27px;
+		padding: 0 8px;
+		border-left: 1px solid #203c49;
+		background: #0e1b23;
+		color: #91abb5;
+		font-family: var(--mono);
+		font-size: 0.625rem;
+		font-weight: 700;
+		letter-spacing: 0.05em;
+		white-space: nowrap;
+	}
+
+	.screen-frame:has(.screen-toggle:not([hidden])[aria-pressed="false"]) .screen-toolbar em {
+		visibility: hidden;
+	}
+
+	.screen-toggle:not([hidden])[aria-pressed="false"]:hover::after,
+	.screen-toggle:not([hidden])[aria-pressed="false"]:focus-visible::after {
+		background: #0c3c4b;
+		color: #dcfaff;
+	}
+
 	.console-pane-overview:has(.screen-toggle[aria-pressed="true"]) .overview-canvas,
 	.console-pane-workspace:has(.screen-toggle[aria-pressed="true"]) .workspace-canvas {
 		grid-template-columns: minmax(0, 1fr);
@@ -3142,16 +3175,21 @@ body:has(.product-console) .site-footer {
 	.console-pane-workspace:has(.screen-toggle[aria-pressed="true"]) .workspace-screen {
 		display: grid;
 		align-self: center;
+		justify-self: center;
 		width: 100%;
 		height: auto;
 		margin: 0;
 	}
 
 	.console-pane-overview:has(.screen-toggle[aria-pressed="true"]) .overview-screen {
+		/* 16:9 image plus 27px toolbar, 35px caption, and frame borders. */
+		max-width: calc(177.7778svh - 405.1111px);
 		grid-template-rows: 27px auto 35px;
 	}
 
 	.console-pane-workspace:has(.screen-toggle[aria-pressed="true"]) .workspace-screen {
+		/* 16:9 image plus 27px toolbar and frame borders. */
+		max-width: calc(177.7778svh - 342.8889px);
 		grid-template-rows: 27px auto;
 	}
 
