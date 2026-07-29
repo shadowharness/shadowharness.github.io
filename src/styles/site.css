@@ -1088,6 +1088,17 @@ summary {
 	box-shadow: 0 30px 100px rgba(0, 0, 0, 0.7);
 }
 
+.demo-focus-sentinel {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	overflow: hidden;
+	border: 0;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
 .demo-dialog [data-demo-frame-mount] {
 	overflow: hidden;
 	aspect-ratio: 16 / 9;
@@ -2293,7 +2304,7 @@ body:has(.product-console) .site-footer {
 
 .rail-caption {
 	padding: 12px 13px 8px;
-	color: #526d78;
+	color: #78929d;
 	font-family: var(--mono);
 	font-size: 0.52rem;
 	font-weight: 700;
@@ -2321,7 +2332,7 @@ body:has(.product-console) .site-footer {
 }
 
 .console-rail button > span {
-	color: #46616d;
+	color: #728b95;
 	font-family: var(--mono);
 	font-size: 0.51rem;
 	font-weight: 700;
@@ -2569,7 +2580,7 @@ body:has(.product-console) .site-footer {
 	padding-inline: 8px;
 	border-bottom: 1px solid #203c49;
 	background: #0e1b23;
-	color: #67828d;
+	color: #78939e;
 	font-family: var(--mono);
 	font-size: 0.48rem;
 	letter-spacing: 0.05em;
@@ -2642,7 +2653,7 @@ body:has(.product-console) .site-footer {
 
 .overview-screen figcaption > span {
 	border-left: 0;
-	color: #5c7a87;
+	color: #73929e;
 	letter-spacing: 0.08em;
 }
 

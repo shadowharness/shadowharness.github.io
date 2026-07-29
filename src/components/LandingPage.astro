@@ -367,7 +367,16 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 												loop
 												playsinline
 												preload="none"
-												poster={`${base}media/${clip.poster}?v=${mediaVersion}`}
+												poster={`${base}media/${
+													index === 0
+														? clip.poster
+														: clip.poster.replace(/\.webp$/, '-placeholder.webp')
+												}?v=${mediaVersion}`}
+												data-poster={
+													index === 0
+														? undefined
+														: `${base}media/${clip.poster}?v=${mediaVersion}`
+												}
 												aria-label={clip.alt}
 												data-sidera-video
 												data-src={`${base}media/${clip.video}?v=${mediaVersion}`}
@@ -469,6 +478,19 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 			}
 		};
 
+		const loadSideraPosters = () => {
+			sideraVideos.forEach((video) => {
+				const source = video.dataset.poster;
+				if (!source) return;
+				delete video.dataset.poster;
+				const poster = new Image();
+				poster.addEventListener('load', () => {
+					video.poster = source;
+				});
+				poster.src = source;
+			});
+		};
+
 		const syncSideraPlayback = (paneId: string) => {
 			const featured = featuredVideo();
 			sideraVideos.forEach((video) => {
@@ -487,6 +509,7 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 			options: { updateHash?: boolean; focusTab?: boolean } = {},
 		) => {
 			const paneId = canonicalPane(requestedId);
+			if (paneId === 'memory') loadSideraPosters();
 			panes.forEach((pane) => {
 				pane.hidden = pane.id !== paneId;
 			});
