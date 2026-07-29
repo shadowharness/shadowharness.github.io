@@ -1,41 +1,48 @@
 ---
 export interface Props {
 	lang: 'ja' | 'en';
+	otherLangUrl?: string;
 }
-const { lang } = Astro.props;
+const { lang, otherLangUrl: alternateLanguageUrl } = Astro.props;
 const base = import.meta.env.BASE_URL;
 
 const homeUrl = lang === 'ja' ? base : `${base}en/`;
-const otherLangUrl = lang === 'ja' ? `${base}en/` : base;
-const securityUrl = lang === 'ja' ? `${base}security/` : `${base}en/security/`;
+const otherLangUrl = alternateLanguageUrl ?? (lang === 'ja' ? `${base}en/` : base);
+const guideUrl = lang === 'ja' ? `${base}guide/` : `${base}en/guide/`;
 
 const nav =
 	lang === 'ja'
 		? [
-				{ href: `${homeUrl}#concept`, label: 'コンセプト' },
+				{ href: guideUrl, label: 'ガイド' },
 				{ href: `${homeUrl}#memory`, label: '記憶' },
-				{ href: `${homeUrl}#editor`, label: 'エディタ' },
-				{ href: securityUrl, label: 'セキュリティ' },
 				{ href: `${homeUrl}#demo`, label: 'デモ' },
 			]
 		: [
-				{ href: `${homeUrl}#concept`, label: 'Concept' },
+				{ href: guideUrl, label: 'Guide' },
 				{ href: `${homeUrl}#memory`, label: 'Memory' },
-				{ href: `${homeUrl}#editor`, label: 'Editor' },
-				{ href: securityUrl, label: 'Security' },
 				{ href: `${homeUrl}#demo`, label: 'Demo' },
 			];
 ---
 
 <header class="site-header">
-	<a class="brand" href={homeUrl}>SHADOW</a>
-	<nav>
+	<a class="brand" href={homeUrl}>
+		<span class="brand-mark" aria-hidden="true">S</span>
+		<span>ShadowHarness</span>
+	</a>
+	<nav class="desktop-nav" aria-label={lang === 'ja' ? 'メインナビゲーション' : 'Primary navigation'}>
 		{nav.map((item) => <a href={item.href}>{item.label}</a>)}
+		<a href="https://x.com/ShadowHarness" target="_blank" rel="noopener">X</a>
 	</nav>
 	<span class="header-links">
 		<a class="lang-link" href={otherLangUrl}>{lang === 'ja' ? 'EN' : '日本語'}</a>
-		<a class="x-link" href="https://x.com/ShadowHarness" target="_blank" rel="noopener">
-			𝕏 @ShadowHarness
-		</a>
 	</span>
+	<details class="mobile-menu">
+		<summary aria-label={lang === 'ja' ? 'メニューを開く' : 'Open menu'}>
+			<span></span><span></span>
+		</summary>
+		<nav aria-label={lang === 'ja' ? 'モバイルナビゲーション' : 'Mobile navigation'}>
+			{nav.map((item) => <a href={item.href}>{item.label}</a>)}
+			<a href="https://x.com/ShadowHarness" target="_blank" rel="noopener">X</a>
+		</nav>
+	</details>
 </header>

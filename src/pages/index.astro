@@ -1,11 +1,11 @@
 ---
+import LandingPage from '../components/LandingPage.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 
 const siteUrl = 'https://shadowharness.github.io/';
-const base = import.meta.env.BASE_URL;
-const title = 'Shadow — 忘れないAI環境';
+const title = 'ShadowHarness — AIエージェントに、ひとつの机と記憶を。';
 const description =
-  'Shadow は AIコーディングエージェントのためのデスクトップ作業環境。セッションが終わっても、文脈は終わらない。';
+	'GPT / Codex、Claude Code、Grok、Geminiなどを一つの画面へ。作業と記憶がAIをまたいでつながる、Windows向け統合LLMターミナル環境。';
 ---
 
 <SiteLayout
@@ -17,232 +17,21 @@ const description =
 	alternateEn={`${siteUrl}en/`}
 >
 	<Fragment slot="head-extra">
+		<link rel="preload" as="image" href="/media/hero-workspace.webp" type="image/webp" fetchpriority="high" />
 		<script
 			type="application/ld+json"
 			set:html={JSON.stringify({
 				'@context': 'https://schema.org',
 				'@type': 'SoftwareApplication',
-				name: 'Shadow',
+				name: 'ShadowHarness',
 				applicationCategory: 'DeveloperApplication',
 				operatingSystem: 'Windows',
 				description,
 				url: siteUrl,
 				image: `${siteUrl}og-image.png`,
-				author: { '@type': 'Organization', name: 'Shadow Harness' },
+				author: { '@type': 'Organization', name: 'ShadowHarness' },
 			})}
 		/>
 	</Fragment>
-
-	<main>
-		<section class="hero">
-			<div class="ring" aria-hidden="true"></div>
-			<h1 class="wordmark">SHADOW</h1>
-			<p class="tagline"><span class="ac">忘れない</span>AI環境。</p>
-			<p class="sub">Persistent memory for AI coding agents.</p>
-			<div class="cta-row">
-				<a class="cta primary" href="https://github.com/shadowharness/shadowharness.github.io" target="_blank" rel="noopener">
-					GitHubで見る
-				</a>
-				<a class="cta ghost" href="https://x.com/ShadowHarness" target="_blank" rel="noopener">
-					Xでフォロー
-				</a>
-			</div>
-		</section>
-
-		<section id="concept" class="section">
-			<h2>セッションが終わっても、文脈は終わらない</h2>
-			<p class="lead">
-				AI の CLI にも再開機能はあるが、それは膨らみきった会話をそのまま
-				引きずるだけ——要点だけを持って、新鮮な状態から続きに入れるわけではない。
-				Shadow は、こぼれていく文脈をその手前で拾い上げておく<strong>受け皿</strong>。
-				本物の CLI エージェントを動かしながら、会話の記録を裏で丁寧に残し、
-				話題ごとに整理していく。
-			</p>
-			<div class="grid-3">
-				<div class="card">
-					<h3>記憶が続く</h3>
-					<p>
-						セッションをまたいでも、直前までの文脈と話題ごとのノートが自動で引き継がれる。
-						リセットしても、続きから始められる。
-					</p>
-				</div>
-				<div class="card">
-					<h3>本物の CLI をそのまま</h3>
-					<p>
-						作り替えも間引きもしない。Claude Code / Codex / Grok / Gemini——本物の
-						CLI をそのまま画面の中で動かすから、本家の機能がそのまま全部使える。
-					</p>
-				</div>
-				<div class="card">
-					<h3>デスクトップで完結</h3>
-					<p>
-						エクスプローラーとプレビューに加え、AIのペインは必要なだけ増やせる
-						（10枚でも並べられる）。エディタも内蔵。ウィンドウを行き来する必要がない。
-					</p>
-				</div>
-			</div>
-		</section>
-
-		<section id="memory" class="section alt">
-			<h2>記憶のしくみ</h2>
-			<p class="lead">
-				AIと交わした会話は、放っておけばウィンドウを閉じた瞬間に消えていく。
-				Shadow はその一つひとつを取りこぼさず記録し、サーバー側で静かに整理して、
-				話題ごとのノートに変えていく。
-			</p>
-			<div class="grid-3">
-				<div class="card">
-					<h3>ぜんぶ残る</h3>
-					<p>
-						どの会社の AI ペインで交わした会話も、同じように記録される。
-						どのペインで何を話したか、あとから辿れる。
-					</p>
-				</div>
-				<div class="card">
-					<h3>整理はサーバーの仕事</h3>
-					<p>
-						会話の整理と話題付けは、手元の端末ではなくサーバー側でおこなう。
-						まとめたノートの正本はサーバーに置かれ、端末に溜め込まない。
-					</p>
-				</div>
-				<div class="card">
-					<h3>続きから始まる</h3>
-					<p>
-						新しいセッションを開くと、直前の状況と関係する話題が自動で差し出される。
-						「さっきの続きで」が、そのまま通じる。
-					</p>
-				</div>
-			</div>
-		</section>
-
-		<section id="editor" class="section">
-			<h2>エディタも、その場で</h2>
-			<p class="lead">
-				ファイルを見る・直す・仕上がりを確かめる——が、1つの画面の中で完結する。
-				AIに任せる部分と自分で書く部分を、行ったり来たりしながら進められる。
-			</p>
-			<div class="grid-3">
-				<div class="card">
-					<h3>3つのモード</h3>
-					<p>
-						閲覧・編集・そのまま表示。Markdown や HTML は、書きながら仕上がりを
-						リアルタイムに確認できる。
-					</p>
-				</div>
-				<div class="card">
-					<h3>AI補完つき</h3>
-					<p>
-						書きかけの行の続きを、AIがうっすらと提案する。Tab で確定、
-						いらなければ無視して書き進めるだけ。
-					</p>
-				</div>
-				<div class="card">
-					<h3>補完エンジンは選べる</h3>
-					<p>
-						補完に使うAIは差し替え可能。サーバーで動く小さなローカルAIにも、
-						各社のクラウドモデルにも、設定ひとつで切り替えられる。
-					</p>
-				</div>
-			</div>
-		</section>
-
-		<section id="watch" class="section alt">
-			<h2>席を外しても、止まらない</h2>
-			<p class="lead">
-				長い作業の途中で席を離れることはある。Shadow には、外出先の携帯から作業の様子を
-				確かめて、ひとこと指示を返せる仕組みも用意している。急ぎの確認や承認待ちで、
-				AIが止まったままにならないように。
-			</p>
-		</section>
-
-		<section id="security" class="section">
-			<h2>プライバシーとセキュリティ</h2>
-			<p class="lead">
-				AIとの会話ログには、ほぼ確実に個人情報や仕事の中身が含まれる。
-				Shadow は、それを前提に設計している。
-			</p>
-			<div class="grid-2">
-				<div class="card">
-					<h3>秘密が入っている前提で</h3>
-					<p>
-						会話ログは「秘密が書かれているもの」として扱う。保存のしかたも整理のしかたも、
-						その前提から出発している。
-					</p>
-				</div>
-				<div class="card">
-					<h3>経路は暗号化</h3>
-					<p>
-						端末とサーバーの間のやり取りは、暗号化された経路だけを使う。
-						会話の記録が裸のままネットワークを流れることはない。
-					</p>
-				</div>
-				<div class="card">
-					<h3>学習には使わせない</h3>
-					<p>
-						サーバー側の整理処理は、入力がAI各社の学習に使われない形でおこなう——
-						学習利用を断った契約形態のAPIと、サーバーの中で動くローカルAIの組み合わせ。
-					</p>
-				</div>
-				<div class="card">
-					<h3>これからは、もっと内側へ</h3>
-					<p>
-						整理も制御も、将来はサーバー内のローカルAIへ完全に置き換えていく予定。
-						大事なデータを外に出さない方向へ、一歩ずつ進めている。
-					</p>
-				</div>
-			</div>
-			<p class="repo-link">
-				<a href={`${base}security/`}>→ セキュリティ・信頼性ページで詳しく見る</a>
-			</p>
-		</section>
-
-		<section id="demo" class="section alt">
-			<h2>実際の画面</h2>
-			<p class="lead">
-				エクスプローラーと、並べた AI ペインが1つのウィンドウに収まっている。
-				ペインは浮動配置で自由に増減できる。
-			</p>
-			<div class="demo-shot">
-				<img
-					src={`${base}demo-screenshot-1.png`}
-					alt="Shadow デスクトップアプリのスクリーンショット — エクスプローラーと複数のAIペインが並ぶ様子"
-					loading="lazy"
-					width="1568"
-					height="830"
-				/>
-			</div>
-
-			<div class="video-grid">
-				<div class="video-card">
-					<div class="video-embed">
-						<iframe
-							src="https://www.youtube-nocookie.com/embed/ZqW_nLrWJVA"
-							title="Shadow — 忘れないAI環境"
-							loading="lazy"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							allowfullscreen
-						></iframe>
-					</div>
-					<p class="video-caption">記憶編 — セッションをまたいで文脈が続く様子</p>
-				</div>
-				<div class="video-card">
-					<div class="video-embed">
-						<iframe
-							src="https://www.youtube-nocookie.com/embed/PGTC9SDfYWs"
-							title="Shadow — 散らからないAI環境"
-							loading="lazy"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							allowfullscreen
-						></iframe>
-					</div>
-					<p class="video-caption">作業スペース編 — 散らからずに片付く様子</p>
-				</div>
-			</div>
-			<p class="repo-link">
-				<a href="https://github.com/shadowharness/shadowharness.github.io" target="_blank" rel="noopener">
-					→ GitHub
-				</a>
-			</p>
-		</section>
-	</main>
+	<LandingPage lang="ja" />
 </SiteLayout>

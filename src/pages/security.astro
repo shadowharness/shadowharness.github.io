@@ -2,10 +2,11 @@
 import SiteLayout from '../layouts/SiteLayout.astro';
 
 const siteUrl = 'https://shadowharness.github.io/';
+const base = import.meta.env.BASE_URL;
 const pageUrl = `${siteUrl}security/`;
-const title = 'セキュリティ・信頼性 — Shadow';
+const title = 'データの扱いと信頼性 — ShadowHarness';
 const description =
-  'Shadow が預かるもの・預からないもの、利用者ごとの隔離、通信と鍵、消去・持ち出しの権利まで、あなたの会話データの扱いを具体的に説明します。';
+	'Sidera Memoryが扱う端末ログ、Shadow Hub、記憶の構造化に使うLLM、各CLI提供元との境界とリスクを説明します。';
 ---
 
 <SiteLayout
@@ -16,245 +17,195 @@ const description =
 	alternateJa={pageUrl}
 	alternateEn={`${siteUrl}en/security/`}
 >
-	<main class="doc-page">
-		<header class="doc-head">
-			<h1>セキュリティ・信頼性</h1>
-			<p class="updated">2026年7月11日 更新</p>
+	<main id="main-content" class="guide-page">
+		<header class="guide-hero">
+			<p class="eyebrow">DATA HANDLING &amp; TRUST</p>
+			<h1>データの扱いと信頼性</h1>
 			<p class="lead">
-				AI との会話の記録には、仕事の中身や個人的な情報が含まれます。Shadow はその記録を
-				預かって「記憶」に変えるサービスです。だからこのページでは、何を預かり、どう隔て、
-				誰に何が見え、あなたに何ができるのかを具体的に説明します。方針は一つです —
-				<strong>守りは運営の心がけではなく、構造で成り立たせる。</strong>
+				Sidera Memoryは、端末の会話ログをShadow Hubへ送り、LLMの判断も使って
+				次の作業に使える記憶へ整理します。
+			</p>
+			<p>
+				便利さのために何が端末の外へ出るのか、どの処理にLLMが関わるのか、
+				各AI提供元の設定とどこで分かれるのかを、ここで明確にします。
 			</p>
 		</header>
 
-		<aside class="keypoints">
-			<h2>要点</h2>
-			<ul>
-				<li>サーバーに送られるのは AI との会話記録だけ。PC のファイル・パスワード・API キーは出ていきません</li>
-				<li>データは利用者ごとに独立した部屋に置かれ、全部屋を開けられる鍵は存在しません</li>
-				<li>会話の原本は常にあなたの PC にあり、記憶ノートはいつでも取り出せ、退会すれば部屋ごと消えます</li>
-				<li>売りません。広告に使いません。AI の学習に使わせません</li>
-				<li>これらの約束を弱める変更は、事前の告知なしには行いません</li>
-			</ul>
-		</aside>
+		<div class="guide-layout">
+			<aside class="guide-nav">
+				<p>このページ</p>
+				<nav aria-label="データの扱いに関する目次">
+					<a href="#summary">最初に知ってほしいこと</a>
+					<a href="#flow">Sideraのデータフロー</a>
+					<a href="#training">構造化と学習利用</a>
+					<a href="#providers">各CLI提供元との境界</a>
+					<a href="#storage">端末とHubにあるもの</a>
+					<a href="#risk">ゼロリスクではない</a>
+					<a href="#updates">更新と問い合わせ</a>
+				</nav>
+			</aside>
 
-		<article>
-			<section id="what-we-hold">
-				<h2>1. 預かるもの、預からないもの</h2>
-				<p>
-					Shadow がサーバーで預かるのは、あなたが AI と交わした会話の記録と、そこから自動で
-					作られる「記憶ノート」（要約と索引）です。次の作業のときに AI が「前に何をしたか」を
-					思い出すための材料で、すべてあなたの資産です。
-				</p>
-				<p>
-					サーバーに送られるのは、この会話記録だけです。PC の中のファイル、パスワード、
-					API キー、作業の成果物は送られません。
-				</p>
-				<p>
-					また、会話記録の原本は常にあなたの PC に残ります。サーバーが持つのはその写しです。
-					原本が手元にあるので、Shadow をやめても会話の記録を失うことはありません。
-				</p>
-			</section>
+			<article class="guide-content prose">
+				<section id="summary">
+					<p class="eyebrow">01 / SUMMARY</p>
+					<h2>最初に知ってほしいこと</h2>
+					<div class="trust-grid">
+						<div>
+							<h3>ログはHubへ送られる</h3>
+							<p>
+								Sidera Memoryを利用すると、各CLIがPCに残した端末ログの新しい範囲が
+								Shadow Hubへ送られます。
+							</p>
+						</div>
+						<div>
+							<h3>LLMの判断が入る</h3>
+							<p>
+								現在の結論、変更の経緯、根拠の関係を整理する過程にはLLMの判断を使います。
+							</p>
+						</div>
+						<div>
+							<h3>構造化入力は学習に使わせない</h3>
+							<p>
+								Sideraの構造化に渡す入力は、モデル学習へ利用されない設定で処理します。
+							</p>
+						</div>
+						<div>
+							<h3>各CLI側は別の境界</h3>
+							<p>
+								Codex、Claude Code、Grok、Geminiなどのデータ利用は、
+								各提供元の条件と利用者自身の設定に従います。
+							</p>
+						</div>
+					</div>
+				</section>
 
-			<section id="isolation">
-				<h2>2. 他の利用者と混ざらない構造</h2>
-				<p>
-					多くのサービスは、全員のデータを一つの大きな保管庫に入れ、アクセス権限で仕切ります。
-					その作りでは、権限の不具合が一つあるだけで、他人のデータが見える事故につながります。
-				</p>
-				<p>
-					Shadow はこの作りを採りませんでした。保管も処理も利用者ごとに独立した「部屋」に
-					分かれていて、あなたのデータはあなたの部屋にだけ置かれます。部屋の中に他人のデータが
-					最初から存在しないため、仮にどこかに不具合があっても、影響はその部屋の中に閉じます。
-					AI が記憶として参照できるのも、あなたの部屋の中身だけです。
-				</p>
-				<p>
-					建物そのもの — サーバー機や通信の入口 — は共有ですが、データの保管場所と記憶を
-					処理する仕組みは利用者ごとに分かれています。部屋の鍵も一部屋ごとに別で、
-					全部屋を開けられる鍵はどこにも作っていません。入口が攻撃を受けても、そこに
-					他の部屋の鍵は置かれていません。
-				</p>
-			</section>
+				<section id="flow">
+					<p class="eyebrow">02 / DATA FLOW</p>
+					<h2>Sidera Memoryでデータが動く順番</h2>
+					<ol>
+						<li>
+							<strong>各CLIが生ログをPCに残す。</strong>
+							保存場所と形式は、それぞれのCLIが定めます。
+						</li>
+						<li>
+							<strong>ShadowHarnessが新しいログ範囲を検出する。</strong>
+							Sidera Memoryのために必要な端末ログがShadow Hubへ送られます。
+						</li>
+						<li>
+							<strong>Hub上で記憶へ構造化する。</strong>
+							機械的な索引だけでなくLLMの判断も使い、結論、変化、根拠のつながりを整理します。
+						</li>
+						<li>
+							<strong>現在の入力に関係する部分を返す。</strong>
+							過去の全履歴ではなく、今回の作業に必要と判断された記憶がAIペインへ届きます。
+						</li>
+					</ol>
+					<div class="guide-callout">
+						端末ログには、入力した文章だけでなく、コマンドの出力やAIが会話中に扱った情報が
+						含まれることがあります。「質問文だけが送られる」とは考えないでください。
+					</div>
+				</section>
 
-			<section id="transport">
-				<h2>3. 通信と鍵</h2>
-				<p>あなたの PC とサーバーの間の通信は、すべて暗号化されています。</p>
-				<p>鍵（アクセス用のトークン）は端末ごとに別々に発行されます。</p>
-				<p>
-					サーバー側に保存されるのは鍵そのものではなく、照合用の指紋（ハッシュ）です。
-					サーバーに侵入されても、そこから使える鍵は出てきません。
-				</p>
-				<p>
-					接続は常にあなたの PC 側から始まります。サーバーからあなたの PC へ接続する経路は
-					ありません。運営用の管理経路も利用者用の入口とは分かれていて、利用者用の入口から
-					管理操作には到達できません。
-				</p>
-			</section>
+				<section id="training">
+					<p class="eyebrow">03 / LLM PROCESSING</p>
+					<h2>記憶の構造化と、モデル学習への利用</h2>
+					<p>
+						Sidera Memoryは、単純なキーワード検索だけでは作れません。どれが現在の結論か、
+						以前の判断がいつ更新されたか、どの記録が根拠になるかを整理するために、
+						LLMによる判断を使います。
+					</p>
+					<p>
+						この構造化処理へ渡す入力は、モデル学習に利用されない設定で扱います。
+						これは「LLMへ何も送らない」という意味ではありません。構造化のための入力は
+						LLM処理へ渡りますが、その入力を学習データとして利用しない条件を選んでいます。
+					</p>
+					<div class="guide-callout">
+						この約束が対象にするのは、ShadowHarnessがSideraの記憶を構造化する処理です。
+						各CLIで利用するAIサービス側の扱いまで、ShadowHarnessが上書きするものではありません。
+					</div>
+				</section>
 
-			<section id="operators">
-				<h2>4. 運営者に見えるもの</h2>
-				<p>
-					サーバーを管理する運営者は、技術的にはサーバー内のデータに触れられる立場にあります。
-					これはどのクラウドサービスでも変わりません。Shadow では、この立場の使い方を
-					次の三つに限定しています。
-				</p>
-				<ul>
-					<li>あなたのデータを開くのは、あなたから障害調査の依頼があったときと、システム障害の復旧に必要なときだけです</li>
-					<li>いずれの場合も、あなたに連絡し、同意を得た上で開きます</li>
-					<li>あなたのデータを営業や広告に使うこと、第三者に売る・渡すことはありません</li>
-				</ul>
-			</section>
+				<section id="providers">
+					<p class="eyebrow">04 / PROVIDER BOUNDARY</p>
+					<h2>Codex、Claude Code、Grok、Geminiなどは別のサービス</h2>
+					<p>
+						各AIエージェントへ送った入力と、そのAIが生成した応答は、それぞれの提供元の
+						サービス上でも処理されます。保存期間、サービス改善や学習への利用、組織向けの
+						保護設定などは、利用しているプランと利用者自身の設定に依存します。
+					</p>
+					<p>
+						ShadowHarnessのSidera向け設定は、各提供元側の設定を変更しません。反対に、
+						各提供元側で学習利用を無効にしていても、Sidera Memoryを使う場合は記憶を作るための
+						端末ログがShadow Hubへ送られます。二つの境界を分けて判断してください。
+					</p>
+				</section>
 
-			<section id="ai-summary">
-				<h2>5. 記憶ノートを作る AI</h2>
-				<p>会話記録から記憶ノートへの変換は、要約専用の AI が行います。この処理には二つの決まりがあります。</p>
-				<ul>
-					<li>処理に使う AI は、入力されたデータをモデルの学習に使わない条件で運用します</li>
-					<li>
-						処理の費用は運営が負担します。あなたの API キーを預かることはありません —
-						キーを預かれば、漏洩時の責任や契約条件の違いをあなたに背負わせることになるためです
-					</li>
-				</ul>
-			</section>
+				<section id="storage">
+					<p class="eyebrow">05 / STORAGE</p>
+					<h2>端末側にあるもの、Shadow Hub側にあるもの</h2>
+					<dl class="facts-list">
+						<div>
+							<dt>利用者のPC</dt>
+							<dd>
+								各CLIの生ログは、そのCLIが定めるPC内の場所に残ります。ShadowHarnessの
+								クライアントにも、収集位置や送信進捗を管理するためのローカル情報が残ります。
+							</dd>
+						</div>
+						<div>
+							<dt>Shadow Hub</dt>
+							<dd>
+								Sidera Memoryのために送られたログデータを受け取り、そこから作られた
+								構造化記憶と索引を保持します。
+							</dd>
+						</div>
+						<div>
+							<dt>作業中のAIペイン</dt>
+							<dd>
+								現在の入力に関係すると判断された記憶が、作業を続けるための文脈として
+								必要な範囲で渡されます。
+							</dd>
+						</div>
+					</dl>
+					<p>
+						生ログは端末に残り、記憶を扱うためのデータはHubにも置かれます。端末とHubの
+						どちらか一方だけですべてを持つ構造ではありません。
+					</p>
+				</section>
 
-			<section id="retention">
-				<h2>6. 消えない・消せる・取り出せる</h2>
-				<p>
-					<strong>勝手に消えません。</strong>サーバーには、預かった会話記録を切り詰める・
-					上書きするといった操作が、機能として存在しません。不具合や誤操作で記録が欠ける事故を、
-					「そういう機能を持たない」ことで防いでいます。加えて毎晩、別の場所にバックアップを
-					世代ごと残します。
-				</p>
-				<p>
-					<strong>あなたはいつでも消せます。</strong>退会すれば、あなたの部屋ごと削除されます。
-					バックアップも保持期間の満了までに消えます。保持期間の日数は利用規約に明記します。
-				</p>
-				<p>
-					<strong>いつでも取り出せます。</strong>記憶ノートと要約済みの会話範囲は、いつでも
-					手元に取り出せます。会話の完全な原本は、初めからあなたの PC にあります。
-				</p>
-			</section>
+				<section id="risk">
+					<p class="eyebrow">06 / RISK</p>
+					<h2>ゼロリスクとは言いません</h2>
+					<p>
+						端末ログをネットワーク越しに送り、HubとLLMで処理する以上、情報漏えい、
+						誤ったアクセス、処理先の障害といったリスクをゼロにはできません。これは、
+						仕事の内容を一般のクラウドLLMへ送って使うときと同種のリスクです。
+					</p>
+					<p>
+						端末の会話には、ソースコード、ファイルパス、作業上の判断、コマンド出力などが
+						含まれ得ます。扱う情報の機密性と、各AI提供元およびSidera Memoryの設定を確認した上で
+						利用してください。
+					</p>
+					<p>
+						ShadowHarnessは、データの流れを曖昧にせず、構造化に使う入力を学習利用されない
+						設定で扱うことでリスクを抑えます。ただし、それを「絶対に漏れない」という
+						約束へ言い換えることはしません。
+					</p>
+				</section>
 
-			<section id="dont-have">
-				<h2>7. そもそも持たないもの</h2>
-				<p>
-					持っていないものは、漏れようがありません。Shadow は、預かる必要のない情報を
-					最初から受け取らない設計です。
-				</p>
-				<ul>
-					<li>
-						<strong>パスワード</strong> — ログインは外部アカウントで行います。パスワードは
-						あなたとその提供元の間にだけ存在し、Shadow のサーバーを通ることすらありません
-					</li>
-					<li>
-						<strong>氏名・プロフィール</strong> — 保存しません。受け取るのは「前回と同じ人」と
-						確認するための、氏名を含まない識別番号だけです
-					</li>
-					<li>
-						<strong>カード情報</strong> — 決済会社に直接渡り、Shadow のサーバーを通りません
-					</li>
-				</ul>
-				<p>
-					Shadow の手元にあるのは、預かった会話データ、上の識別番号、連絡用のメールアドレス一つ、
-					接続端末の一覧だけです。メールアドレスは事故の連絡と重要なお知らせにだけ使い、
-					宣伝には使いません。
-				</p>
-			</section>
-
-			<section id="incident">
-				<h2>8. 事故が起きたとき</h2>
-				<p>
-					あなたのデータに影響しうる問題 — 不正アクセスの疑い、データの欠損、重大な障害 —
-					を運営が把握したときは、対象の利用者へ隠さず、すみやかに知らせます。何が起きたのか、
-					どう直したのかまで説明します。
-				</p>
-			</section>
-
-			<section id="changes">
-				<h2>9. この約束の変え方</h2>
-				<p>
-					このページの内容は、守りを強くする方向にはいつでも更新します。約束を弱める・減らす
-					変更は、事前に利用者へ告知せずには行いません。
-				</p>
-			</section>
-		</article>
+				<section id="updates">
+					<p class="eyebrow">07 / UPDATES</p>
+					<h2>データの扱いが変わるとき</h2>
+					<p>
+						Sidera Memoryの処理経路やデータの境界に変更がある場合は、このページの説明も
+						更新します。開発状況と公式のお知らせは
+						<a href="https://x.com/ShadowHarness" target="_blank" rel="noopener">
+							@ShadowHarness
+						</a>
+						で確認できます。
+					</p>
+					<p><a href={`${base}guide/`}>ShadowHarnessガイドへ戻る</a></p>
+				</section>
+			</article>
+		</div>
 	</main>
 </SiteLayout>
-
-<style>
-	.doc-page {
-		max-width: 780px;
-		margin: 0 auto;
-		padding: clamp(3rem, 8vh, 5rem) 1.5rem 4.5rem;
-	}
-	.doc-head h1 {
-		font-size: clamp(1.9rem, 5vw, 2.5rem);
-		margin: 0 0 0.5rem;
-		color: #f4fbfd;
-	}
-	.updated {
-		color: #708696;
-		font-size: 0.85rem;
-		margin: 0 0 1.8rem;
-	}
-	.doc-head .lead {
-		color: #c3d0dc;
-		font-size: 1.03rem;
-		line-height: 1.95;
-		margin: 0;
-	}
-	.doc-head .lead strong,
-	article strong {
-		color: #eef4f8;
-	}
-	.keypoints {
-		margin: 2.4rem 0 0;
-		background: rgba(56, 219, 230, 0.05);
-		border: 1px solid rgba(56, 219, 230, 0.2);
-		border-radius: 14px;
-		padding: 1.4rem 1.7rem;
-	}
-	.keypoints h2 {
-		font-size: 0.92rem;
-		letter-spacing: 0.1em;
-		color: #38dbe6;
-		margin: 0 0 0.7rem;
-	}
-	.keypoints ul {
-		margin: 0;
-		padding-left: 1.2em;
-	}
-	.keypoints li {
-		color: #c3d0dc;
-		line-height: 1.85;
-		margin: 0.4rem 0;
-		font-size: 0.96rem;
-	}
-	article section {
-		border-top: 1px solid rgba(56, 219, 230, 0.1);
-		margin-top: 2.8rem;
-		padding-top: 2.4rem;
-	}
-	article h2 {
-		font-size: 1.35rem;
-		color: #f4fbfd;
-		margin: 0 0 1rem;
-	}
-	article p {
-		color: #b9c7d4;
-		font-size: 0.99rem;
-		line-height: 1.95;
-		margin: 0.9rem 0;
-	}
-	article ul {
-		padding-left: 1.25em;
-		margin: 0.9rem 0;
-	}
-	article li {
-		color: #b9c7d4;
-		font-size: 0.99rem;
-		line-height: 1.9;
-		margin: 0.5rem 0;
-	}
-</style>

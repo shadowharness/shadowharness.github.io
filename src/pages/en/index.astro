@@ -1,12 +1,12 @@
 ---
+import LandingPage from '../../components/LandingPage.astro';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 
 const siteUrl = 'https://shadowharness.github.io/';
-const base = import.meta.env.BASE_URL;
 const pageUrl = `${siteUrl}en/`;
-const title = 'Shadow — The AI environment that never forgets';
+const title = 'ShadowHarness — One desk and one memory for every AI agent';
 const description =
-  'Shadow is a desktop working environment for AI coding agents. The session may end — the context never does.';
+	'Bring GPT / Codex, Claude Code, Grok, Gemini and more into one Windows workspace where work and memory carry across agents.';
 ---
 
 <SiteLayout
@@ -18,235 +18,21 @@ const description =
 	alternateEn={pageUrl}
 >
 	<Fragment slot="head-extra">
+		<link rel="preload" as="image" href="/media/hero-workspace.webp" type="image/webp" fetchpriority="high" />
 		<script
 			type="application/ld+json"
 			set:html={JSON.stringify({
 				'@context': 'https://schema.org',
 				'@type': 'SoftwareApplication',
-				name: 'Shadow',
+				name: 'ShadowHarness',
 				applicationCategory: 'DeveloperApplication',
 				operatingSystem: 'Windows',
 				description,
 				url: pageUrl,
-				image: `${siteUrl}og-image.png`,
-				author: { '@type': 'Organization', name: 'Shadow Harness' },
+				image: `${siteUrl}og-image-en.png`,
+				author: { '@type': 'Organization', name: 'ShadowHarness' },
 			})}
 		/>
 	</Fragment>
-
-	<main>
-		<section class="hero">
-			<div class="ring" aria-hidden="true"></div>
-			<h1 class="wordmark">SHADOW</h1>
-			<p class="tagline">The AI environment that <span class="ac">never forgets</span>.</p>
-			<p class="sub">Persistent memory for AI coding agents.</p>
-			<div class="cta-row">
-				<a class="cta primary" href="https://github.com/shadowharness/shadowharness.github.io" target="_blank" rel="noopener">
-					View on GitHub
-				</a>
-				<a class="cta ghost" href="https://x.com/ShadowHarness" target="_blank" rel="noopener">
-					Follow on X
-				</a>
-			</div>
-		</section>
-
-		<section id="concept" class="section">
-			<h2>The session may end. The context doesn't.</h2>
-			<p class="lead">
-				An AI CLI can resume a session — but resume drags the whole bloated
-				conversation forward. It doesn't carry just the essentials and let you continue
-				fresh. Shadow is <strong>a home for your context</strong>: it hosts real
-				CLI agents while quietly keeping a record of every conversation and organizing
-				it by topic behind the scenes.
-			</p>
-			<div class="grid-3">
-				<div class="card">
-					<h3>Memory that persists</h3>
-					<p>
-						Context and topic notes carry over across sessions automatically. Reset the
-						session — pick up right where you left off.
-					</p>
-				</div>
-				<div class="card">
-					<h3>The real CLIs, as-is</h3>
-					<p>
-						Nothing rebuilt, nothing stripped down. Claude Code / Codex / Grok /
-						Gemini — Shadow runs the genuine CLI right inside the window, so every
-						feature works exactly as it does upstream.
-					</p>
-				</div>
-				<div class="card">
-					<h3>One desktop, everything</h3>
-					<p>
-						A file explorer, a preview pane, and as many AI panes as you want
-						(stack ten if you like). A built-in editor too. No more window juggling.
-					</p>
-				</div>
-			</div>
-		</section>
-
-		<section id="memory" class="section alt">
-			<h2>How the memory works</h2>
-			<p class="lead">
-				Left alone, a conversation with an AI vanishes the moment you close the window.
-				Shadow records every one of them, quietly organizes them on the server side,
-				and turns them into notes — one per topic.
-			</p>
-			<div class="grid-3">
-				<div class="card">
-					<h3>Everything is kept</h3>
-					<p>
-						Conversations in every AI pane you open — whichever company's — are
-						recorded the same way. What was said, and in which pane, stays traceable.
-					</p>
-				</div>
-				<div class="card">
-					<h3>The server does the tidying</h3>
-					<p>
-						Organizing and topic-tagging happen on the server, not on your machine.
-						The master copy of the notes lives there — nothing piles up on your device.
-					</p>
-				</div>
-				<div class="card">
-					<h3>Continue where you left off</h3>
-					<p>
-						Open a new session and the recent state and related topics are laid out
-						for you automatically. "Continue from before" just works.
-					</p>
-				</div>
-			</div>
-		</section>
-
-		<section id="editor" class="section">
-			<h2>An editor, right there</h2>
-			<p class="lead">
-				View a file, fix it, check how it renders — all inside one window. Move back
-				and forth between what you delegate to the AI and what you write yourself.
-			</p>
-			<div class="grid-3">
-				<div class="card">
-					<h3>Three modes</h3>
-					<p>
-						View, edit, and rendered preview. Markdown and HTML render live
-						as you type.
-					</p>
-				</div>
-				<div class="card">
-					<h3>AI completion built in</h3>
-					<p>
-						The AI faintly suggests the rest of the line you're writing. Press Tab
-						to accept — or just keep typing and ignore it.
-					</p>
-				</div>
-				<div class="card">
-					<h3>Bring your own engine</h3>
-					<p>
-						The completion model is swappable: a small local AI running on the
-						server, or any major cloud model — one setting away.
-					</p>
-				</div>
-			</div>
-		</section>
-
-		<section id="watch" class="section alt">
-			<h2>Step away — it doesn't stop</h2>
-			<p class="lead">
-				Long jobs outlive your time at the desk. Shadow includes a way to check on
-				your work from your phone and send a quick instruction back — so an urgent
-				confirmation or approval never leaves the AI stuck waiting.
-			</p>
-		</section>
-
-		<section id="security" class="section">
-			<h2>Privacy and security</h2>
-			<p class="lead">
-				Conversation logs with an AI almost certainly contain personal information
-				and the substance of your work. Shadow is designed on that assumption.
-			</p>
-			<div class="grid-2">
-				<div class="card">
-					<h3>Assumed sensitive</h3>
-					<p>
-						Logs are treated as containing secrets — because they do. How they are
-						stored and organized starts from that premise.
-					</p>
-				</div>
-				<div class="card">
-					<h3>Encrypted in transit</h3>
-					<p>
-						Everything between your machine and the server travels only over an
-						encrypted channel. Your records never cross the network in the clear.
-					</p>
-				</div>
-				<div class="card">
-					<h3>Never used for training</h3>
-					<p>
-						Server-side processing runs in forms where your data is not used to train
-						anyone's AI — API plans with training opted out, combined with a local AI
-						running inside the server.
-					</p>
-				</div>
-				<div class="card">
-					<h3>Moving further inside</h3>
-					<p>
-						The plan is to fully replace both the organizing and the control layer
-						with local AI inside the server — step by step, toward keeping your
-						data from ever leaving.
-					</p>
-				</div>
-			</div>
-			<p class="repo-link">
-				<a href={`${base}en/security/`}>→ Read the full Security &amp; Trust page</a>
-			</p>
-		</section>
-
-		<section id="demo" class="section alt">
-			<h2>See it in action</h2>
-			<p class="lead">
-				A file explorer and a row of AI panes in a single window.
-				Panes float freely — add or remove them at will.
-			</p>
-			<div class="demo-shot">
-				<img
-					src={`${base}demo-screenshot-1.png`}
-					alt="Screenshot of the Shadow desktop app — the file explorer and several AI panes side by side"
-					loading="lazy"
-					width="1568"
-					height="830"
-				/>
-			</div>
-
-			<div class="video-grid">
-				<div class="video-card">
-					<div class="video-embed">
-						<iframe
-							src="https://www.youtube-nocookie.com/embed/z0D8-rqVunc"
-							title="Shadow — The AI environment that never forgets"
-							loading="lazy"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							allowfullscreen
-						></iframe>
-					</div>
-					<p class="video-caption">Memory — context that survives across sessions</p>
-				</div>
-				<div class="video-card">
-					<div class="video-embed">
-						<iframe
-							src="https://www.youtube-nocookie.com/embed/h-wGvXwAU6g"
-							title="Shadow — The AI workspace that never scatters"
-							loading="lazy"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							allowfullscreen
-						></iframe>
-					</div>
-					<p class="video-caption">Workspace — everything tidied, nothing scattered</p>
-				</div>
-			</div>
-			<p class="repo-link">
-				<a href="https://github.com/shadowharness/shadowharness.github.io" target="_blank" rel="noopener">
-					→ GitHub
-				</a>
-			</p>
-		</section>
-	</main>
+	<LandingPage lang="en" />
 </SiteLayout>
