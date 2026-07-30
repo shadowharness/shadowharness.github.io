@@ -2158,7 +2158,7 @@ body:has(.product-console)::before {
 	display: none;
 }
 
-.site-header:has(+ .product-console) {
+.site-header:has(~ .product-console) {
 	grid-template-columns: 1fr auto;
 	height: 54px;
 	padding-inline: 18px;
@@ -2168,7 +2168,7 @@ body:has(.product-console)::before {
 	backdrop-filter: none;
 }
 
-.site-header:has(+ .product-console) .brand {
+.site-header:has(~ .product-console) .brand {
 	min-height: 44px;
 	color: #e9f5f7;
 	font-family: var(--mono);
@@ -2176,7 +2176,7 @@ body:has(.product-console)::before {
 	letter-spacing: 0.035em;
 }
 
-.site-header:has(+ .product-console) .brand-mark {
+.site-header:has(~ .product-console) .brand-mark {
 	width: 1.65rem;
 	height: 1.65rem;
 	border: 1px solid #56cfe6;
@@ -2186,16 +2186,16 @@ body:has(.product-console)::before {
 	font-size: 0.74rem;
 }
 
-.site-header:has(+ .product-console) .desktop-nav,
-.site-header:has(+ .product-console) .mobile-menu {
+.site-header:has(~ .product-console) .desktop-nav,
+.site-header:has(~ .product-console) .mobile-menu {
 	display: none;
 }
 
-.site-header:has(+ .product-console) .header-links {
+.site-header:has(~ .product-console) .header-links {
 	grid-column: 2;
 }
 
-.site-header:has(+ .product-console) .lang-link {
+.site-header:has(~ .product-console) .lang-link {
 	height: 44px;
 	min-width: 3.5rem;
 	border-color: #284957;
@@ -2206,7 +2206,7 @@ body:has(.product-console)::before {
 	letter-spacing: 0.07em;
 }
 
-.site-header:has(+ .product-console) .lang-link:hover {
+.site-header:has(~ .product-console) .lang-link:hover {
 	border-color: #6bdff2;
 	background: #0d2935;
 	color: #dffaff;
@@ -3304,21 +3304,21 @@ body:has(.product-console) .site-footer {
 		overflow: hidden;
 	}
 
-	.site-header:has(+ .product-console) {
+	.site-header:has(~ .product-console) {
 		height: 50px;
 		padding-inline: 12px;
 	}
 
-	.site-header:has(+ .product-console) .brand {
+	.site-header:has(~ .product-console) .brand {
 		font-size: 0.73rem;
 	}
 
-	.site-header:has(+ .product-console) .brand-mark {
+	.site-header:has(~ .product-console) .brand-mark {
 		width: 1.45rem;
 		height: 1.45rem;
 	}
 
-	.site-header:has(+ .product-console) .lang-link {
+	.site-header:has(~ .product-console) .lang-link {
 		height: 44px;
 		min-width: 3rem;
 	}
