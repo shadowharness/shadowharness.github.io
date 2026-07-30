@@ -58,10 +58,11 @@ const description =
 							</p>
 						</div>
 						<div>
-							<h3>LLM judgment is involved</h3>
+							<h3>LLM judgment is used for part of the process</h3>
 							<p>
-								An LLM helps identify the current conclusion, the history of changes, and
-								the relationship between a conclusion and its evidence.
+								An LLM is used in part of the process that identifies the current conclusion,
+								the history of changes, and the relationship between a conclusion and its
+								evidence.
 							</p>
 						</div>
 						<div>
@@ -174,8 +175,9 @@ const description =
 						</div>
 					</dl>
 					<p>
-						Raw logs remain on the device, while data used to maintain memory also lives on
-						the Hub. Neither side is the sole location for every part of the system.
+						Each device keeps its raw logs, and the full logs are also sent to the Hub. The
+						Hub aggregates raw logs from multiple devices and maintains memory and indexes
+						across them.
 					</p>
 				</section>
 
@@ -192,11 +194,6 @@ const description =
 						A terminal conversation can contain source code, file paths, working decisions,
 						and command output. Consider the sensitivity of the work and review the settings
 						for both each AI provider and Sidera Memory before using them.
-					</p>
-					<p>
-						ShadowHarness reduces risk by making the data path explicit and by processing
-						structuring input under settings that exclude it from training. We do not turn
-						those measures into a promise that disclosure is impossible.
 					</p>
 				</section>
 
