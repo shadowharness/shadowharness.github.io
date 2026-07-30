@@ -259,6 +259,8 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 							<div class="screen-image">
 								<img
 									src={`${base}media/hero-workspace.webp?v=${mediaVersion}`}
+									srcset={`${base}media/hero-workspace-400.webp?v=${mediaVersion} 400w, ${base}media/hero-workspace-800.webp?v=${mediaVersion} 800w, ${base}media/hero-workspace-960.webp?v=${mediaVersion} 960w, ${base}media/hero-workspace.webp?v=${mediaVersion} 1600w`}
+									sizes="(max-width: 760px) calc(100vw - 28px), (max-width: 1100px) and (max-aspect-ratio: 11 / 10) calc(100vw - 30px), (max-width: 1100px) 60vw, 58vw"
 									alt={copy.overviewAlt}
 									width="1600"
 									height="900"
@@ -488,7 +490,6 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 			motionControl.textContent = isPaused
 				? (motionControl.dataset.playLabel ?? 'Play')
 				: (motionControl.dataset.pauseLabel ?? 'Pause');
-			motionControl.setAttribute('aria-pressed', isPaused ? 'false' : 'true');
 		};
 
 		const loadVideo = (video: HTMLVideoElement) => {
@@ -681,7 +682,6 @@ const agents = ['GPT / Codex', 'Claude Code', 'Grok', 'Gemini'];
 				if (!wasFeatured && selectedVideo && Number.isFinite(selectedVideo.duration)) {
 					selectedVideo.currentTime = 0;
 				}
-				if (!wasFeatured) motionPaused = reduceMotion.matches;
 				syncSideraPlayback('memory');
 			});
 		});

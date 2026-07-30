@@ -18,7 +18,15 @@ const description =
 	alternateEn={pageUrl}
 >
 	<Fragment slot="head-extra">
-		<link rel="preload" as="image" href="/media/hero-workspace.webp?v=20260729g" type="image/webp" fetchpriority="high" />
+		<link
+			rel="preload"
+			as="image"
+			href="/media/hero-workspace.webp?v=20260729g"
+			imagesrcset="/media/hero-workspace-400.webp?v=20260729g 400w, /media/hero-workspace-800.webp?v=20260729g 800w, /media/hero-workspace-960.webp?v=20260729g 960w, /media/hero-workspace.webp?v=20260729g 1600w"
+			imagesizes="(max-width: 760px) calc(100vw - 28px), (max-width: 1100px) and (max-aspect-ratio: 11 / 10) calc(100vw - 30px), (max-width: 1100px) 60vw, 58vw"
+			type="image/webp"
+			fetchpriority="high"
+		/>
 		<script
 			type="application/ld+json"
 			set:html={JSON.stringify({
