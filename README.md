@@ -14,8 +14,8 @@ Memory—the layer that returns only the past that matters to the current task.
 
 ![ShadowHarnessの実画面](public/media/hero-workspace.webp)
 
-- **サイト / Website**: https://shadowharness.github.io/ （[English](https://shadowharness.github.io/en/)）
-- **ガイド / Guide**: https://shadowharness.github.io/guide/ （[English](https://shadowharness.github.io/en/guide/)）
+- **Website**: https://shadowharness.github.io/ （[日本語](https://shadowharness.github.io/ja/)）
+- **Guide**: https://shadowharness.github.io/en/guide/ （[日本語](https://shadowharness.github.io/guide/)）
 - **X**: [@ShadowHarness](https://x.com/ShadowHarness)
 - **YouTube**: [@ShadowHarness](https://www.youtube.com/@ShadowHarness)
 

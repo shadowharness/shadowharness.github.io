@@ -6,5 +6,9 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://shadowharness.github.io',
   base: '/',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => page !== 'https://shadowharness.github.io/en/',
+    }),
+  ],
 });

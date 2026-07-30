@@ -6,8 +6,10 @@ export interface Props {
 const { lang, otherLangUrl: alternateLanguageUrl } = Astro.props;
 const base = import.meta.env.BASE_URL;
 
-const homeUrl = lang === 'ja' ? base : `${base}en/`;
-const otherLangUrl = alternateLanguageUrl ?? (lang === 'ja' ? `${base}en/` : base);
+const homeUrl = lang === 'ja' ? `${base}ja/` : base;
+const otherLangUrl = alternateLanguageUrl ?? (lang === 'ja' ? base : `${base}ja/`);
+const otherLang = lang === 'ja' ? 'en' : 'ja';
+const languageLabel = lang === 'ja' ? '英語版へ切り替え: English' : 'Switch to 日本語';
 const guideUrl = lang === 'ja' ? `${base}guide/` : `${base}en/guide/`;
 
 const nav =
@@ -34,7 +36,15 @@ const nav =
 		<a href="https://x.com/ShadowHarness" target="_blank" rel="noopener">X</a>
 	</nav>
 	<span class="header-links">
-		<a class="lang-link" href={otherLangUrl}>{lang === 'ja' ? 'EN' : '日本語'}</a>
+		<a
+			class="lang-link"
+			href={otherLangUrl}
+			hreflang={otherLang}
+			aria-label={languageLabel}
+			data-language-link
+		>
+			<span lang={otherLang}>{lang === 'ja' ? 'English' : '日本語'}</span>
+		</a>
 	</span>
 	<details class="mobile-menu">
 		<summary aria-label={lang === 'ja' ? 'メニュー' : 'Menu'}>
@@ -48,6 +58,24 @@ const nav =
 </header>
 
 <script>
+	const languageLink = document.querySelector<HTMLAnchorElement>('[data-language-link]');
+	if (languageLink) {
+		const destination = new URL(languageLink.href);
+		const updateLanguageLink = () => {
+			languageLink.href = `${destination.pathname}${destination.search}${window.location.hash}`;
+		};
+		const updateAfterPaneChange = (event: Event) => {
+			if (event.target instanceof Element && event.target.closest('[data-pane-target]')) {
+				queueMicrotask(updateLanguageLink);
+			}
+		};
+		updateLanguageLink();
+		window.addEventListener('hashchange', updateLanguageLink);
+		window.addEventListener('popstate', updateLanguageLink);
+		document.addEventListener('click', updateAfterPaneChange);
+		document.addEventListener('keydown', updateAfterPaneChange);
+	}
+
 	document.querySelectorAll<HTMLDetailsElement>('.mobile-menu').forEach((menu) => {
 		const summary = menu.querySelector<HTMLElement>('summary');
 		menu.addEventListener('keydown', (event) => {

@@ -8,21 +8,23 @@ const description = 'The requested page could not be found.';
 ---
 
 <SiteLayout
-	lang="ja"
+	lang="en"
 	title={title}
 	description={description}
 	pageUrl={siteUrl}
-	alternateJa={siteUrl}
-	alternateEn={`${siteUrl}en/`}
+	alternateJa={`${siteUrl}ja/`}
+	alternateEn={siteUrl}
 	noindex
 >
 	<main id="main-content" class="error-page" tabindex="-1">
 		<p class="eyebrow">404 / NOT FOUND</p>
-		<h1>このページは、<br /><span>まだ記憶にありません。</span></h1>
+		<h1>Page not found.</h1>
 		<p>The requested page could not be found.</p>
 		<div class="cta-row">
-			<a class="button button-primary" href={base}>トップへ戻る</a>
-			<a class="button button-secondary" href={`${base}en/`}>English</a>
+			<a class="button button-primary" href={base}>Back to home</a>
+			<a class="button button-secondary" href={`${base}ja/`} hreflang="ja"
+				><span lang="ja">日本語</span></a
+			>
 		</div>
 	</main>
 </SiteLayout>

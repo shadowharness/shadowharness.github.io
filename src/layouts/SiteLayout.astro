@@ -39,14 +39,14 @@ const otherLangUrl = lang === 'ja' ? alternateEn : alternateJa;
 		<meta name="theme-color" content="#0b1014" media="(prefers-color-scheme: dark)" />
 		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
 		<link rel="stylesheet" href={siteStyles} />
-		{noindex && <meta name="robots" content="noindex" />}
+		{noindex && <meta name="robots" content="noindex, follow" />}
 
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<link rel="canonical" href={pageUrl} />
 		<link rel="alternate" hreflang="ja" href={alternateJa} />
 		<link rel="alternate" hreflang="en" href={alternateEn} />
-		<link rel="alternate" hreflang="x-default" href={alternateJa} />
+		<link rel="alternate" hreflang="x-default" href={alternateEn} />
 
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content={title} />

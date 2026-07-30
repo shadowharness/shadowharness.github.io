@@ -4,7 +4,7 @@ export interface Props {
 }
 const { lang } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const homeUrl = lang === 'ja' ? base : `${base}en/`;
+const homeUrl = lang === 'ja' ? `${base}ja/` : base;
 const guideUrl = lang === 'ja' ? `${base}guide/` : `${base}en/guide/`;
 const securityUrl = lang === 'ja' ? `${base}security/` : `${base}en/security/`;
 ---

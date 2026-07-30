@@ -1,19 +1,20 @@
 ---
-import LandingPage from '../components/LandingPage.astro';
-import SiteLayout from '../layouts/SiteLayout.astro';
+import LandingPage from '../../components/LandingPage.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
 
 const siteUrl = 'https://shadowharness.github.io/';
-const title = 'ShadowHarness — One desk and one memory for every AI agent';
+const pageUrl = `${siteUrl}ja/`;
+const title = 'ShadowHarness — AIエージェントに、ひとつの机と記憶を。';
 const description =
-	'Bring GPT / Codex, Claude Code, Grok, Gemini and more into one Windows workspace where work and memory carry across agents.';
+	'GPT / Codex、Claude Code、Grok、Geminiなどを一つの画面へ。作業と記憶がAIをまたいでつながる、Windows向け統合LLMターミナル環境。';
 ---
 
 <SiteLayout
-	lang="en"
+	lang="ja"
 	title={title}
 	description={description}
-	pageUrl={siteUrl}
-	alternateJa={`${siteUrl}ja/`}
+	pageUrl={pageUrl}
+	alternateJa={pageUrl}
 	alternateEn={siteUrl}
 >
 	<Fragment slot="head-extra">
@@ -35,11 +36,11 @@ const description =
 				applicationCategory: 'DeveloperApplication',
 				operatingSystem: 'Windows',
 				description,
-				url: siteUrl,
-				image: `${siteUrl}og-image-en.png?v=20260729e`,
+				url: pageUrl,
+				image: `${siteUrl}og-image.png?v=20260729e`,
 				author: { '@type': 'Organization', name: 'ShadowHarness' },
 			})}
 		/>
 	</Fragment>
-	<LandingPage lang="en" />
+	<LandingPage lang="ja" />
 </SiteLayout>
