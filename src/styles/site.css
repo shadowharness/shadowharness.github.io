@@ -3119,7 +3119,7 @@ body:has(.product-console) .site-footer {
 	margin-top: 11px;
 }
 
-@media (min-width: 1101px) and (orientation: landscape) {
+@media (min-width: 761px) and (orientation: landscape) {
 	.sidera-gallery {
 		container-type: size;
 	}
@@ -3129,7 +3129,9 @@ body:has(.product-console) .site-footer {
 		width: 100%;
 		max-width: calc(177.7778cqh - 83.3px);
 	}
+}
 
+@media (min-width: 1101px) and (orientation: landscape) {
 	.screen-toggle:not([hidden]) {
 		top: -27px;
 	}
