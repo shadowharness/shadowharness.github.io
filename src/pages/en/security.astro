@@ -40,7 +40,7 @@ const description =
 					<a href="#training">Structuring and training</a>
 					<a href="#providers">The provider boundary</a>
 					<a href="#storage">What lives where</a>
-					<a href="#risk">Risk is not zero</a>
+					<a href="#risk">Information to review</a>
 					<a href="#updates">Updates and contact</a>
 				</nav>
 			</aside>
@@ -53,8 +53,8 @@ const description =
 						<div>
 							<h3>Logs go to the Hub</h3>
 							<p>
-								When you use Sidera Memory, new ranges of the terminal logs left by each
-								CLI on your PC are sent to Shadow Hub.
+								When you use Sidera Memory, new ranges of terminal logs—including input,
+								AI responses, and command output—are sent from your PC to Shadow Hub.
 							</p>
 						</div>
 						<div>
@@ -183,12 +183,11 @@ const description =
 
 				<section id="risk">
 					<p class="eyebrow">06 / RISK</p>
-					<h2>Risk is not zero</h2>
+					<h2>Information to review before use</h2>
 					<p>
-						Sending terminal logs over a network and processing them through the Hub and an
-						LLM carries non-zero risks, including unauthorized disclosure, incorrect access,
-						and service failure. These are the same kinds of risk involved when sending work
-						to a general cloud LLM.
+						Terminal logs are sent over a network and processed through the Hub and an LLM.
+						This means accounting for risks such as unauthorized disclosure, unintended access,
+						and service outages.
 					</p>
 					<p>
 						A terminal conversation can contain source code, file paths, working decisions,

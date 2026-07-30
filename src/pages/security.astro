@@ -40,7 +40,7 @@ const description =
 					<a href="#training">構造化と学習利用</a>
 					<a href="#providers">各CLI提供元との境界</a>
 					<a href="#storage">端末とHubにあるもの</a>
-					<a href="#risk">ゼロリスクではない</a>
+					<a href="#risk">取り扱う情報と確認</a>
 					<a href="#updates">更新と問い合わせ</a>
 				</nav>
 			</aside>
@@ -53,8 +53,8 @@ const description =
 						<div>
 							<h3>ログはHubへ送られる</h3>
 							<p>
-								Sidera Memoryを利用すると、各CLIがPCに残した端末ログの新しい範囲が
-								Shadow Hubへ送られます。
+								Sidera Memoryを利用すると、各CLIがPCに残した入力、AI応答、
+								コマンド出力などを含む端末ログの新しい範囲がShadow Hubへ送られます。
 							</p>
 						</div>
 						<div>
@@ -173,11 +173,10 @@ const description =
 
 				<section id="risk">
 					<p class="eyebrow">06 / RISK</p>
-					<h2>ゼロリスクとは<br />言いません</h2>
+					<h2>取り扱う情報と利用前の確認</h2>
 					<p>
-						端末ログをネットワーク越しに送り、HubとLLMで処理する以上、情報漏えい、
-						誤ったアクセス、処理先の障害といったリスクをゼロにはできません。これは、
-						仕事の内容を一般のクラウドLLMへ送って使うときと同種のリスクです。
+						端末ログはネットワーク越しに送られ、HubとLLMで処理されます。情報漏えい、
+						意図しないアクセス、処理先の障害といったリスクを考慮する必要があります。
 					</p>
 					<p>
 						端末の会話には、ソースコード、ファイルパス、作業上の判断、コマンド出力などが

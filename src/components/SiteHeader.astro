@@ -37,7 +37,7 @@ const nav =
 		<a class="lang-link" href={otherLangUrl}>{lang === 'ja' ? 'EN' : '日本語'}</a>
 	</span>
 	<details class="mobile-menu">
-		<summary aria-label={lang === 'ja' ? 'メニューを開く' : 'Open menu'}>
+		<summary aria-label={lang === 'ja' ? 'メニュー' : 'Menu'}>
 			<span></span><span></span>
 		</summary>
 		<nav aria-label={lang === 'ja' ? 'モバイルナビゲーション' : 'Mobile navigation'}>
@@ -46,3 +46,22 @@ const nav =
 		</nav>
 	</details>
 </header>
+
+<script>
+	document.querySelectorAll<HTMLDetailsElement>('.mobile-menu').forEach((menu) => {
+		const summary = menu.querySelector<HTMLElement>('summary');
+		menu.addEventListener('keydown', (event) => {
+			if (event.key !== 'Escape' || !menu.open) return;
+			menu.open = false;
+			summary?.focus();
+		});
+		menu.addEventListener('click', (event) => {
+			if (!(event.target instanceof Element) || !event.target.closest('a')) return;
+			menu.open = false;
+			summary?.focus();
+		});
+		document.addEventListener('pointerdown', (event) => {
+			if (menu.open && event.target instanceof Node && !menu.contains(event.target)) menu.open = false;
+		});
+	});
+</script>
