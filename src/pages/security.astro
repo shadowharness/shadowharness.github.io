@@ -127,16 +127,15 @@ const description =
 
 				<section id="providers">
 					<p class="eyebrow">04 / PROVIDER BOUNDARY</p>
-					<h2>Codex、Claude Code、Grok、Geminiなどは別のサービス</h2>
+					<h2>各AI CLIは、利用者自身の契約で直接動きます</h2>
 					<p>
-						各AIエージェントへ送った入力と、そのAIが生成した応答は、それぞれの提供元の
-						サービス上でも処理されます。保存期間、サービス改善や学習への利用、組織向けの
-						保護設定などは、利用しているプランと利用者自身の設定に依存します。
+						ShadowHarnessは、各AI CLIへの入力や応答をAI提供元へ独自に転送したり、
+						別のコピーを送信したりしません。Codex、Claude Code、Grok、Geminiなどは、
+						利用者が各CLIを直接使う場合と同じ経路で、それぞれのサービスへ接続します。
 					</p>
 					<p>
-						ShadowHarnessのSidera向け設定は、各提供元側の設定を変更しません。反対に、
-						各提供元側で学習利用を無効にしていても、Sidera Memoryを使う場合は記憶を作るための
-						端末ログがShadow Hubへ送られます。二つの境界を分けて判断してください。
+						Sidera Memoryの経路はこれとは別です。有効にした場合、記憶を作るための
+						端末ログが利用者のShadow Hubへ送られ、そこで構造化されます。
 					</p>
 				</section>
 

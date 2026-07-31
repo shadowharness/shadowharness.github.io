@@ -133,17 +133,15 @@ const description =
 
 				<section id="providers">
 					<p class="eyebrow">04 / PROVIDER BOUNDARY</p>
-					<h2>Codex, Claude Code, Grok, Gemini, and others remain separate services</h2>
+					<h2>Each AI CLI connects through the account you already use</h2>
 					<p>
-						Input you send to an AI agent, and the response it generates, are also processed
-						by that provider's service. Retention, use for service improvement or training,
-						and organization-level protections depend on your plan and settings with that provider.
+						ShadowHarness does not independently forward your prompts or responses to AI providers,
+						and it does not send them an additional copy. Codex, Claude Code, Grok, Gemini, and other
+						CLIs connect to their services through the same path they use when run directly.
 					</p>
 					<p>
-						ShadowHarness's Sidera settings do not change those provider settings. Conversely,
-						even if training use is disabled with a provider, using Sidera Memory still sends
-						the terminal log data needed to build memory to Shadow Hub. Evaluate the two
-						boundaries separately.
+						Sidera Memory uses a separate path. When enabled, the terminal logs needed to build
+						memory are sent to your Shadow Hub and structured there.
 					</p>
 				</section>
 
