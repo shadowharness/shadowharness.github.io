@@ -5,7 +5,7 @@ const siteUrl = 'https://shadowharness.github.io/';
 const pageUrl = `${siteUrl}security/`;
 const title = 'データの扱いとセキュリティ — ShadowHarness';
 const description =
-	'Shadow Hubのセキュリティ、Sidera Memoryが送信・保存するデータ、各AI CLIとの境界を説明します。';
+	'Shadow Hubのセキュリティと、Sidera Memoryが送信・保存するデータを説明します。';
 ---
 
 <SiteLayout
@@ -31,7 +31,6 @@ const description =
 				<nav aria-label="データの扱いに関する目次">
 					<a href="#security">Shadow Hubのセキュリティ</a>
 					<a href="#data">扱うデータ</a>
-					<a href="#providers">各CLI提供元との境界</a>
 				</nav>
 			</aside>
 
@@ -99,15 +98,6 @@ const description =
 					</p>
 				</section>
 
-				<section id="providers">
-					<p class="eyebrow">03 / AI CLI</p>
-					<h2>各AI CLIとの境界</h2>
-					<p>
-						ShadowHarnessは各AI CLIの通信を中継せず、会話をAI提供元へ追加送信しません。
-						Codex、Claude Code、Grok、Geminiなどは、単独で使う場合と同じ経路で
-						それぞれのサービスへ接続します。
-					</p>
-				</section>
 			</article>
 		</div>
 	</main>

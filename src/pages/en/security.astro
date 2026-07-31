@@ -5,7 +5,7 @@ const siteUrl = 'https://shadowharness.github.io/';
 const pageUrl = `${siteUrl}en/security/`;
 const title = 'Data Handling & Security — ShadowHarness';
 const description =
-	'How Shadow Hub protects Sidera Memory data, what Shadow sends and stores, and where each AI CLI remains separate.';
+	'How Shadow Hub protects Sidera Memory data and what Shadow sends and stores.';
 ---
 
 <SiteLayout
@@ -32,7 +32,6 @@ const description =
 				<nav aria-label="Data handling contents">
 					<a href="#security">Shadow Hub security</a>
 					<a href="#data">Data Shadow handles</a>
-					<a href="#providers">AI CLI boundary</a>
 				</nav>
 			</aside>
 
@@ -102,15 +101,6 @@ const description =
 					</p>
 				</section>
 
-				<section id="providers">
-					<p class="eyebrow">03 / AI CLI</p>
-					<h2>AI CLI boundary</h2>
-					<p>
-						ShadowHarness does not proxy AI CLI traffic or send providers an additional copy
-						of your conversations. Codex, Claude Code, Grok, Gemini, and other CLIs connect
-						to their services through the same path they use when run on their own.
-					</p>
-				</section>
 			</article>
 		</div>
 	</main>
