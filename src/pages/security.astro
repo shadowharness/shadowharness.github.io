@@ -69,10 +69,11 @@ const description =
 					<h2>Shadowが扱うデータ</h2>
 					<dl class="facts-list">
 						<div>
-							<dt>利用者のPC</dt>
+							<dt>PC上の既存ログ</dt>
 							<dd>
-								各CLIの生ログは、CLIごとの保存先に残ります。生ログには入力、AIの応答、
-								コマンド出力などが含まれます。
+								各CLIは通常、入力・応答・コマンド出力をPC上の生ログに保存します。
+								ShadowHarnessはこの既存ログを読み取るため、ShadowHarnessから起動した会話と
+								CLIを単独で使った会話を同じ記憶へまとめられます。
 							</dd>
 						</div>
 						<div>
