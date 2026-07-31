@@ -2,11 +2,10 @@
 import SiteLayout from '../../layouts/SiteLayout.astro';
 
 const siteUrl = 'https://shadowharness.github.io/';
-const base = import.meta.env.BASE_URL;
 const pageUrl = `${siteUrl}en/security/`;
-const title = 'Data Handling & Trust — ShadowHarness';
+const title = 'Data Handling & Security — ShadowHarness';
 const description =
-	'How Sidera Memory handles terminal logs across your device, Shadow Hub, the LLM used to structure memory, and each CLI provider.';
+	'How Shadow Hub protects Sidera Memory data, what Shadow sends and stores, and where each AI CLI remains separate.';
 ---
 
 <SiteLayout
@@ -19,15 +18,11 @@ const description =
 >
 	<main id="main-content" class="guide-page" tabindex="-1">
 		<header class="guide-hero">
-			<p class="eyebrow">DATA HANDLING &amp; TRUST</p>
-			<h1>Data Handling &amp; Trust</h1>
+			<p class="eyebrow">DATA HANDLING &amp; SECURITY</p>
+			<h1>Data Handling &amp; Security</h1>
 			<p class="lead">
-				Sidera Memory sends terminal conversation logs to Shadow Hub and uses LLM judgment
-				to organize them into memory the next task can use.
-			</p>
-			<p>
-				This page makes clear what leaves your device, where an LLM is involved, and where
-				ShadowHarness ends and each AI provider's settings begin.
+				This page covers what Shadow controls: Sidera Memory data transfer and storage,
+				and the protections built into Shadow Hub.
 			</p>
 		</header>
 
@@ -35,176 +30,86 @@ const description =
 			<aside class="guide-nav">
 				<p>On this page</p>
 				<nav aria-label="Data handling contents">
-					<a href="#summary">What to know first</a>
-					<a href="#flow">Sidera data flow</a>
-					<a href="#training">Structuring and training</a>
-					<a href="#providers">The provider boundary</a>
-					<a href="#storage">What lives where</a>
-					<a href="#risk">Information to review</a>
-					<a href="#updates">Updates and contact</a>
+					<a href="#security">Shadow Hub security</a>
+					<a href="#data">Data Shadow handles</a>
+					<a href="#providers">AI CLI boundary</a>
 				</nav>
 			</aside>
 
 			<article class="guide-content prose">
-				<section id="summary">
-					<p class="eyebrow">01 / SUMMARY</p>
-					<h2>What to know first</h2>
+				<section id="security">
+					<p class="eyebrow">01 / SERVER SECURITY</p>
+					<h2>Shadow Hub security</h2>
 					<div class="trust-grid">
 						<div>
-							<h3>Logs go to the Hub</h3>
+							<h3>HTTPS in transit</h3>
+							<p>Connections between your PC and Shadow Hub are encrypted with HTTPS.</p>
+						</div>
+						<div>
+							<h3>Separated by account</h3>
 							<p>
-								When you use Sidera Memory, new ranges of terminal logs—including input,
-								AI responses, and command output—are sent from your PC to Shadow Hub.
+								Memory data is separated into a container, data area, and internal network
+								for each user. Containers run as non-root with a read-only root filesystem.
 							</p>
 						</div>
 						<div>
-							<h3>LLM judgment is used for part of the process</h3>
+							<h3>Authenticated per device</h3>
 							<p>
-								An LLM is used in part of the process that identifies the current conclusion,
-								the history of changes, and the relationship between a conclusion and its
-								evidence.
+								Log upload and memory retrieval require a device token. The server stores
+								only its SHA-256 hash, not the token itself, and tokens can be revoked per device.
 							</p>
 						</div>
 						<div>
-							<h3>Structuring input is not used for training</h3>
+							<h3>Limited public surface</h3>
 							<p>
-								Input sent for Sidera's structuring is processed under settings that do
-								not allow it to be used for model training.
-							</p>
-						</div>
-						<div>
-							<h3>Each CLI is a separate boundary</h3>
-							<p>
-								Data use by Codex, Claude Code, Grok, Gemini, and other providers follows
-								their terms and your settings with them.
+								The memory API is limited to log upload, memory retrieval, and evidence
+								retrieval. Administrative APIs are not public, and credentials are omitted
+								from access logs.
 							</p>
 						</div>
 					</div>
 				</section>
 
-				<section id="flow">
-					<p class="eyebrow">02 / DATA FLOW</p>
-					<h2>How data moves through Sidera Memory</h2>
-					<ol>
-						<li>
-							<strong>Each CLI writes its raw log on your PC.</strong>{' '}
-							The CLI determines the location and format.
-						</li>
-						<li>
-							<strong>ShadowHarness detects new log ranges.</strong>{' '}
-							Terminal log data needed by Sidera Memory is sent to Shadow Hub.
-						</li>
-						<li>
-							<strong>The Hub structures it into memory.</strong>{' '}
-							Alongside mechanical indexing, LLM judgment helps connect conclusions,
-							changes, and supporting evidence.
-						</li>
-						<li>
-							<strong>The relevant part is returned for the current input.</strong>{' '}
-							The working AI pane receives memory selected for this task, not the entire history.
-						</li>
-					</ol>
-					<div class="guide-callout">
-						A terminal log can contain more than what you typed. It may include command
-						output and other content the AI handled during the conversation. Do not assume
-						that only your question is sent.
-					</div>
-				</section>
-
-				<section id="training">
-					<p class="eyebrow">03 / LLM PROCESSING</p>
-					<h2>Structuring memory and model training</h2>
-					<p>
-						Sidera Memory cannot be built with keyword search alone. It uses LLM judgment to
-						determine which conclusion is current, when an earlier decision changed, and
-						which record supports it.
-					</p>
-					<p>
-						Input sent for this structuring is handled under settings that do not allow it
-						to be used for model training. This does not mean that no data reaches an LLM:
-						the structuring input is processed by an LLM, but under conditions that exclude
-						that input from training data.
-					</p>
-					<div class="guide-callout">
-						This commitment covers the processing ShadowHarness performs to structure
-						Sidera memory. It does not override how the AI service behind each CLI handles data.
-					</div>
-				</section>
-
-				<section id="providers">
-					<p class="eyebrow">04 / PROVIDER BOUNDARY</p>
-					<h2>Each AI CLI connects through the account you already use</h2>
-					<p>
-						ShadowHarness does not independently forward your prompts or responses to AI providers,
-						and it does not send them an additional copy. Codex, Claude Code, Grok, Gemini, and other
-						CLIs connect to their services through the same path they use when run directly.
-					</p>
-					<p>
-						Sidera Memory uses a separate path. When enabled, the terminal logs needed to build
-						memory are sent to your Shadow Hub and structured there.
-					</p>
-				</section>
-
-				<section id="storage">
-					<p class="eyebrow">05 / STORAGE</p>
-					<h2>What lives on your device and what lives on Shadow Hub</h2>
+				<section id="data">
+					<p class="eyebrow">02 / DATA</p>
+					<h2>Data Shadow handles</h2>
 					<dl class="facts-list">
 						<div>
 							<dt>Your PC</dt>
 							<dd>
-								Each CLI's raw log remains in the location that CLI chooses. The
-								ShadowHarness client also keeps local state needed to track
-								collection and sending progress.
+								Each CLI keeps its raw log in its own storage location. Raw logs include
+								input, AI responses, and command output.
 							</dd>
 						</div>
 						<div>
 							<dt>Shadow Hub</dt>
 							<dd>
-								The Hub receives log data sent for Sidera Memory and holds the structured
-								memory and indexes built from it.
+								When Sidera Memory is enabled, newly appended log ranges are sent to the Hub.
+								The Hub keeps the complete accumulated raw logs and the memory and indexes
+								built from them.
 							</dd>
 						</div>
 						<div>
 							<dt>The working AI pane</dt>
 							<dd>
-								Memory judged relevant to the current input is supplied as context in the
-								range needed to continue the work.
+								Memory relevant to the current input is supplied as context for the task.
 							</dd>
 						</div>
 					</dl>
 					<p>
-						Each device keeps its raw logs, and the full logs are also sent to the Hub. The
-						Hub aggregates raw logs from multiple devices and maintains memory and indexes
-						across them.
+						An LLM is used for part of memory structuring. Structuring input is processed
+						under settings that do not allow it to be used for model training.
 					</p>
 				</section>
 
-				<section id="risk">
-					<p class="eyebrow">06 / RISK</p>
-					<h2>Information to review before use</h2>
+				<section id="providers">
+					<p class="eyebrow">03 / AI CLI</p>
+					<h2>AI CLI boundary</h2>
 					<p>
-						Terminal logs are sent over a network and processed through the Hub and an LLM.
-						This means accounting for risks such as unauthorized disclosure, unintended access,
-						and service outages.
+						ShadowHarness does not proxy AI CLI traffic or send providers an additional copy
+						of your conversations. Codex, Claude Code, Grok, Gemini, and other CLIs connect
+						to their services through the same path they use when run on their own.
 					</p>
-					<p>
-						A terminal conversation can contain source code, file paths, working decisions,
-						and command output. Consider the sensitivity of the work and review the settings
-						for both each AI provider and Sidera Memory before using them.
-					</p>
-				</section>
-
-				<section id="updates">
-					<p class="eyebrow">07 / UPDATES</p>
-					<h2>When data handling changes</h2>
-					<p>
-						If the Sidera Memory processing path or data boundary changes, this page will be
-						updated as well. Development updates and official notices are available from{' '}
-						<a href="https://x.com/ShadowHarness" target="_blank" rel="noopener">
-							@ShadowHarness
-						</a>.
-					</p>
-					<p><a href={`${base}en/guide/`}>Return to the ShadowHarness Guide</a></p>
 				</section>
 			</article>
 		</div>

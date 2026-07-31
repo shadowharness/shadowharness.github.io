@@ -2,11 +2,10 @@
 import SiteLayout from '../layouts/SiteLayout.astro';
 
 const siteUrl = 'https://shadowharness.github.io/';
-const base = import.meta.env.BASE_URL;
 const pageUrl = `${siteUrl}security/`;
-const title = 'データの扱いと信頼性 — ShadowHarness';
+const title = 'データの扱いとセキュリティ — ShadowHarness';
 const description =
-	'Sidera Memoryが扱う端末ログ、Shadow Hub、記憶の構造化に使うLLM、各CLI提供元との境界とリスクを説明します。';
+	'Shadow Hubのセキュリティ、Sidera Memoryが送信・保存するデータ、各AI CLIとの境界を説明します。';
 ---
 
 <SiteLayout
@@ -19,15 +18,10 @@ const description =
 >
 	<main id="main-content" class="guide-page" tabindex="-1">
 		<header class="guide-hero">
-			<p class="eyebrow">DATA HANDLING &amp; TRUST</p>
-			<h1>データの扱いと信頼性</h1>
+			<p class="eyebrow">DATA HANDLING &amp; SECURITY</p>
+			<h1>データの扱いとセキュリティ</h1>
 			<p class="lead">
-				Sidera Memoryは、端末の会話ログをShadow Hubへ送り、LLMの判断も使って
-				次の作業に使える記憶へ整理します。
-			</p>
-			<p>
-				便利さのために何が端末の外へ出るのか、どの処理にLLMが関わるのか、
-				各AI提供元の設定とどこで分かれるのかを、ここで明確にします。
+				Shadowが管理するSidera Memoryの送信・保存と、Shadow Hubの保護を説明します。
 			</p>
 		</header>
 
@@ -35,167 +29,84 @@ const description =
 			<aside class="guide-nav">
 				<p>このページ</p>
 				<nav aria-label="データの扱いに関する目次">
-					<a href="#summary">最初に知ってほしいこと</a>
-					<a href="#flow">Sideraのデータフロー</a>
-					<a href="#training">構造化と学習利用</a>
+					<a href="#security">Shadow Hubのセキュリティ</a>
+					<a href="#data">扱うデータ</a>
 					<a href="#providers">各CLI提供元との境界</a>
-					<a href="#storage">端末とHubにあるもの</a>
-					<a href="#risk">取り扱う情報と確認</a>
-					<a href="#updates">更新と問い合わせ</a>
 				</nav>
 			</aside>
 
 			<article class="guide-content prose">
-				<section id="summary">
-					<p class="eyebrow">01 / SUMMARY</p>
-					<h2>最初に知ってほしいこと</h2>
+				<section id="security">
+					<p class="eyebrow">01 / SERVER SECURITY</p>
+					<h2>Shadow Hubのセキュリティ</h2>
 					<div class="trust-grid">
 						<div>
-							<h3>ログはHubへ送られる</h3>
+							<h3>通信はHTTPS</h3>
+							<p>PCとShadow Hubの通信はHTTPSで暗号化します。</p>
+						</div>
+						<div>
+							<h3>利用者ごとに分離</h3>
 							<p>
-								Sidera Memoryを利用すると、各CLIがPCに残した入力、AI応答、
-								コマンド出力などを含む端末ログの新しい範囲がShadow Hubへ送られます。
+								記憶データは利用者ごとのコンテナ、専用データ領域、内部ネットワークに分離します。
+								コンテナは非rootで動作し、ルートファイルシステムは読み取り専用です。
 							</p>
 						</div>
 						<div>
-							<h3>LLMの判断が一部入る</h3>
+							<h3>端末ごとに認証</h3>
 							<p>
-								現在の結論、変更の経緯、根拠の関係を整理する過程の一部に、LLMの判断が入ります。
+								ログ送信と記憶取得には端末トークンを使います。サーバにはトークン本体ではなく
+								SHA-256ハッシュだけを保存し、端末単位で失効できます。
 							</p>
 						</div>
 						<div>
-							<h3>構造化入力は学習に使わせない</h3>
+							<h3>公開面を限定</h3>
 							<p>
-								Sideraの構造化に渡す入力は、モデル学習へ利用されない設定で処理します。
-							</p>
-						</div>
-						<div>
-							<h3>各CLI側は別の境界</h3>
-							<p>
-								Codex、Claude Code、Grok、Geminiなどのデータ利用は、
-								各提供元の条件と利用者自身の設定に従います。
+								記憶データのAPIはログ送信・記憶取得・根拠取得に限定し、管理APIは公開しません。
+								認証情報はアクセスログに記録しません。
 							</p>
 						</div>
 					</div>
 				</section>
 
-				<section id="flow">
-					<p class="eyebrow">02 / DATA FLOW</p>
-					<h2>Sidera Memoryでデータが動く順番</h2>
-					<ol>
-						<li>
-							<strong>各CLIが生ログをPCに残す。</strong>
-							保存場所と形式は、それぞれのCLIが定めます。
-						</li>
-						<li>
-							<strong>ShadowHarnessが新しいログ範囲を検出する。</strong>
-							Sidera Memoryのために必要な端末ログがShadow Hubへ送られます。
-						</li>
-						<li>
-							<strong>Hub上で記憶へ構造化する。</strong>
-							機械的な索引だけでなくLLMの判断も使い、結論、変化、根拠のつながりを整理します。
-						</li>
-						<li>
-							<strong>現在の入力に関係する部分を返す。</strong>
-							過去の全履歴ではなく、今回の作業に必要と判断された記憶がAIペインへ届きます。
-						</li>
-					</ol>
-					<div class="guide-callout">
-						端末ログには、入力した文章だけでなく、コマンドの出力やAIが会話中に扱った情報が
-						含まれることがあります。「質問文だけが送られる」とは考えないでください。
-					</div>
-				</section>
-
-				<section id="training">
-					<p class="eyebrow">03 / LLM PROCESSING</p>
-					<h2>記憶の構造化と、モデル学習への利用</h2>
-					<p>
-						Sidera Memoryは、単純なキーワード検索だけでは作れません。どれが現在の結論か、
-						以前の判断がいつ更新されたか、どの記録が根拠になるかを整理するために、
-						LLMによる判断を使います。
-					</p>
-					<p>
-						この構造化処理へ渡す入力は、モデル学習に利用されない設定で扱います。
-						これは「LLMへ何も送らない」という意味ではありません。構造化のための入力は
-						LLM処理へ渡りますが、その入力を学習データとして利用しない条件を選んでいます。
-					</p>
-					<div class="guide-callout">
-						この約束が対象にするのは、ShadowHarnessがSideraの記憶を構造化する処理です。
-						各CLIで利用するAIサービス側の扱いまで、ShadowHarnessが上書きするものではありません。
-					</div>
-				</section>
-
-				<section id="providers">
-					<p class="eyebrow">04 / PROVIDER BOUNDARY</p>
-					<h2>各AI CLIは、利用者自身の契約で直接動きます</h2>
-					<p>
-						ShadowHarnessは、各AI CLIへの入力や応答をAI提供元へ独自に転送したり、
-						別のコピーを送信したりしません。Codex、Claude Code、Grok、Geminiなどは、
-						利用者が各CLIを直接使う場合と同じ経路で、それぞれのサービスへ接続します。
-					</p>
-					<p>
-						Sidera Memoryの経路はこれとは別です。有効にした場合、記憶を作るための
-						端末ログが利用者のShadow Hubへ送られ、そこで構造化されます。
-					</p>
-				</section>
-
-				<section id="storage">
-					<p class="eyebrow">05 / STORAGE</p>
-					<h2>端末側にあるもの、Shadow Hub側にあるもの</h2>
+				<section id="data">
+					<p class="eyebrow">02 / DATA</p>
+					<h2>Shadowが扱うデータ</h2>
 					<dl class="facts-list">
 						<div>
 							<dt>利用者のPC</dt>
 							<dd>
-								各CLIの生ログは、そのCLIが定めるPC内の場所に残ります。ShadowHarnessの
-								クライアントにも、収集位置や送信進捗を管理するためのローカル情報が残ります。
+								各CLIの生ログが、そのCLIの保存先に残ります。生ログには入力、AIの応答、
+								コマンド出力などが含まれます。
 							</dd>
 						</div>
 						<div>
 							<dt>Shadow Hub</dt>
 							<dd>
-								Sidera Memoryのために送られたログデータを受け取り、そこから作られた
-								構造化記憶と索引を保持します。
+								Sidera Memoryを有効にすると、生ログの追加分が送られます。Hubは各端末から
+								送られた生ログ全文と、そこから作った記憶・索引を保持します。
 							</dd>
 						</div>
 						<div>
 							<dt>作業中のAIペイン</dt>
 							<dd>
-								現在の入力に関係すると判断された記憶が、作業を続けるための文脈として
-								必要な範囲で渡されます。
+								現在の入力に関係する記憶を、作業を続けるための文脈として渡します。
 							</dd>
 						</div>
 					</dl>
 					<p>
-						各端末の生ログは端末に残り、その全文がHubにも送られます。Hubは複数端末から届いた生ログを集約し、端末をまたいだ記憶と索引を保持します。
+						Hubで記憶を構造化する処理の一部にLLMを使います。構造化処理の入力は、
+						モデル学習に利用されない設定で処理します。
 					</p>
 				</section>
 
-				<section id="risk">
-					<p class="eyebrow">06 / RISK</p>
-					<h2>取り扱う情報と利用前の確認</h2>
+				<section id="providers">
+					<p class="eyebrow">03 / AI CLI</p>
+					<h2>各AI CLIとの境界</h2>
 					<p>
-						端末ログはネットワーク越しに送られ、HubとLLMで処理されます。情報漏えい、
-						意図しないアクセス、処理先の障害といったリスクを考慮する必要があります。
+						ShadowHarnessは各AI CLIの通信を中継せず、会話をAI提供元へ追加送信しません。
+						Codex、Claude Code、Grok、Geminiなどは、単独で使う場合と同じ経路で
+						それぞれのサービスへ接続します。
 					</p>
-					<p>
-						端末の会話には、ソースコード、ファイルパス、作業上の判断、コマンド出力などが
-						含まれ得ます。扱う情報の機密性と、各AI提供元およびSidera Memoryの設定を確認した上で
-						利用してください。
-					</p>
-				</section>
-
-				<section id="updates">
-					<p class="eyebrow">07 / UPDATES</p>
-					<h2>データの扱いが変わるとき</h2>
-					<p>
-						Sidera Memoryの処理経路やデータの境界に変更がある場合は、このページの説明も
-						更新します。開発状況と公式のお知らせは
-						<a href="https://x.com/ShadowHarness" target="_blank" rel="noopener">
-							@ShadowHarness
-						</a>
-						で確認できます。
-					</p>
-					<p><a href={`${base}guide/`}>ShadowHarnessガイドへ戻る</a></p>
 				</section>
 			</article>
 		</div>
