@@ -20,10 +20,6 @@ const description =
 		<header class="guide-hero">
 			<p class="eyebrow">DATA HANDLING &amp; SECURITY</p>
 			<h1>Data Handling &amp; Security</h1>
-			<p class="lead">
-				This page covers what Shadow controls: Sidera Memory data transfer and storage,
-				and the protections built into Shadow Hub.
-			</p>
 		</header>
 
 		<div class="guide-layout">
@@ -42,28 +38,29 @@ const description =
 					<div class="trust-grid">
 						<div>
 							<h3>HTTPS in transit</h3>
-							<p>Connections between your PC and Shadow Hub are encrypted with HTTPS.</p>
+							<p>Connections between your PC and Shadow Hub use HTTPS encryption.</p>
 						</div>
 						<div>
 							<h3>Separated by account</h3>
 							<p>
 								Memory data is separated into a container, data area, and internal network
-								for each user. Containers run as non-root with a read-only root filesystem.
+								for each user. Containers run without root privileges and use a read-only
+								root filesystem.
 							</p>
 						</div>
 						<div>
 							<h3>Authenticated per device</h3>
 							<p>
-								Log upload and memory retrieval require a device token. The server stores
-								only its SHA-256 hash, not the token itself, and tokens can be revoked per device.
+								Device tokens authenticate log uploads and memory retrieval. The server retains
+								only each token's SHA-256 hash, and tokens can be revoked per device.
 							</p>
 						</div>
 						<div>
 							<h3>Limited public surface</h3>
 							<p>
-								The memory API is limited to log upload, memory retrieval, and evidence
-								retrieval. Administrative APIs are not public, and credentials are omitted
-								from access logs.
+								The public memory API is limited to log upload, memory retrieval, and
+								evidence retrieval. Administrative APIs are not exposed, and credentials
+								are excluded from access logs.
 							</p>
 						</div>
 					</div>
@@ -91,13 +88,13 @@ const description =
 						<div>
 							<dt>The working AI pane</dt>
 							<dd>
-								Memory relevant to the current input is supplied as context for the task.
+								Memory relevant to the current input is supplied to the AI pane as context.
 							</dd>
 						</div>
 					</dl>
 					<p>
-						An LLM is used for part of memory structuring. Structuring input is processed
-						under settings that do not allow it to be used for model training.
+						Memory structuring uses an LLM. Structuring input is processed with model
+						training disabled.
 					</p>
 				</section>
 
